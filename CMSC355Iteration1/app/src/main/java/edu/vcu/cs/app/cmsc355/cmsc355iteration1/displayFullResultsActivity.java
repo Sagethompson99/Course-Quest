@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
  * clicks on one of the results from resultsActivity. There is a button on this activity to return
  * to the main results screen
  */
+
+//THIS IS NOT USED
 public class displayFullResultsActivity extends AppCompatActivity
 {
     private Course fullCourseDetails;
@@ -61,17 +63,18 @@ public class displayFullResultsActivity extends AppCompatActivity
         String courseWebsite = Course.getCourseWebsite(fullCourseDetails);
         String courseLink = Course.getCourseLink(fullCourseDetails);
         String courseDescription = Course.getCourseDescription(fullCourseDetails);
-        String professors = Course.getProfessors(fullCourseDetails);
+        /**String professors = Course.getProfessors(fullCourseDetails);
         String costType = Course.costTypeEnumToString(Course.getCostType(fullCourseDetails)).toUpperCase();
-        double courseCost = Course.getCourseCost(fullCourseDetails);
+        double courseCost = Course.getCourseCost(fullCourseDetails);*/
+        String courseCost = Course.getCost(fullCourseDetails);
         String rating = Course.getRating(fullCourseDetails);
-        boolean offersDegree = Course.getOffersDegree(fullCourseDetails);
+        /**boolean offersDegree = Course.getOffersDegree(fullCourseDetails);
         String degreeUniversity = Course.getDegreeUniversity(fullCourseDetails);
         String degreeType = Course.getDegreeType(fullCourseDetails);
         boolean offersCertificate = Course.getOffersCertificate(fullCourseDetails);
         String certificationType = Course.getCertificateType(fullCourseDetails);
         String difficulty = Course.getDifficultyString(fullCourseDetails);
-        double courseLength = Course.getCourseLength(fullCourseDetails);
+        double courseLength = Course.getCourseLength(fullCourseDetails);*/
 
         //Displaying course subject
         if (courseSubject.equals(""))
@@ -123,6 +126,16 @@ public class displayFullResultsActivity extends AppCompatActivity
             allInfo.append("Course Description: "+courseDescription+"\n");
         }
 
+        if (courseCost.equals(""))
+        {
+            allInfo.append("No Course Cost Found or Listed\n");
+        }
+        else
+        {
+            allInfo.append("Course Description: "+courseDescription+"\n");
+        }
+
+        /**
         //Display course professors
         if (professors.equals(""))
         {
@@ -164,7 +177,7 @@ public class displayFullResultsActivity extends AppCompatActivity
         else if (costType.equals("ONETIMECOST") && courseCost != -1)
         {
             allInfo.append("This course has a one time cost of "+courseCost+"" +"\n");
-        }
+        }*/
 
         //Displaying rating
         if (rating.equals(""))
@@ -175,7 +188,7 @@ public class displayFullResultsActivity extends AppCompatActivity
         {
             allInfo.append("The rating for this course is "+rating+"\n");
         }
-
+        /**
         //Displaying information about if the class offers degree
         if (offersDegree && !degreeType.equals("") && !degreeUniversity.equals(""))
         {
@@ -222,7 +235,7 @@ public class displayFullResultsActivity extends AppCompatActivity
         else
         {
             allInfo.append("Course length listed as: "+courseLength+"\n");
-        }
+        }*/
 
         return allInfo;
     }

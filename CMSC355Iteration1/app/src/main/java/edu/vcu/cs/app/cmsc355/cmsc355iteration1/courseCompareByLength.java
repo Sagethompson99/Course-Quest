@@ -7,7 +7,7 @@ public class courseCompareByLength implements Comparator<Course>
     @Override
     public int compare(Course course1, Course course2)
     {
-        double length1 = Course.getCourseLength(course1);
+        /**double length1 = Course.getCourseLength(course1);
         double length2 = Course.getCourseLength(course2);
         if (length1 < length2)
         {
@@ -20,6 +20,7 @@ public class courseCompareByLength implements Comparator<Course>
         else
         {
             return 1;
-        }
+        }*/
+        return 1;
     }
 }

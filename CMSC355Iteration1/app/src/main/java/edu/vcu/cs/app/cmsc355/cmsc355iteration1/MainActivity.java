@@ -14,7 +14,8 @@ public class MainActivity extends AppCompatActivity
     private ArrayList<Course> results = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
@@ -30,6 +31,8 @@ public class MainActivity extends AppCompatActivity
         //Then call viewResults to open resultsActivity
         viewResults(results);
     }
+
+    //Provider, price filters
 
     //Send the found results to resultsActivity
     public void viewResults(ArrayList<Course> results)
