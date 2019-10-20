@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CourseQuest</string>
+    <string name="title_activity_display_full_results">DisplayFullResults</string>
+</resources>
