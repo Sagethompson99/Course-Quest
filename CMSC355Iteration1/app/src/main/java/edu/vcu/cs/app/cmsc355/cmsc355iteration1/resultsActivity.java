@@ -65,15 +65,18 @@ public class resultsActivity extends AppCompatActivity
             }
             else
             {
+                final String courseLink = Course.getCourseLink(currentCourse);
+
                 courseView.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
                     public void onClick(View view)
                     {
+
                         //USES PARCELABLE
                         // https://developer.android.com/reference/android/os/Parcelable.html
-                        Intent intent = new Intent(view.getContext(), displayFullResultsActivity.class);
-                        intent.putExtra("Course", currentCourse);
+                        Intent intent = new Intent(view.getContext(), openLink.class);
+                        intent.putExtra("Course", courseLink);
                         view.getContext().startActivity(intent);
                     }
                 });
@@ -92,9 +95,7 @@ public class resultsActivity extends AppCompatActivity
         String courseName = Course.getCourseName(course)+'\n';
         String courseWebsite = Course.getCourseWebsite(course)+'\n';
         String courseLink = Course.getCourseLink(course)+'\n';
-        String courseCostType = Course.getCostTypeString(course)+'\n';
-        double courseCost = Course.getCourseCost(course);
-        String courseCostString = courseCost+"\n";
+        String courseCost = Course.getCost(course)+'\n';
 
         if (!courseSubject.equals(""))
         {
@@ -112,13 +113,9 @@ public class resultsActivity extends AppCompatActivity
         {
             courseView.append(courseLink);
         }
-        if (!courseCostType.equals(""))
+        if (!courseCost.equals(""))
         {
-            courseView.append(courseCostType);
-        }
-        if (courseCost != -1)
-        {
-            courseView.append(courseCostString);
+            courseView.append(courseCost);
         }
         if (courseView.getText().equals(""))
         {

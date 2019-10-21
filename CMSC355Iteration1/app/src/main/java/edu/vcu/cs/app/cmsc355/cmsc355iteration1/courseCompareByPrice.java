@@ -7,7 +7,7 @@ public class courseCompareByPrice implements Comparator<Course>
     @Override
     public int compare(Course course1, Course course2)
     {
-        double courseCost1 = Course.getCourseCost(course1);
+        /**double courseCost1 = Course.getCourseCost(course1);
         double courseCost2 = Course.getCourseCost(course2);
         if (courseCost1 < courseCost2)
         {
@@ -20,6 +20,7 @@ public class courseCompareByPrice implements Comparator<Course>
         else
         {
             return 1;
-        }
+        }*/
+        return 1;
     }
 }
