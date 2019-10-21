@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".HomeActivity"></activity>
-        <activity android:name=".Dashboard" />
+        <activity android:name=".SettingsActivity" />
         <activity
             android:name=".DisplayFullResults"
             android:label="@string/title_activity_display_full_results"
