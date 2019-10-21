@@ -58,17 +58,11 @@ public class SearchPageResults extends AppCompatActivity {
             textView.setText(btn_text);
             textView.setTextColor(Color.parseColor("#e74c3c"));
         }
-          add(courses);
+        courses = search(getIntent().getStringExtra("message"));
 
-        //     addResults(courses, resultView);
-        ArrayList<Button> buttons = new ArrayList<Button>();
-        buttons = createButtons(courses);
+        ArrayList<Button> buttons = createButtons(courses);
 
         displayResults(courses, buttons);
-
-
-
-
 
     }
 
@@ -89,24 +83,8 @@ public class SearchPageResults extends AppCompatActivity {
         {
             final Course currentCourse = courses.get(i);
             Button courseView = displayCourse(currentCourse);
-            if (buttons.get(i) == null)
+            if (buttons.get(i) != null)
             {
-                continue;
-            }
-            else
-            {
-                buttons.get(i).setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View view)
-                    {
-                        //USES PARCELABLE
-                        // https://developer.android.com/reference/android/os/Parcelable.html
-                        //Intent intent = new Intent(view.getContext(), DisplayFullResults.class);
-                        //intent.putExtra("Course", currentCourse);
-                        //view.getContext().startActivity(intent);
-                    }
-                });
                 rootView.addView(buttons.get(i));
             }
         }
@@ -175,6 +153,12 @@ public class SearchPageResults extends AppCompatActivity {
     public void openSearchPage() {
         Intent intent = new Intent(this, SearchPage.class);
         startActivity(intent);
+    }
+
+    public ArrayList<Course> search(String searchFor)
+    {
+        //IMPLEMENT WEB SCRAPERS
+        return null;
     }
 
     public void add(ArrayList<Course> courses)
