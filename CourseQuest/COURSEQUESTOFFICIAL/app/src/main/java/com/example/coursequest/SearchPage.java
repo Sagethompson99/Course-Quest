@@ -13,7 +13,7 @@ public class SearchPage extends AppCompatActivity {
     private Button search;
     private SearchView searchVal;
     private Button homeButton;
-    private Button moreButton;
+    private Button settingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,13 @@ public class SearchPage extends AppCompatActivity {
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openHomePage();
+            }
+        });
+
+        settingsButton = (Button) findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openSettingsPage();
             }
         });
 
@@ -59,6 +66,11 @@ public class SearchPage extends AppCompatActivity {
 
     public void openResults() {
         Intent intent = new Intent(this, SearchPageResults.class);
+        startActivity(intent);
+    }
+
+    public void openSettingsPage() {
+        Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 }
