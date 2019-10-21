@@ -7,6 +7,7 @@
  * Course: CMSC 355 - Software Engineering
  * Professor: Dr. Damevski
  */
+package com.example.coursequest;
 import java.io.IOException;
 import java.util.ArrayList;
 
