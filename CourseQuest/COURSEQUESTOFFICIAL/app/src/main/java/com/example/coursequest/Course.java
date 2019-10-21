@@ -1,4 +1,4 @@
-package edu.vcu.cs.app.cmsc355.cmsc355iteration1;
+package com.example.coursequest;
 
 import android.os.Parcel;
 import android.os.Parcelable;

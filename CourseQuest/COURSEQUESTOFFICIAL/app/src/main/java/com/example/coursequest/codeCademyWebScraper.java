@@ -1,3 +1,5 @@
+package com.example.coursequest;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.Jsoup;

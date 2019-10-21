@@ -43,23 +43,6 @@ public class SearchPageResults extends AppCompatActivity {
         ArrayList<Course> courses = new ArrayList<>();
         resultView = (LinearLayout)findViewById(R.id.resultView);
 
-//        LinearLayout rootView = (LinearLayout) findViewById(R.id.rootView);
-//        Button returnButton = new Button(this);
-//        String returnMessage = "Return to the main search screen";
-//        returnButton.setText(returnMessage);
-//        int returnId = 1;
-//        returnButton.setId(returnId);
-//        returnButton.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                Intent intent = new Intent();
-//                setResult(RESULT_OK, intent);
-//                finish();
-//            }
-//        });
-
         backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -75,21 +58,7 @@ public class SearchPageResults extends AppCompatActivity {
             textView.setText(btn_text);
             textView.setTextColor(Color.parseColor("#e74c3c"));
         }
-
-//        rootView.addView(returnButton);
-//        displayResults(courses);
-
           add(courses);
-
-//        TextView test = (TextView) findViewById(R.id.textView5);
-//        String prevText = "";
-//        String space = " ";
-//        test.append(" " + courses.get(1).getCourseName());
-//        for (int i = 0; i < courses.size(); i++) {
-//            prevText = test.getText().toString();
-//            test.append(courses.get(i).getCourseName());
-//
-//        }
 
         //     addResults(courses, resultView);
         ArrayList<Button> buttons = new ArrayList<Button>();
@@ -133,9 +102,9 @@ public class SearchPageResults extends AppCompatActivity {
                     {
                         //USES PARCELABLE
                         // https://developer.android.com/reference/android/os/Parcelable.html
-                        Intent intent = new Intent(view.getContext(), DisplayFullResults.class);
-                        intent.putExtra("Course", currentCourse);
-                        view.getContext().startActivity(intent);
+                        //Intent intent = new Intent(view.getContext(), DisplayFullResults.class);
+                        //intent.putExtra("Course", currentCourse);
+                        //view.getContext().startActivity(intent);
                     }
                 });
                 rootView.addView(buttons.get(i));
@@ -171,9 +140,7 @@ public class SearchPageResults extends AppCompatActivity {
         String courseName = Course.getCourseName(course)+'\n';
         String courseWebsite = Course.getCourseWebsite(course)+'\n';
         String courseLink = Course.getCourseLink(course)+'\n';
-        String courseCostType = Course.getCostTypeString(course)+'\n';
-        double courseCost = Course.getCourseCost(course);
-        String courseCostString = courseCost+"\n";
+        String courseCost = Course.getCost(course)+'\n';
 
         if (!courseSubject.equals(""))
         {
@@ -191,13 +158,9 @@ public class SearchPageResults extends AppCompatActivity {
         {
             courseView.append(courseLink);
         }
-        if (!courseCostType.equals(""))
+        if (!courseCost.equals(""))
         {
-            courseView.append(courseCostType);
-        }
-        if (courseCost != -1)
-        {
-            courseView.append(courseCostString);
+            courseView.append(courseCost);
         }
         if (courseView.getText().equals(""))
         {
@@ -226,26 +189,26 @@ public class SearchPageResults extends AppCompatActivity {
         testCourse.setCourseDescription(testCourse,"Test description");
         testCourse.setCourseWebsite(testCourse,"Google");
         testCourse.setCourseLink(testCourse,"https://www.udemy.com/course/differential-equations-u/");
-        testCourse.setCost(testCourse,0);
+        //testCourse.setCost(testCourse,0);
         testCourse.setRating(testCourse,"8/10");
         //courses.add(testCourse);
 
-        courses.add(new Course("Differential Equations", "Math", "Google", "Test description", "https://www.udemy.com/course/differential-equations-u/", 0, "8/10"));
+        //courses.add(new Course("Differential Equations", "Math", "Google", "Test description", "https://www.udemy.com/course/differential-equations-u/", 0, "8/10"));
         Course testCourse2 = new Course();
         testCourse2.setCourseSubject(testCourse,"Computer Science");
         testCourse2.setCourseName(testCourse,"Software Engineering");
         testCourse2.setCourseDescription(testCourse,"Test description that I don't feel like writing");
         testCourse2.setCourseWebsite(testCourse,"Some website");
         testCourse2.setCourseLink(testCourse,"https://www.google.com/");
-        testCourse2.setCost(testCourse,25);
+        //testCourse2.setCost(testCourse,25);
         testCourse.setRating(testCourse,"9/10");
         //courses.add(testCourse2);
 
-        courses.add(new Course("Software Engineering", "CS", "VCU", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
-        courses.add(new Course("Software Engineering", "CS", "CodeAcademy", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
-        courses.add(new Course("Software Engineering", "CS", "JMU", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
-        courses.add(new Course("English Fundamentals", "English", "RazKids", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
-        courses.add(new Course("Math 101", "Math", "KhanAcademy", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
-        courses.add(new Course("Software Engineering", "CS", "UVA", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
+        //courses.add(new Course("Software Engineering", "CS", "VCU", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
+        //courses.add(new Course("Software Engineering", "CS", "CodeAcademy", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
+        //courses.add(new Course("Software Engineering", "CS", "JMU", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
+        //courses.add(new Course("English Fundamentals", "English", "RazKids", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
+        //courses.add(new Course("Math 101", "Math", "KhanAcademy", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
+        //courses.add(new Course("Software Engineering", "CS", "UVA", "Test description", "https://www.udemy.com/course/differential-equations-u/", 70, "8/10"));
     }
 }
