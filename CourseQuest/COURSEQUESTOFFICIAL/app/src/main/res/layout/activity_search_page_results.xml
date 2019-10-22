@@ -11,11 +11,10 @@
         android:id="@+id/searchVal"
         android:layout_width="195dp"
         android:layout_height="25dp"
-        android:layout_marginTop="115dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="116dp"
+        android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,13 +22,14 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="245dp"
         android:layout_marginRight="245dp"
         android:layout_marginBottom="10dp"
         android:text="Results for: "
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/results"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -48,9 +48,12 @@
 
     <ScrollView
         android:id="@+id/results"
-        android:layout_width="406dp"
+        android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,50 +63,8 @@
             android:id="@+id/resultView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <!--            <Button-->
-            <!--                android:id="@+id/button"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:background="#00F8F7F7"-->
-            <!--                android:shadowColor="white" />-->
-
-            <!--            <Button-->
-            <!--                android:id="@+id/button2"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:background="#00F8F7F7"-->
-            <!--                 />-->
-
-            <!--            <Button-->
-            <!--                android:id="@+id/button3"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="Button"-->
-            <!--                android:background="#00F8F7F7" />-->
-
-            <!--            <Button-->
-            <!--                android:id="@+id/button4"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="Button"-->
-            <!--                android:background="#00F8F7F7" />-->
-
-            <!--            <Button-->
-            <!--                android:id="@+id/button5"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="Button"-->
-            <!--                android:background="#00F8F7F7" />-->
-
-            <!--            <Button-->
-            <!--                android:id="@+id/button6"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:text="Button"-->
-            <!--                android:background="#00F8F7F7" />-->
-        </LinearLayout>
+            android:gravity="center_vertical"
+            android:orientation="vertical"></LinearLayout>
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

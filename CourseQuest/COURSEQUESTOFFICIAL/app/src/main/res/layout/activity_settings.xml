@@ -23,7 +23,6 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_marginRight="60dip"
-            android:backgroundTint="@color/colorPrimaryDark"
             android:background="@drawable/ic_home_black_24dp"
             android:scaleType="fitCenter" />
 
@@ -41,6 +40,7 @@
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_weight="0"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:background="@drawable/ic_settings_black_24dp"
             android:scaleType="fitCenter" />
     </LinearLayout>
@@ -61,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="My Courses"
+        android:text="Settings"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"

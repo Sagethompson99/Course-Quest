@@ -78,8 +78,7 @@
             android:id="@+id/homeButton"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_centerHorizontal="false"
-            android:layout_marginRight="50dip"
+            android:layout_marginRight="60dip"
             android:background="@drawable/ic_home_black_24dp"
             android:scaleType="fitCenter" />
 
@@ -87,14 +86,14 @@
             android:id="@+id/searchButton2"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_centerHorizontal="true"
-            android:layout_marginRight="50dip"
+            android:layout_marginRight="60dip"
             android:layout_weight="0"
+            android:backgroundTint="@color/colorPrimaryDark"
             android:background="@drawable/ic_search_black_24dp"
             android:scaleType="fitCenter" />
 
         <Button
-            android:id="@+id/moreButton"
+            android:id="@+id/settingsButton"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_weight="0"
