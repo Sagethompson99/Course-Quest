@@ -9,6 +9,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+/**
+This class was made by Sage
+*/
 public class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 
     private final String url = "https://www.futurelearn.com";
