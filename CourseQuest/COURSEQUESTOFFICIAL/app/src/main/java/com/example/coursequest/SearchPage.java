@@ -9,6 +9,9 @@ import android.widget.Button;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+/**
+This class was made by Christopher, then updated by Sage
+*/
 public class SearchPage extends AppCompatActivity {
     private Button search;
     private SearchView searchVal;
