@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+/**
+This class was made by Sage
+*/
 public class SettingsActivity extends AppCompatActivity {
 
     private Button searchButton;
