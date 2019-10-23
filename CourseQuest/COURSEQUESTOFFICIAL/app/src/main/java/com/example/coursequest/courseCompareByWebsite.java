@@ -2,6 +2,10 @@ package com.example.coursequest;
 
 import java.util.Comparator;
 
+/**
+This class will be used in the future to filter results
+This class was made by Christopher Flippen
+*/
 public class courseCompareByWebsite implements Comparator<Course>
 {
 
