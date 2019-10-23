@@ -6,6 +6,11 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.Collections;
 
+/**
+This class encapsulates the information found by the web scraper
+This class was written by Christopher Flippen
+*/
+
 public class Course implements Parcelable
 {
     @Override
