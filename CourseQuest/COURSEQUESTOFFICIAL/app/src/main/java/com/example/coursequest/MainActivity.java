@@ -8,6 +8,7 @@ import android.os.Handler;
 /**
  * MainActivity is the starting screen with the search bar, after searching, the results will be
  * displayed on the resultsActivity
+ * This class was made by Araf
  */
 public class MainActivity extends AppCompatActivity {
 
