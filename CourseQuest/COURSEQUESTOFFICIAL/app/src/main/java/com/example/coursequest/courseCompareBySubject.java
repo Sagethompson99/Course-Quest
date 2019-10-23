@@ -2,10 +2,6 @@ package com.example.coursequest;
 
 import java.util.Comparator;
 
-/**
-This class will be used in a future iteration for filtering results
-This class was made by Christopher Flippen
-*/
 public class courseCompareBySubject implements Comparator<Course>
 {
     public int compare(Course course1, Course course2)

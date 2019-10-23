@@ -25,8 +25,6 @@ import java.util.Random;
  * resultsActivity shows the results from seaching, each course listing displayed by resultsActivity
  * functions as a button that, when clicked, opens up a corresponding url for the course
  * There will be a button on this page that takes the user back to the main search screen (MainActivity)
- * This class was made by Christopher Flippen and Sage Thompson. 
- * Christopher started the class and Sage added UI components and bug fixes later
  */
 
 public class SearchPageResults extends AppCompatActivity {
