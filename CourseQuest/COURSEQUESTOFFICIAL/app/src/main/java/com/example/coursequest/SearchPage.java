@@ -3,24 +3,31 @@ package com.example.coursequest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
-import android.widget.Toast;
 
-/**
-This class was made by Christopher, then updated by Sage
-*/
 public class SearchPage extends AppCompatActivity {
     private Button search;
     private SearchView searchVal;
     private Button homeButton;
     private Button settingsButton;
+    private static final String PREFS_NAME = "prefs";
+    private static final String PREF_DARK_THEME = "dark_theme";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
+
+        if(useDarkTheme) {
+            setTheme(R.style.AppTheme_Dark_NoActionBar);
+        }
+
         setContentView(R.layout.activity_search_page);
 
         searchVal = (SearchView) findViewById(R.id.searchFor);

@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -25,8 +26,6 @@ import java.util.Random;
  * resultsActivity shows the results from seaching, each course listing displayed by resultsActivity
  * functions as a button that, when clicked, opens up a corresponding url for the course
  * There will be a button on this page that takes the user back to the main search screen (MainActivity)
- * This class was made by Christopher Flippen and Sage Thompson. 
- * Christopher started the class and Sage added UI components and bug fixes later
  */
 
 public class SearchPageResults extends AppCompatActivity {
@@ -35,11 +34,21 @@ public class SearchPageResults extends AppCompatActivity {
     private LinearLayout resultView;
     private static ArrayList<Course> courses;
     private static String[] buttonColors;
+    private static final String PREFS_NAME = "prefs";
+    private static final String PREF_DARK_THEME = "dark_theme";
 
     //Receive the courses from MainActivity and use displayResults to display them
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
+
+        if(useDarkTheme) {
+            setTheme(R.style.AppTheme_Dark_NoActionBar);
+        }
+
         setContentView(R.layout.activity_search_page_results);
         Intent intent = getIntent();
 
