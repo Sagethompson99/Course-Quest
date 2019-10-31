@@ -74,7 +74,8 @@ public class SearchPageResults extends AppCompatActivity {
         }
 
         search(getIntent().getExtras().getString("message"));
-        buttonColors = new String[]{"#FFC300", "#57B5F3", "#96E864", "#E864AE", "#FF5959"};
+                                    //orange    green      purple     pink       red        blue
+        buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
     }
 
 
@@ -118,20 +119,20 @@ public class SearchPageResults extends AppCompatActivity {
     //displayResults uses this method in a loop - displaying each course
     public Button displayCourse(Course course)
     {
-        int i = new Random().nextInt(5);
+        int i = new Random().nextInt(6);
         Button courseView = new Button(this);
         Drawable card = getDrawable(R.drawable.results_card);
         card.setTint(Color.parseColor(buttonColors[i]));
         courseView.setBackground(card);
         courseView.setTextSize(COMPLEX_UNIT_SP, 21);
         courseView.setTextColor(Color.parseColor("#F9F9F9"));
-        courseView.setPadding(35, 35, 35, 5);
+        courseView.setPadding(35, 35, 35, 35);
 
         courseView.setText("");
 
         String courseName = Course.getCourseName(course)+"\n\n";
         String courseDesc = Course.getCourseDescription(course) + "\n\n";
-        String courseWebsite = Course.getCourseWebsite(course)+'\n';
+        String courseWebsite = Course.getCourseWebsite(course);
 
         final String courseLink = Course.getCourseLink(course);
         if(!courseLink.equals("")) {

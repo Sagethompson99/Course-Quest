@@ -22,16 +22,12 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="120dp"
-        android:layout_marginEnd="245dp"
-        android:layout_marginRight="245dp"
         android:layout_marginBottom="10dp"
         android:text="Results for: "
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/results"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
