@@ -40,14 +40,15 @@ public class SearchPageResults extends AppCompatActivity {
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
 
-    //Receive the courses from MainActivity and use displayResults to display them
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //saved user preferences. Used to save dark mode/light mode preferences for each launch
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
 
+        //Sets page theme to dark mode if user selects dark mode theme
         if(useDarkTheme) {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
@@ -56,6 +57,7 @@ public class SearchPageResults extends AppCompatActivity {
         Intent intent = getIntent();
 
         ArrayList<Course> courses = new ArrayList<Course>();
+
         resultView = (LinearLayout)findViewById(R.id.resultView);
 
         backButton = (Button) findViewById(R.id.backButton);
@@ -65,7 +67,10 @@ public class SearchPageResults extends AppCompatActivity {
             }
         });
 
+        //populates searchVal textview with user's search query
         TextView textView = (TextView) findViewById(R.id.searchVal);
+
+        //Gets user query from search page
         String btn_text;
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -73,12 +78,14 @@ public class SearchPageResults extends AppCompatActivity {
             textView.setText(btn_text);
         }
 
+        //calls search method with user query
         search(getIntent().getExtras().getString("message"));
+
                                     //orange    green      purple     pink       red        blue
         buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
     }
 
-
+    //adds course result buttons to the screen
     public void displayResults(ArrayList<Course> courses, ArrayList<Button> buttons)
     {
         //Code idea used for adding views programmatically
@@ -101,6 +108,7 @@ public class SearchPageResults extends AppCompatActivity {
         }
     }
 
+    //creates buttons. Called via postExecute method in each website scraper class
     public ArrayList<Button> createButtons(ArrayList<Course> courses) {
 
         ArrayList<Button> buttons = new ArrayList<Button>();
@@ -121,6 +129,8 @@ public class SearchPageResults extends AppCompatActivity {
     {
         int i = new Random().nextInt(6);
         Button courseView = new Button(this);
+
+        //style elements for course buttons
         Drawable card = getDrawable(R.drawable.results_card);
         card.setTint(Color.parseColor(buttonColors[i]));
         courseView.setBackground(card);
@@ -134,6 +144,7 @@ public class SearchPageResults extends AppCompatActivity {
         String courseDesc = Course.getCourseDescription(course) + "\n\n";
         String courseWebsite = Course.getCourseWebsite(course);
 
+        //gets course link and adds onClick function to open the link in an external browser
         final String courseLink = Course.getCourseLink(course);
         if(!courseLink.equals("")) {
             courseView.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +157,8 @@ public class SearchPageResults extends AppCompatActivity {
                 }
             });
         }
+
+        //appends course information to each courseView button
         if (!courseName.equals(""))
         {
             courseView.append(courseName);
@@ -168,11 +181,14 @@ public class SearchPageResults extends AppCompatActivity {
         }
     }
 
+
+    //exits search results page and opens search page
     public void openSearchPage() {
         Intent intent = new Intent(this, SearchPage.class);
         startActivity(intent);
     }
 
+    //gets search results from website scrapers for a given search query
     public void search(String searchFor) {
         futureLearnWebScraper scraper = new futureLearnWebScraper();
         scraper.execute(searchFor, this);

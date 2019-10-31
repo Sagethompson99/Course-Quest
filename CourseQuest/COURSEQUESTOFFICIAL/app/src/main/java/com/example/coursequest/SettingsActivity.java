@@ -22,9 +22,11 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        //saved user preferences. Used to save dark mode/light mode preferences for each launch
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
 
+        //Sets page theme to dark mode if user selects dark mode theme
         if(useDarkTheme) {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
@@ -56,16 +58,19 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    //opens search page
     public void openSearchPage() {
         Intent intent = new Intent(this, SearchPage.class);
         startActivity(intent);
     }
 
+    //opens home page
     public void openHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
+    //sets app theme to dark mode if darkModeSwitch is checked
     public void toggleTheme(boolean darkTheme){
         SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
         editor.putBoolean(PREF_DARK_THEME, darkTheme);
