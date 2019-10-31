@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 /**
  * resultsActivity shows the results from seaching, each course listing displayed by resultsActivity
@@ -117,10 +120,12 @@ public class SearchPageResults extends AppCompatActivity {
     {
         int i = new Random().nextInt(5);
         Button courseView = new Button(this);
-        courseView.setTextSize(18);
-        courseView.setTextColor(Color.WHITE);
-        courseView.setPadding(20, 10, 20, 10);
-        courseView.setBackgroundColor(Color.parseColor(buttonColors[i]));
+        Drawable card = getDrawable(R.drawable.results_card);
+        card.setTint(Color.parseColor(buttonColors[i]));
+        courseView.setBackground(card);
+        courseView.setTextSize(COMPLEX_UNIT_SP, 21);
+        courseView.setTextColor(Color.parseColor("#F9F9F9"));
+        courseView.setPadding(35, 35, 35, 5);
 
         courseView.setText("");
 

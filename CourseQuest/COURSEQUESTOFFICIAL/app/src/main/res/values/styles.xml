@@ -8,13 +8,12 @@
         <item name="android:textColor">@color/colorTextLightMode</item>
     </style>
 
+    <!-- Dark Mode application theme. -->
     <style name="AppTheme.Dark.NoActionBar" parent="Theme.AppCompat">
-
         <item name="colorAccent">@color/colorAccentDarkMode</item>
         <item name="android:textColor">@color/colorTextDarkMode</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-
     </style>
 
     <style name="AppTheme.NoActionBar">

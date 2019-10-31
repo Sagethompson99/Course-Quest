@@ -31,9 +31,9 @@
         android:layout_marginEnd="50dp"
         android:layout_marginRight="50dp"
         android:background="@drawable/round_button"
-        android:backgroundTint="#D6D8D8"
+        android:backgroundTint="?attr/colorAccent"
+        android:queryBackground="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
