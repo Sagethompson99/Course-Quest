@@ -29,8 +29,8 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 		List<String> descriptions = new ArrayList<>();
 		
 		try {
-			
-			for(int numPages = 1; numPages < 4; numPages++) {
+			int maxPages = 4;
+			for(int numPages = 1; numPages < maxPages; numPages++) {
 
 				document = Jsoup.connect("https://www.coursera.org/search?query=" + searchTerm + "&indices%5Bprod_all_products%5D%5Bpage%5D=" + Integer.toString(numPages) + "&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BclickAnalytics%5D=true&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BhitsPerPage%5D=10&configure%5BclickAnalytics%5D=true").get();
 
