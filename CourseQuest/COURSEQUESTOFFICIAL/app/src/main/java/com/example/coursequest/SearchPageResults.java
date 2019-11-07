@@ -183,6 +183,9 @@ public class SearchPageResults extends AppCompatActivity {
     public void search(String searchFor) {
         futureLearnWebScraper scraper = new futureLearnWebScraper();
         scraper.execute(searchFor, this);
+        
+        SkillShareScraper skillShareScraper = new SkillShareScraper();
+        skillShareScraper.execute(searchFor, this);
     }
 
     @Override
