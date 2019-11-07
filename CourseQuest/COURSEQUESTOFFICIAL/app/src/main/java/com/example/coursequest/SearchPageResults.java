@@ -13,11 +13,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -54,9 +58,6 @@ public class SearchPageResults extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_search_page_results);
-        Intent intent = getIntent();
-
-        ArrayList<Course> courses = new ArrayList<Course>();
 
         resultView = (LinearLayout)findViewById(R.id.resultView);
 
@@ -68,15 +69,11 @@ public class SearchPageResults extends AppCompatActivity {
         });
 
         //populates searchVal textview with user's search query
-        TextView textView = (TextView) findViewById(R.id.searchVal);
-
-        //Gets user query from search page
-        String btn_text;
+        TextView searchVal = (TextView) findViewById(R.id.searchVal);
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            btn_text = bundle.getString("message");
-            textView.setText(btn_text);
-        }
+        if (bundle != null)
+            searchVal.setText(bundle.getString("message"));
+
 
         //calls search method with user query
         search(getIntent().getExtras().getString("message"));
@@ -112,34 +109,35 @@ public class SearchPageResults extends AppCompatActivity {
     public ArrayList<Button> createButtons(ArrayList<Course> courses) {
 
         ArrayList<Button> buttons = new ArrayList<Button>();
-
         Iterator<Course> iter = courses.iterator();
 
-        int i = 0;
-        while(iter.hasNext()) {
+        while(iter.hasNext())
             buttons.add(displayCourse(iter.next()));
-            i++;
-        }
 
         return buttons;
+    }
+
+    //provides a standard format for each course button
+    public void formatButton(Button b){
+        int i = new Random().nextInt(6); //randomizer for card background color
+        Drawable card = getDrawable(R.drawable.results_card);
+        card.setTint(Color.parseColor(buttonColors[i]));
+        b.setBackground(card);
+        b.setTextSize(COMPLEX_UNIT_SP, 21);
+        b.setTextColor(Color.parseColor("#F9F9F9"));
+        b.setPadding(35, 35, 35, 35);
     }
 
     //displayResults uses this method in a loop - displaying each course
     public Button displayCourse(Course course)
     {
-        int i = new Random().nextInt(6);
         Button courseView = new Button(this);
+        formatButton(courseView);
 
-        //style elements for course buttons
-        Drawable card = getDrawable(R.drawable.results_card);
-        card.setTint(Color.parseColor(buttonColors[i]));
-        courseView.setBackground(card);
-        courseView.setTextSize(COMPLEX_UNIT_SP, 21);
-        courseView.setTextColor(Color.parseColor("#F9F9F9"));
-        courseView.setPadding(35, 35, 35, 35);
+        //adds menu (like,unlike) to button
+        registerForContextMenu(courseView);
 
         courseView.setText("");
-
         String courseName = Course.getCourseName(course)+"\n\n";
         String courseDesc = Course.getCourseDescription(course) + "\n\n";
         String courseWebsite = Course.getCourseWebsite(course);
@@ -160,25 +158,18 @@ public class SearchPageResults extends AppCompatActivity {
 
         //appends course information to each courseView button
         if (!courseName.equals(""))
-        {
             courseView.append(courseName);
-        }
+
         if (!courseDesc.equals(""))
-        {
             courseView.append(courseDesc);
-        }
+
         if (!courseWebsite.equals(""))
-        {
             courseView.append(courseWebsite);
-        }
+
         if (courseView.getText().equals(""))
-        {
             return null;
-        }
         else
-        {
             return courseView;
-        }
     }
 
 
@@ -192,5 +183,29 @@ public class SearchPageResults extends AppCompatActivity {
     public void search(String searchFor) {
         futureLearnWebScraper scraper = new futureLearnWebScraper();
         scraper.execute(searchFor, this);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.course_options,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // Handle item click
+        switch (item.getItemId()){
+            case R.id.save :
+                Toast.makeText(this,"Course saved:)", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.unsave :
+                Toast.makeText(this,"Course unsaved:(",Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 }
