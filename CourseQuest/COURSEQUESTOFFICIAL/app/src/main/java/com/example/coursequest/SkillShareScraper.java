@@ -16,27 +16,24 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class SkillShareScraper extends Course {
-	
-	public SkillShareScraper() {
-		//empty constructor
-	}
-	
-	public SkillShareScraper(String query) {
-		getCourses(query);
-	}
-	
-	public ArrayList<Course> getCourses(String userSearch) {
+import android.os.AsyncTask;
+import android.widget.Button;
+
+public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
+	SearchPageResults page;
+
+	protected ArrayList<Course> doInBackground(Object... params) {
+		String userSearch = (String) params[0];
+		page = (SearchPageResults) params[1];
 		ArrayList<String> skillTitles = new ArrayList<String>();
 		ArrayList<String> skillLinksTemp = new ArrayList<String>();
 		ArrayList<String> skillLinks = new ArrayList<String>();
 		ArrayList<Course> allCourses = new ArrayList<Course>();
-		
 		try {
 			Document doc = Jsoup.connect("https://www.skillshare.com/search?query=" + userSearch).get();
-			//spaces don't matter because browser catches 
-			
-			Elements titles = doc.getElementsByClass("ss-card__title"); 
+			//spaces don't matter because browser catches
+
+			Elements titles = doc.getElementsByClass("ss-card__title");
 			Elements links = doc.getElementsByTag("a");
 
 			for (Element title : titles) {
@@ -44,25 +41,25 @@ public class SkillShareScraper extends Course {
 				skillTitles.add(title.text());
 					//What else is needed? Images?
 			}
-			
+
 			for (Element link : links) {
 				//all links from page
 				skillLinksTemp.add(link.attr("href"));
 			}
-			
+
 			//links only containing classes (but has duplicates)
 			for (int c = 0; c < skillLinksTemp.size(); c++) {
 				if(skillLinksTemp.get(c).contains("https://www.skillshare.com/classes")) {
 					skillLinks.add(skillLinksTemp.get(c));
 				}
 			}
-			
+
 			ArrayList<String> finalLinks = removeDuplicates(skillLinks);
-			
+
 //			for (int c = 0; c < finalLinks.size(); c++) {
 //				System.out.println("Links fr: " + finalLinks.get(c));
 //			}
-			
+
 			//System.out.println("array list counts: " + skillTitles.size() + " and " + finalLinks.size());
 			allCourses = makeCourseObjects(skillTitles,finalLinks);
 		}
@@ -91,6 +88,7 @@ public class SkillShareScraper extends Course {
 				course.setCourseLink(course, links.get(i));
 				course.setCourseWebsite(course, getWebsite());
 				course.setCost(course, getCost());
+				course.setCourseDescription(course,getNoDescription());
 				//need to add course cost type
 				allCourses.add(course);
 			}
@@ -107,9 +105,23 @@ public class SkillShareScraper extends Course {
 	public String getCost() {
 		return "$15/month or $99/year";
 	}
+
+	public String getNoDescription() {
+		return "Click HERE for course information!";
+	}
 	
 	public String getCourseCostType() {
 		return "Subscription";
+	}
+
+	protected void onPostExecute(ArrayList<Course> list) {
+		try {
+			ArrayList<Button> buttons = page.createButtons(list);
+			page.displayResults(list,buttons);
+		}
+		catch(Exception e) {
+			System.out.println("ERROR [Skill Share]: couldn't get classes :(");
+		}
 	}
 	
 //	public static void main(String[] args) {
