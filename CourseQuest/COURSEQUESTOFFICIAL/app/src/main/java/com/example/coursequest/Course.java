@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -195,4 +196,24 @@ public class Course implements Parcelable
         Collections.sort(courses, new courseCompareByName());
     }
 
+    public static String getInfoString(Course course) {
+        String courseInfo = "";
+        String courseName = Course.getCourseName(course) + "\n\n";
+        String courseDesc = Course.getCourseDescription(course) + "\n\n";
+        String courseWebsite = Course.getCourseWebsite(course);
+        if (!courseName.equals(""))
+        {
+            courseInfo += courseName;
+        }
+        if (!courseDesc.equals(""))
+        {
+            courseInfo += courseDesc;
+        }
+
+        if (!courseWebsite.equals(""))
+        {
+            courseInfo += courseWebsite;
+        }
+        return courseInfo;
+    }
 }

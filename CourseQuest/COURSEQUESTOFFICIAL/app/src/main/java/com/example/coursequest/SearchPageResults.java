@@ -53,7 +53,8 @@ public class SearchPageResults extends AppCompatActivity {
         boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
 
         //Sets page theme to dark mode if user selects dark mode theme
-        if(useDarkTheme) {
+        if(useDarkTheme)
+        {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
 
@@ -68,12 +69,13 @@ public class SearchPageResults extends AppCompatActivity {
             }
         });
 
-        //populates searchVal textview with user's search query
+        //populates searchVal TextView with user's search query
         TextView searchVal = (TextView) findViewById(R.id.searchVal);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
+        {
             searchVal.setText(bundle.getString("message"));
-
+        }
 
         //calls search method with user query
         search(getIntent().getExtras().getString("message"));
@@ -118,7 +120,8 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //provides a standard format for each course button
-    public void formatButton(Button b){
+    public void formatButton(Button b)
+    {
         int i = new Random().nextInt(6); //randomizer for card background color
         Drawable card = getDrawable(R.drawable.results_card);
         card.setTint(Color.parseColor(buttonColors[i]));
@@ -138,11 +141,21 @@ public class SearchPageResults extends AppCompatActivity {
         registerForContextMenu(courseView);
 
         courseView.setText("");
-        String courseName = Course.getCourseName(course)+"\n\n";
-        String courseDesc = Course.getCourseDescription(course) + "\n\n";
-        String courseWebsite = Course.getCourseWebsite(course);
 
         //gets course link and adds onClick function to open the link in an external browser
+        setLink(course, courseView);
+
+        //appends course information to each courseView button
+        courseView.append(Course.getInfoString(course));
+
+        if (courseView.getText().equals(""))
+            return null;
+        else
+            return courseView;
+    }
+
+    public void setLink(Course course, Button courseView)
+    {
         final String courseLink = Course.getCourseLink(course);
         if(!courseLink.equals("")) {
             courseView.setOnClickListener(new View.OnClickListener() {
@@ -155,21 +168,6 @@ public class SearchPageResults extends AppCompatActivity {
                 }
             });
         }
-
-        //appends course information to each courseView button
-        if (!courseName.equals(""))
-            courseView.append(courseName);
-
-        if (!courseDesc.equals(""))
-            courseView.append(courseDesc);
-
-        if (!courseWebsite.equals(""))
-            courseView.append(courseWebsite);
-
-        if (courseView.getText().equals(""))
-            return null;
-        else
-            return courseView;
     }
 
 
@@ -180,10 +178,13 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //gets search results from website scrapers for a given search query
-    public void search(String searchFor) {
+    public void search(String searchFor)
+    {
+        //Search for futureLearn Courses
         futureLearnWebScraper scraper = new futureLearnWebScraper();
         scraper.execute(searchFor, this);
-        
+
+        //Search for skillShare Courses
         SkillShareScraper skillShareScraper = new SkillShareScraper();
         skillShareScraper.execute(searchFor, this);
     }
