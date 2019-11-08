@@ -181,6 +181,11 @@ public class Course implements Parcelable
         return course.rating;
     }
 
+    public static void sortByCourseName(ArrayList<Course> courses)
+    {
+        Collections.sort(courses, new courseCompareByCourseName());
+    }
+
     public static void sortBySubject(ArrayList<Course> courses)
     {
         Collections.sort(courses, new courseCompareBySubject());
@@ -191,10 +196,36 @@ public class Course implements Parcelable
         Collections.sort(courses, new courseCompareByWebsite());
     }
 
-    public static void sortByName(ArrayList<Course> courses)
+    public static void sortByNameABC(ArrayList<Course> courses)
     {
-        Collections.sort(courses, new courseCompareByName());
+        Collections.sort(courses, new courseCompareByNameABC());
     }
+
+    public static void sortByNameZYX(ArrayList<Course> courses)
+    {
+        Collections.sort(courses, new courseCompareByNameZYX());
+    }
+
+    public static void removeByWebsite(String website, ArrayList<Course> courses)
+    {
+        int i = 0;
+        while (i < courses.size())
+        {
+            if (courses.get(i)==null)
+            {
+                courses.remove(i);
+            }
+            else if (getCourseWebsite(courses.get(i)).equals(website))
+            {
+                courses.remove(i);
+            }
+            else
+            {
+                i++;
+            }
+        }
+    }
+
 
     public static String getInfoString(Course course) {
         String courseInfo = "";
