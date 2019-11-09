@@ -62,7 +62,6 @@ public class HomeActivity extends AppCompatActivity {
         savedCourseView = (LinearLayout) findViewById(R.id.savedCourseView);
         noCoursesImage = (ImageView) findViewById(R.id.noCoursesImage);
         noCoursesText = (TextView) findViewById((R.id.noCoursesText));
-        //savedCourses = new ArrayList<String>();
 
         searchButton = (Button) findViewById(R.id.searchButton2);
         searchButton.setOnClickListener(new View.OnClickListener() {

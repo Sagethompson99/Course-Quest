@@ -5,6 +5,8 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.widget.Button;
 
+import androidx.constraintlayout.widget.Constraints;
+
 import com.example.coursequest.R;
 import java.util.Random;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
@@ -25,5 +27,11 @@ public class courseButtonFormatter  {
         b.setTextSize(COMPLEX_UNIT_SP, 20);
         b.setTextColor(Color.parseColor("#F9F9F9"));
         b.setPadding(35, 35, 35, 35);
+        Constraints.LayoutParams params = new Constraints.LayoutParams(
+                Constraints.LayoutParams.WRAP_CONTENT,
+                Constraints.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(0, 0, 0, 20);
+        b.setLayoutParams(params);
     }
 }
