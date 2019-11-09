@@ -139,13 +139,10 @@ public class SearchPageResults extends AppCompatActivity {
         //adds menu (like,unlike) to button
         registerForContextMenu(courseView);
 
-
         courseView.setText("");
         String courseName = Course.getCourseName(course)+"\n\n";
         String courseDesc = Course.getCourseDescription(course) + "\n\n";
         String courseWebsite = Course.getCourseWebsite(course);
-
-
 
         //gets course link and adds onClick function to open the link in an external browser
         final String courseLink = Course.getCourseLink(course);
