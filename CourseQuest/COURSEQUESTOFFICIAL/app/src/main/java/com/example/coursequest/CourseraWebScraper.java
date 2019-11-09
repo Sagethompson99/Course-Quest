@@ -26,12 +26,13 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 		List<String> allLinks = new ArrayList<String>();
 		List<String> courseLinks = new ArrayList<String>();
 		List<String> ratings = new ArrayList<String>();
+		List<String> descriptions = new ArrayList<>();
 		
 		try {
-			
-			for(int i = 1; i < 4; i++) {
+			int maxPages = 4;
+			for(int numPages = 1; numPages < maxPages; numPages++) {
 
-				document = Jsoup.connect("https://www.coursera.org/search?query=" + searchTerm + "&indices%5Bprod_all_products%5D%5Bpage%5D=" + Integer.toString(i) + "&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BclickAnalytics%5D=true&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BhitsPerPage%5D=10&configure%5BclickAnalytics%5D=true").get();
+				document = Jsoup.connect("https://www.coursera.org/search?query=" + searchTerm + "&indices%5Bprod_all_products%5D%5Bpage%5D=" + Integer.toString(numPages) + "&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BclickAnalytics%5D=true&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BhitsPerPage%5D=10&configure%5BclickAnalytics%5D=true").get();
 
 				Elements titles = document.getElementsByClass("color-primary-text card-title headline-1-text");
 				titlesList.addAll(titles.eachText());
@@ -51,6 +52,7 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 				Elements rating = document.getElementsByClass("ratings-text");
 				ratings.addAll(rating.eachText());
 
+
 			}
 			
 		}
@@ -58,8 +60,14 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 		catch(Exception e){
 			System.out.println("No search results");
 		}
+
+		String desc = "Click here for a course description!";
+		for(int j = 0; j < titlesList.size(); j++){
+			descriptions.add(desc);
+		}
+
 		getCourseLinks(allLinks, courseLinks);
-		return 	makeCourseObjects(titlesList, ratings, courseLinks, "Coursera", searchTerm);
+		return 	makeCourseObjects(titlesList, ratings, courseLinks, descriptions, "Coursera", searchTerm);
 
 	}
 	
@@ -74,7 +82,7 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 	}
 
 	
-	public ArrayList<Course> makeCourseObjects(List<String> titles, List<String> ratings, List<String> links, String website, String subject) {
+	public ArrayList<Course> makeCourseObjects(List<String> titles, List<String> ratings, List<String> links, List<String> descriptions, String website, String subject) {
 		ArrayList<Course> allCourses = new ArrayList<Course>();
 		for(int i = 0; i < titles.size(); i++) {
 			Course courseObj = new Course();
@@ -83,6 +91,7 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 			courseObj.setCourseSubject(subject);
 			courseObj.setCourseWebsite(website);
 			courseObj.setRating(ratings.get(i));
+			courseObj.setCourseDescription(descriptions.get(i));
 			allCourses.add(courseObj);
 		}
 
