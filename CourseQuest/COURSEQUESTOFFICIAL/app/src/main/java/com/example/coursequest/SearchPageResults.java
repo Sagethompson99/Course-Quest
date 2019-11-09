@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -120,22 +119,12 @@ public class SearchPageResults extends AppCompatActivity {
         return buttons;
     }
 
-    //provides a standard format for each course button
-    public void formatButton(Button b){
-        int i = new Random().nextInt(6); //randomizer for card background color
-        Drawable card = getDrawable(R.drawable.results_card);
-        card.setTint(Color.parseColor(buttonColors[i]));
-        b.setBackground(card);
-        b.setTextSize(COMPLEX_UNIT_SP, 21);
-        b.setTextColor(Color.parseColor("#F9F9F9"));
-        b.setPadding(35, 35, 35, 35);
-    }
 
     //displayResults uses this method in a loop - displaying each course
     public Button displayCourse(Course course)
     {
         Button courseView = new Button(this);
-        formatButton(courseView);
+        courseButtonFormatter.format(this, courseView);
         //adds menu (like,unlike) to button
         registerForContextMenu(courseView);
 

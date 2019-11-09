@@ -8,11 +8,16 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,6 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView noCoursesImage;
     private TextView noCoursesText;
     public static SharedPreferences mySavedCourses;
+    String longPressedButtonText;
 
 
     @Override
@@ -122,19 +128,41 @@ public class HomeActivity extends AppCompatActivity {
         }
         else{
             for(int i = 0; i < savedCourses.size(); i++) {
-                String[] buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
                 Button course = new Button(this);
+                registerForContextMenu(course);
                 course.setText(savedCourses.get(i));
-                int color = new Random().nextInt(6); //randomizer for card background color
-                Drawable card = getDrawable(R.drawable.results_card);
-                card.setTint(Color.parseColor(buttonColors[color]));
-                course.setBackground(card);
-                course.setTextSize(COMPLEX_UNIT_SP, 20);
-                course.setTextColor(Color.parseColor("#F9F9F9"));
-                course.setPadding(35, 35, 35, 35);
-
+                courseButtonFormatter.format(this, course);
                 savedCourseView.addView(course);
             }
         }
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        Button b = (Button)v;
+        longPressedButtonText = b.getText().toString();
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.course_options,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // Handle item click
+        switch (item.getItemId()){
+            case R.id.save :
+                Toast.makeText(this,"course already saved", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.unsave :
+                Toast.makeText(this,"Course unsaved:(",Toast.LENGTH_SHORT).show();
+                deleteSavedCourse(longPressedButtonText);
+                finish();
+                startActivity(getIntent());
+                break;
+            default:
+                break;
+        }
+        return super.onContextItemSelected(item);
     }
 }
