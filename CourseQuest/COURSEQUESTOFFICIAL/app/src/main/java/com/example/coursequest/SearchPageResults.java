@@ -18,8 +18,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,10 +41,12 @@ public class SearchPageResults extends AppCompatActivity {
 
     private Button backButton;
     private LinearLayout resultView;
+    private ScrollView results;
     private static ArrayList<Course> courses;
     private static String[] buttonColors;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
+    private String longPressedButtonText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +57,11 @@ public class SearchPageResults extends AppCompatActivity {
         boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
 
         //Sets page theme to dark mode if user selects dark mode theme
-        if(useDarkTheme) {
+        if(useDarkTheme)
             setTheme(R.style.AppTheme_Dark_NoActionBar);
-        }
+
 
         setContentView(R.layout.activity_search_page_results);
-
         resultView = (LinearLayout)findViewById(R.id.resultView);
 
         backButton = (Button) findViewById(R.id.backButton);
@@ -133,14 +136,16 @@ public class SearchPageResults extends AppCompatActivity {
     {
         Button courseView = new Button(this);
         formatButton(courseView);
-
         //adds menu (like,unlike) to button
         registerForContextMenu(courseView);
+
 
         courseView.setText("");
         String courseName = Course.getCourseName(course)+"\n\n";
         String courseDesc = Course.getCourseDescription(course) + "\n\n";
         String courseWebsite = Course.getCourseWebsite(course);
+
+
 
         //gets course link and adds onClick function to open the link in an external browser
         final String courseLink = Course.getCourseLink(course);
@@ -183,25 +188,35 @@ public class SearchPageResults extends AppCompatActivity {
     public void search(String searchFor) {
         futureLearnWebScraper scraper = new futureLearnWebScraper();
         scraper.execute(searchFor, this);
+
+        codeCademyWebScraper scraper3 = new codeCademyWebScraper();
+        scraper3.execute(searchFor, this);
+
+        CourseraWebScraper scraper2 = new CourseraWebScraper();
+        scraper2.execute(searchFor, this);
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-
+        Button b = (Button)v;
+        longPressedButtonText = b.getText().toString();
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.course_options,menu);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         // Handle item click
         switch (item.getItemId()){
             case R.id.save :
-                Toast.makeText(this,"Course saved:)", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"course saved:)", Toast.LENGTH_SHORT).show();
+                HomeActivity.addNewSavedCourse(longPressedButtonText);
                 break;
             case R.id.unsave :
                 Toast.makeText(this,"Course unsaved:(",Toast.LENGTH_SHORT).show();
+                HomeActivity.deleteSavedCourse(longPressedButtonText);
                 break;
             default:
                 break;

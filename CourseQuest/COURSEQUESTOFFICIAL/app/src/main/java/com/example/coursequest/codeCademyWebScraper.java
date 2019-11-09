@@ -1,25 +1,38 @@
 package com.example.coursequest;
 
+import android.os.AsyncTask;
+import android.widget.Button;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class codeCademyWebScraper {
+public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 	
 	private final String url = "https://www.codecademy.com/search?page=";
 	private Document doc;
-	
-	public ArrayList<Course> getCourses(String query) {
-		List<String> courses = new ArrayList<String>();
+	SearchPageResults page;
+
+	/**
+	 * doInBackground is a pre-defined method that runs an asynchronous task on a separate thread from the UI.
+	 *
+	 * This method connects to the FutureLearn URL, collects course information for a given user search query,
+	 * and creates course objects with that information
+	 */
+	@Override
+	protected ArrayList<Course> doInBackground(Object... params) {
+		String query = (String) params[0];
+		page = (SearchPageResults) params[1];
+		List<String>courses = new ArrayList<String>();
 		List<String>courseDescriptions = new ArrayList<String>();
 		List<String>courseLinks = new ArrayList<String>();
 		
 		ArrayList<Course> courseList = new ArrayList<Course>();
 		
 		int pageNumber = 1; //current page number
-		int numPages = 0; //number of pages to parse (0 by default)
+		int numPages = 0; //number of pages to parse (determined by numOfResults)
 		
 	    try {        	
 	    	// finds the number of search results
@@ -78,6 +91,25 @@ public class codeCademyWebScraper {
 	    } 
 	    
 	    return courseList;
+	}
+
+	/**
+	 * onPostExecute is a pre-defined method that is automatically executed after a successful
+	 * doInBackground() method execution
+	 *
+	 * This method calls createButtons() and displayResults() from the SearchPageResults class, passing
+	 * them an ArrayList of courses created in the doInBackground() method
+	 */
+	@Override
+	protected void onPostExecute(ArrayList<Course> list) {
+		try {
+			//creates course buttons with course info and displays them on SearchPageResults
+			ArrayList<Button> buttons = page.createButtons(list);
+			page.displayResults(list, buttons);
+		}
+		catch(Exception e){
+			System.out.println("Results creation unsuccessful");
+		}
 	}
 	
 	public String getCoursePrice() {
