@@ -13,6 +13,7 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 
 		
 	private Document document;
+	private Document document1;
 	SearchPageResults page;
 
 
@@ -27,12 +28,31 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 		List<String> courseLinks = new ArrayList<String>();
 		List<String> ratings = new ArrayList<String>();
 		List<String> descriptions = new ArrayList<>();
+		List<String> AmountResults = new ArrayList<>();
 		
 		try {
-			int maxPages = 4;
-			for(int numPages = 1; numPages < maxPages; numPages++) {
+			//first page of results
+			document1 = Jsoup.connect("https://www.coursera.org/search?query=" + searchTerm + "&indices%5Bprod_all_products%5D%5Bpage%5D=1&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BclickAnalytics%5D=true&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BhitsPerPage%5D=10&configure%5BclickAnalytics%5D=true").get();
 
-				document = Jsoup.connect("https://www.coursera.org/search?query=" + searchTerm + "&indices%5Bprod_all_products%5D%5Bpage%5D=" + Integer.toString(numPages) + "&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BclickAnalytics%5D=true&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BhitsPerPage%5D=10&configure%5BclickAnalytics%5D=true").get();
+			Elements numPagesTotal = document1.getElementsByClass("filter-menu-and-number-of-results horizontal-box");
+			AmountResults.addAll(numPagesTotal.eachText());
+			String[] h = AmountResults.get(0).split(" ");
+			String numOfResults = h[1];
+
+			int numPages = (Integer.parseInt(numOfResults)/10);
+
+			if(numPages % 10 != 0) {
+				numPages += 1;
+			}
+
+			if(numPages > 5){
+				numPages = 5;
+			}
+
+
+			for(int pageNumber = 1; pageNumber < numPages; pageNumber++) {
+
+				document = Jsoup.connect("https://www.coursera.org/search?query=" + searchTerm + "&indices%5Bprod_all_products_term_optimization%5D%5Bpage%5D=" + pageNumber + "&indices%5Bprod_all_products_term_optimization%5D%5Bconfigure%5D%5BclickAnalytics%5D=true&indices%5Bprod_all_products_term_optimization%5D%5Bconfigure%5D%5BhitsPerPage%5D=10&configure%5BclickAnalytics%5D=true").get();
 
 				Elements titles = document.getElementsByClass("color-primary-text card-title headline-1-text");
 				titlesList.addAll(titles.eachText());
