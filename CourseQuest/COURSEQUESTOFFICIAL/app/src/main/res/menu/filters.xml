@@ -5,10 +5,12 @@
     android:orientation="vertical">
 
     <item
-        android:id="@+id/save"
-        android:icon="@drawable/like_icon"
-        android:title="Like:)" />
+        android:id="@+id/filterABC"
+        android:title="Abc->" />
     <item
-        android:id="@+id/unsave"
-        android:title="Dislike:/" />
+        android:id="@+id/filterZXY"
+        android:title="Zyx->" />
+    <item
+        android:id="@+id/filterProvider"
+        android:title="Provider"/>
 </menu>

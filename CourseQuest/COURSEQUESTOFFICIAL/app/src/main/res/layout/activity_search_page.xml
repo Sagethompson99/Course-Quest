@@ -23,17 +23,14 @@
     <SearchView
         android:id="@+id/searchFor"
         style="@android:style/Widget.Material.SearchView"
-        android:layout_width="match_parent"
+        android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
         android:background="@drawable/round_button"
         android:backgroundTint="?attr/colorAccent"
+        android:gravity="left"
         android:queryBackground="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
@@ -50,17 +47,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchFor" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="50dp"
-        android:contentDescription="TODO"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
-        app:srcCompat="@drawable/transparent_logo" />
 
     <LinearLayout
         android:id="@+id/Navigation"
@@ -101,5 +87,17 @@
             android:background="@drawable/ic_settings_black_24dp"
             android:scaleType="fitCenter" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/filter"
+        android:layout_width="55dip"
+        android:layout_height="55dip"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="57dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/ic_filter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchFor"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

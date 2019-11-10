@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
@@ -14,6 +18,7 @@ public class SearchPage extends AppCompatActivity {
     private SearchView searchVal;
     private Button homeButton;
     private Button settingsButton;
+    private Button filter;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
 
@@ -45,6 +50,9 @@ public class SearchPage extends AppCompatActivity {
                 openSettingsPage();
             }
         });
+
+        filter = findViewById(R.id.filter);
+        registerForContextMenu(filter);
 
         final Intent intent = new Intent(SearchPage.this, SearchPageResults.class);
 
@@ -82,5 +90,29 @@ public class SearchPage extends AppCompatActivity {
     public void openSettingsPage() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.filters,menu);
+        menu.setHeaderTitle("Filters");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.filterABC:
+                return true;
+            case R.id.filterZXY:
+                return true;
+            case R.id.filterProvider:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

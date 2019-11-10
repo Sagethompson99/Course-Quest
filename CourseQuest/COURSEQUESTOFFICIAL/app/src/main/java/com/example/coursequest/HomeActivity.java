@@ -4,16 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,9 +21,6 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Random;
-
-import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 public class HomeActivity extends AppCompatActivity {
 
