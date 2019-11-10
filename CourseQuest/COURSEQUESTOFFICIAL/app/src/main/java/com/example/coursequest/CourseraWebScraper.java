@@ -28,18 +28,17 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 		List<String> courseLinks = new ArrayList<String>();
 		List<String> ratings = new ArrayList<String>();
 		List<String> descriptions = new ArrayList<>();
-		List<String> AmountResults = new ArrayList<>();
 		
 		try {
 			//first page of results
 			document1 = Jsoup.connect("https://www.coursera.org/search?query=" + searchTerm + "&indices%5Bprod_all_products%5D%5Bpage%5D=1&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BclickAnalytics%5D=true&indices%5Bprod_all_products%5D%5Bconfigure%5D%5BhitsPerPage%5D=10&configure%5BclickAnalytics%5D=true").get();
 
 			Elements numPagesTotal = document1.getElementsByClass("filter-menu-and-number-of-results horizontal-box");
-			AmountResults.addAll(numPagesTotal.eachText());
-			String[] h = AmountResults.get(0).split(" ");
-			String numOfResults = h[1];
+			Element totalResults = numPagesTotal.first();
+			String[] numResults = totalResults.text().split(" ");
+			int numOfResults = Integer.parseInt(numResults[1]);
 
-			int numPages = (Integer.parseInt(numOfResults)/10);
+			int numPages = (numOfResults/10);
 
 			if(numPages % 10 != 0) {
 				numPages += 1;
