@@ -160,7 +160,7 @@ public class HomeActivity extends AppCompatActivity {
             noCoursesText.setVisibility(View.VISIBLE);
         }
         else{
-            for(int i = 0; i < savedCourses.size(); i++) {
+            for(int i = savedCourses.size()-1; i >= 0; i--) {
                 Button course = new Button(this);
                 course.setTransformationMethod(null);
                 registerForContextMenu(course);

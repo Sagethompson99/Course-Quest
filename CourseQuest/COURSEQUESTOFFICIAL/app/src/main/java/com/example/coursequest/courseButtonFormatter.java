@@ -16,12 +16,12 @@ import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
  */
 public class courseButtonFormatter  {
 
-    private static int textSize = 19;                   //orange    green      purple     pink       red        blue
-    private static String[] buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
+    private static int textSize = 19;                   //orange    dark blue   green      teal        purple     pink       red        blue
+    private static String[] buttonColors = new String[]{"#FFC300", "#2E86C1", "#2ECC71", "#45B39D",  "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
 
     public static void format(Context c, Button b)
     {
-        int color = new Random().nextInt(6); //randomizer for card background color
+        int color = new Random().nextInt(8); //randomizer for card background color
         Drawable card = getDrawable(c, R.drawable.results_card);
         card.setTint(Color.parseColor(buttonColors[color]));
         b.setBackground(card);
