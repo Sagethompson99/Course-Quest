@@ -79,9 +79,6 @@ public class SearchPageResults extends AppCompatActivity {
 
         //calls search method with user query
         search(getIntent().getExtras().getString("message"));
-
-                                    //orange    green      purple     pink       red        blue
-        buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
     }
 
     //adds course result buttons to the screen
@@ -193,7 +190,6 @@ public class SearchPageResults extends AppCompatActivity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         // Handle item click
         switch (item.getItemId()){
             case R.id.save :

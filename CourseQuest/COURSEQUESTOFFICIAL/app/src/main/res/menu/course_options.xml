@@ -6,6 +6,7 @@
 
     <item
         android:id="@+id/save"
+        android:icon="@drawable/like_icon"
         android:title="Like:)" />
     <item
         android:id="@+id/unsave"
