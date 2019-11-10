@@ -180,6 +180,9 @@ public class SearchPageResults extends AppCompatActivity {
 
         codeCademyWebScraper scraper3 = new codeCademyWebScraper();
         scraper3.execute(searchFor, this);
+        
+        SkillShareScraper scraper4 = new SkillShareScraper();
+        scraper4.execute(searchFor, this);
 
         CourseraWebScraper scraper2 = new CourseraWebScraper();
         scraper2.execute(searchFor, this);
