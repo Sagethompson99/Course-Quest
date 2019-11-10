@@ -162,6 +162,7 @@ public class HomeActivity extends AppCompatActivity {
         else{
             for(int i = 0; i < savedCourses.size(); i++) {
                 Button course = new Button(this);
+                course.setTransformationMethod(null);
                 registerForContextMenu(course);
                 course.setText(savedCourses.get(i));
                 courseButtonFormatter.format(this, course);
