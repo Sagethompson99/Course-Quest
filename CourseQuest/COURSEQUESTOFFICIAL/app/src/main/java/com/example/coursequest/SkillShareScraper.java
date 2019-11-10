@@ -21,6 +21,7 @@ import android.widget.Button;
 
 public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 	SearchPageResults page;
+	ArrayList<Course> finalCourses;
 
 	protected ArrayList<Course> doInBackground(Object... params) {
 		String userSearch = (String) params[0];
@@ -93,10 +94,16 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 				allCourses.add(course);
 			}
 			//System.out.println("course count: " + allCourses.size());
+			finalCourses = allCourses;
 			return allCourses;
 		}
 		return null; //maybe return string notifying error?
 	}
+
+	public ArrayList<Course> getCourses() {
+		return finalCourses;
+	}
+
 	
 	public String getWebsite() {
 		return "Skill Share";
