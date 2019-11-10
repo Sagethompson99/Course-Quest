@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -17,10 +18,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,12 +39,10 @@ public class SearchPageResults extends AppCompatActivity {
 
     private Button backButton;
     private LinearLayout resultView;
-    private ScrollView results;
     private static ArrayList<Course> courses;
     private static String[] buttonColors;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
-    private String longPressedButtonText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +54,12 @@ public class SearchPageResults extends AppCompatActivity {
 
         //Sets page theme to dark mode if user selects dark mode theme
         if(useDarkTheme)
+        {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
-
+        }
 
         setContentView(R.layout.activity_search_page_results);
+
         resultView = (LinearLayout)findViewById(R.id.resultView);
 
         backButton = (Button) findViewById(R.id.backButton);
@@ -70,15 +69,19 @@ public class SearchPageResults extends AppCompatActivity {
             }
         });
 
-        //populates searchVal textview with user's search query
+        //populates searchVal TextView with user's search query
         TextView searchVal = (TextView) findViewById(R.id.searchVal);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
+        {
             searchVal.setText(bundle.getString("message"));
-
+        }
 
         //calls search method with user query
         search(getIntent().getExtras().getString("message"));
+
+                                    //orange    green      purple     pink       red        blue
+        buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
     }
 
     //adds course result buttons to the screen
@@ -116,21 +119,43 @@ public class SearchPageResults extends AppCompatActivity {
         return buttons;
     }
 
+    //provides a standard format for each course button
+    public void formatButton(Button b)
+    {
+        int i = new Random().nextInt(6); //randomizer for card background color
+        Drawable card = getDrawable(R.drawable.results_card);
+        card.setTint(Color.parseColor(buttonColors[i]));
+        b.setBackground(card);
+        b.setTextSize(COMPLEX_UNIT_SP, 21);
+        b.setTextColor(Color.parseColor("#F9F9F9"));
+        b.setPadding(35, 35, 35, 35);
+    }
 
     //displayResults uses this method in a loop - displaying each course
     public Button displayCourse(Course course)
     {
         Button courseView = new Button(this);
-        courseButtonFormatter.format(this, courseView);
+        formatButton(courseView);
+
         //adds menu (like,unlike) to button
         registerForContextMenu(courseView);
 
         courseView.setText("");
-        String courseName = Course.getCourseName(course)+"\n\n";
-        String courseDesc = Course.getCourseDescription(course) + "\n\n";
-        String courseWebsite = Course.getCourseWebsite(course);
 
         //gets course link and adds onClick function to open the link in an external browser
+        setLink(course, courseView);
+
+        //appends course information to each courseView button
+        courseView.append(Course.getInfoString(course));
+
+        if (courseView.getText().equals(""))
+            return null;
+        else
+            return courseView;
+    }
+
+    public void setLink(Course course, Button courseView)
+    {
         final String courseLink = Course.getCourseLink(course);
         if(!courseLink.equals("")) {
             courseView.setOnClickListener(new View.OnClickListener() {
@@ -143,21 +168,6 @@ public class SearchPageResults extends AppCompatActivity {
                 }
             });
         }
-
-        //appends course information to each courseView button
-        if (!courseName.equals(""))
-            courseView.append(courseName);
-
-        if (!courseDesc.equals(""))
-            courseView.append(courseDesc);
-
-        if (!courseWebsite.equals(""))
-            courseView.append(courseWebsite);
-
-        if (courseView.getText().equals(""))
-            return null;
-        else
-            return courseView;
     }
 
 
@@ -168,22 +178,21 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //gets search results from website scrapers for a given search query
-    public void search(String searchFor) {
+    public void search(String searchFor)
+    {
+        //Search for futureLearn Courses
         futureLearnWebScraper scraper = new futureLearnWebScraper();
         scraper.execute(searchFor, this);
 
-        codeCademyWebScraper scraper3 = new codeCademyWebScraper();
-        scraper3.execute(searchFor, this);
-
-        CourseraWebScraper scraper2 = new CourseraWebScraper();
-        scraper2.execute(searchFor, this);
+        //Search for skillShare Courses
+        SkillShareScraper skillShareScraper = new SkillShareScraper();
+        skillShareScraper.execute(searchFor, this);
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        Button b = (Button)v;
-        longPressedButtonText = b.getText().toString();
+
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.course_options,menu);
     }
@@ -193,12 +202,10 @@ public class SearchPageResults extends AppCompatActivity {
         // Handle item click
         switch (item.getItemId()){
             case R.id.save :
-                Toast.makeText(this,"course saved:)", Toast.LENGTH_SHORT).show();
-                HomeActivity.addNewSavedCourse(longPressedButtonText);
+                Toast.makeText(this,"Course saved:)", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.unsave :
                 Toast.makeText(this,"Course unsaved:(",Toast.LENGTH_SHORT).show();
-                HomeActivity.deleteSavedCourse(longPressedButtonText);
                 break;
             default:
                 break;
