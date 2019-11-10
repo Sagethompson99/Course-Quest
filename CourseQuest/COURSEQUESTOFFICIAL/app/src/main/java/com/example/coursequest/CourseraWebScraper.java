@@ -52,7 +52,6 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 				Elements rating = document.getElementsByClass("ratings-text");
 				ratings.addAll(rating.eachText());
 
-
 			}
 			
 		}
@@ -61,7 +60,7 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 			System.out.println("No search results");
 		}
 
-		String desc = "Click here for a course description!";
+		String desc = "No description. Click for more information about this course.";
 		for(int j = 0; j < titlesList.size(); j++){
 			descriptions.add(desc);
 		}
@@ -96,7 +95,6 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 		}
 
 		return allCourses;
-		
 	}
 
 

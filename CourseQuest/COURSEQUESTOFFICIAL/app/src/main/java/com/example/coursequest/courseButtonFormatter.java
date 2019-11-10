@@ -11,22 +11,23 @@ import java.util.Random;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
 
-/* This class has a method which takes a button and applies the standard course button styles
+/* This class has a method which takes a button as a parameter and applies the standard course button styles
  * to it.
  */
 public class courseButtonFormatter  {
 
+    private static int textSize = 19;                   //orange    green      purple     pink       red        blue
+    private static String[] buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
+
     public static void format(Context c, Button b)
     {
-                                             //orange    green      purple     pink       red        blue
-        String[] buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
         int color = new Random().nextInt(6); //randomizer for card background color
         Drawable card = getDrawable(c, R.drawable.results_card);
         card.setTint(Color.parseColor(buttonColors[color]));
         b.setBackground(card);
-        b.setTextSize(COMPLEX_UNIT_SP, 18);
+        b.setTextSize(COMPLEX_UNIT_SP, textSize);
         b.setTextColor(Color.parseColor("#F9F9F9"));
-        b.setPadding(35, 35, 35, 35);
+        b.setPadding(55, 55, 55, 55);
         Constraints.LayoutParams params = new Constraints.LayoutParams(
                 Constraints.LayoutParams.WRAP_CONTENT,
                 Constraints.LayoutParams.WRAP_CONTENT
