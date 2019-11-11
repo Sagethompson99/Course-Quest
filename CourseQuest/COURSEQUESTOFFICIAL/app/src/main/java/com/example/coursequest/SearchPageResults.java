@@ -87,9 +87,6 @@ public class SearchPageResults extends AppCompatActivity {
 
         //calls search method with user query
         search(getIntent().getExtras().getString("message"));
-
-                                    //orange    green      purple     pink       red        blue
-        buttonColors = new String[]{"#FFC300", "#64EA66", "#AE73FF", "#E864AE", "#FF5959", "#2BADF8"};
     }
 
     //adds course result buttons to the screen
@@ -188,8 +185,8 @@ public class SearchPageResults extends AppCompatActivity {
         SkillShareScraper scraper4 = new SkillShareScraper();
         scraper4.execute(searchFor, this);
 
-        CourseraWebScraper scraper2 = new CourseraWebScraper();
-        scraper2.execute(searchFor, this);
+     //   CourseraWebScraper scraper2 = new CourseraWebScraper();
+     //   scraper2.execute(searchFor, this);
     }
 
     public String getButtonLink(Button getLink)

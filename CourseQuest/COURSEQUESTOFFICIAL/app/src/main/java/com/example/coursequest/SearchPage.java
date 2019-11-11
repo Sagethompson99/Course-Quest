@@ -15,6 +15,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class SearchPage extends AppCompatActivity {
@@ -28,7 +32,11 @@ public class SearchPage extends AppCompatActivity {
     private String alphabeticalType = "";
     private ArrayList<String> searchWhichWebsites;
     private LinearLayout popularSearches;
-    private String[] popularSearchTerms = new String[] {"Science", "Astronomy", "Calculus", "Interior Design"};
+    private LinearLayout recentSearches;
+    private String[] popularSearchTerms = new String[] {"Science", "Math", "Art History", "Engineering", "Politics", "Business"};
+    private ArrayList<String> recentSearchTerms;
+    private SharedPreferences myRecentSearches;
+    String currentSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +50,11 @@ public class SearchPage extends AppCompatActivity {
         if(useDarkTheme) {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
+
+        myRecentSearches = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        recentSearches = (LinearLayout) findViewById(R.id.recentSearches);
+        loadData();
+
 
         setContentView(R.layout.activity_search_page);
 
@@ -62,7 +75,8 @@ public class SearchPage extends AppCompatActivity {
         });
 
         popularSearches = (LinearLayout) findViewById(R.id.popularSearches);
-        populatePopularSearchesView(popularSearchTerms);
+        populatePopularSearchesView();
+        populateRecentSearchesView();
 
         filter = findViewById(R.id.filter);
         registerForContextMenu(filter);
@@ -89,6 +103,11 @@ public class SearchPage extends AppCompatActivity {
 
             public void onClick(View v) {
                 startActivity(intent);
+                currentSearch = searchVal.getQuery().toString();
+                if(!(recentSearchTerms.contains(currentSearch))) {
+                    recentSearchTerms.add(currentSearch);
+                }
+                saveData();
             }
         });
     }
@@ -109,8 +128,8 @@ public class SearchPage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void populatePopularSearchesView(String[] searchterms){
-        for(String term: searchterms) {
+    public void populatePopularSearchesView(){
+        for(String term: popularSearchTerms) {
             final Button b = new Button(this);
             b.setTransformationMethod(null);
             b.setText(term);
@@ -128,7 +147,48 @@ public class SearchPage extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    public void populateRecentSearchesView(){
+        for(String term: recentSearchTerms) {
+            final Button b = new Button(this);
+            b.setTransformationMethod(null);
+            b.setText(term);
+            courseButtonFormatter.format(this, b);
+            Constraints.LayoutParams params = new Constraints.LayoutParams(
+                    Constraints.LayoutParams.WRAP_CONTENT,
+                    Constraints.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(20, 0, 0, 20);
+            b.setLayoutParams(params);
+            //recentSearches.addView(b);
+            b.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    openResults(b.getText().toString());
+                  }
+            });
+        }
+
+    }
+
+    private void saveData() {
+        SharedPreferences.Editor editor = myRecentSearches.edit();
+        Gson gson = new Gson();
+        String Json = gson.toJson(recentSearchTerms);
+        editor.putString("search", Json);
+        editor.apply();
+    }
+
+    private void loadData() {
+        SharedPreferences sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);
+        Gson gson = new Gson();
+        String json = sharedPreferences.getString("search", null);
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        recentSearchTerms = gson.fromJson(json, type);
+        if (recentSearchTerms == null)
+        {
+            recentSearchTerms = new ArrayList<>();
+        }
     }
 
     @Override

@@ -106,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"
-        android:text="Trending"
+        android:text="Popular Subjects"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/popularSearchesView"
@@ -117,13 +117,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
+        android:layout_marginBottom="50dp"
+        android:scrollbars="none"
         app:layout_constraintBottom_toTopOf="@+id/Navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search"
-        android:scrollbars="none">
+        app:layout_constraintTop_toBottomOf="@+id/recentSearchesView">
 
         <LinearLayout
             android:id="@+id/popularSearches"
@@ -131,6 +131,38 @@
             android:layout_height="match_parent"
             android:orientation="horizontal" />
 
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/recentSearchesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:text="Recent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/recentSearchesView" />
+
+    <HorizontalScrollView
+        android:id="@+id/recentSearchesView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="15dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toTopOf="@+id/popularSearchesView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search">
+
+        <LinearLayout
+            android:id="@+id/recentSearches"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" />
     </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
