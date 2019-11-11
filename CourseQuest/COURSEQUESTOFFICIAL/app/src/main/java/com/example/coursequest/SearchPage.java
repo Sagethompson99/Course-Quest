@@ -6,13 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+
+import java.util.ArrayList;
 
 public class SearchPage extends AppCompatActivity {
     private Button search;
@@ -22,12 +24,16 @@ public class SearchPage extends AppCompatActivity {
     private Button filter;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
+    private String alphabeticalType = "";
+    private ArrayList<String> searchWhichWebsites;
     private LinearLayout popularSearches;
     private String[] popularSearchTerms = new String[] {"Science", "Astronomy", "Calculus", "Interior Design"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        searchWhichWebsites = new ArrayList<>();
 
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
@@ -73,6 +79,9 @@ public class SearchPage extends AppCompatActivity {
                 return false;
             }
         });
+
+        intent.putExtra("alphabeticalType", alphabeticalType);
+        intent.putExtra("searchWebsites", searchWhichWebsites);
 
         search = (Button) findViewById(R.id.search);
         search.setOnClickListener(new View.OnClickListener() {
@@ -127,15 +136,37 @@ public class SearchPage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
+        switch (item.getItemId())
+        {
             case R.id.filterABC:
-                return true;
+                alphabeticalType = "filterABC";
             case R.id.filterZXY:
-                return true;
-            case R.id.filterProvider:
-                return true;
+                alphabeticalType = "filterZYX";
+            case R.id.filterDefault:
+                alphabeticalType = "filterDefault";
+            case R.id.filterCodeCademy:
+                searchWhichWebsites.add("CodeCademy");
+            case R.id.filterCoursera:
+                searchWhichWebsites.add("Coursera");
+            case R.id.filterFutureLearn:
+                searchWhichWebsites.add("FutureLearn");
+            case R.id.filterSkillShare:
+                searchWhichWebsites.add("SkillShare");
+            case R.id.searchAllWebsites:
+                addAllWebsites();
+            case R.id.clearFilters:
+                addAllWebsites();
+                alphabeticalType = "filterDefault";
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void addAllWebsites()
+    {
+            searchWhichWebsites.add("CodeCademy");
+            searchWhichWebsites.add("Coursera");
+            searchWhichWebsites.add("FutureLearn");
+            searchWhichWebsites.add("SkillShare");
     }
 }
