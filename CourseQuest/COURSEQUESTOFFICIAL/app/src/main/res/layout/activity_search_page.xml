@@ -100,6 +100,18 @@
         app:layout_constraintStart_toEndOf="@+id/searchFor"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+    <TextView
+        android:id="@+id/popularSearchesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="Trending"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/popularSearchesView"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <HorizontalScrollView
         android:id="@+id/popularSearchesView"
         android:layout_width="match_parent"
@@ -110,25 +122,15 @@
         app:layout_constraintBottom_toTopOf="@+id/Navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search">
+        app:layout_constraintTop_toBottomOf="@+id/search"
+        android:scrollbars="none">
 
         <LinearLayout
             android:id="@+id/popularSearches"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical" >
+            android:orientation="horizontal" />
 
-            <TextView
-                android:id="@+id/popularSearchesTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="Trending"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                android:textSize="18sp" />
-
-        </LinearLayout>
     </HorizontalScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Constraints;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -105,6 +106,12 @@ public class SearchPage extends AppCompatActivity {
             b.setTransformationMethod(null);
             b.setText(term);
             courseButtonFormatter.format(this, b);
+            Constraints.LayoutParams params = new Constraints.LayoutParams(
+                    Constraints.LayoutParams.WRAP_CONTENT,
+                    Constraints.LayoutParams.WRAP_CONTENT
+            );
+            params.setMargins(20, 0, 0, 20);
+            b.setLayoutParams(params);
             popularSearches.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
