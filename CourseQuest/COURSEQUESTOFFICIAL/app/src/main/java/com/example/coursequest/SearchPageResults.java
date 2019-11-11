@@ -47,6 +47,8 @@ public class SearchPageResults extends AppCompatActivity {
     private static final String PREF_DARK_THEME = "dark_theme";
     private String longPressedButtonText;
     private String longPressedButtonLink;
+    private ArrayList<String> searchWhichWebsites;
+    private String alphabeticalType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -79,6 +81,8 @@ public class SearchPageResults extends AppCompatActivity {
         if (bundle != null)
         {
             searchVal.setText(bundle.getString("message"));
+            searchWhichWebsites = getIntent().getExtras().getStringArrayList("searchWebsites");
+            alphabeticalType = getIntent().getExtras().getString("alphabeticalType");
         }
 
         //calls search method with user query
@@ -175,17 +179,17 @@ public class SearchPageResults extends AppCompatActivity {
     //gets search results from website scrapers for a given search query
     public void search(String searchFor)
     {
-        futureLearnWebScraper futureLearnScraper = new futureLearnWebScraper();
-        futureLearnScraper.execute(searchFor, this);
+        futureLearnWebScraper scraper = new futureLearnWebScraper();
+        scraper.execute(searchFor, this);
 
-        codeCademyWebScraper codeCademyScraper = new codeCademyWebScraper();
-        codeCademyScraper.execute(searchFor, this);
+        codeCademyWebScraper scraper3 = new codeCademyWebScraper();
+        scraper3.execute(searchFor, this);
         
-        SkillShareScraper skillShareScraper = new SkillShareScraper();
-        skillShareScraper.execute(searchFor, this);
+        SkillShareScraper scraper4 = new SkillShareScraper();
+        scraper4.execute(searchFor, this);
 
-     //   CourseraWebScraper courseraScraper = new CourseraWebScraper();
-     //   courseraScraper.execute(searchFor, this);
+        CourseraWebScraper scraper2 = new CourseraWebScraper();
+        scraper2.execute(searchFor, this);
     }
 
     public String getButtonLink(Button getLink)
