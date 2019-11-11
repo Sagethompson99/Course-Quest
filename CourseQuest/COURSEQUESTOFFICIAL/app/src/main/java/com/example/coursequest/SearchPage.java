@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
@@ -50,13 +51,12 @@ public class SearchPage extends AppCompatActivity {
         if(useDarkTheme) {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
+        setContentView(R.layout.activity_search_page);
 
         myRecentSearches = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        recentSearches = (LinearLayout) findViewById(R.id.recentSearches);
+        recentSearches =  (LinearLayout) findViewById(R.id.recentSearches);
+
         loadData();
-
-
-        setContentView(R.layout.activity_search_page);
 
         searchVal = (SearchView) findViewById(R.id.searchFor);
 
@@ -159,9 +159,9 @@ public class SearchPage extends AppCompatActivity {
                     Constraints.LayoutParams.WRAP_CONTENT,
                     Constraints.LayoutParams.WRAP_CONTENT
             );
-            params.setMargins(20, 0, 0, 20);
+            params.setMargins(20, 0, 0, 0);
             b.setLayoutParams(params);
-            //recentSearches.addView(b);
+            recentSearches.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     openResults(b.getText().toString());
