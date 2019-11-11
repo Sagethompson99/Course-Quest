@@ -175,17 +175,17 @@ public class SearchPageResults extends AppCompatActivity {
     //gets search results from website scrapers for a given search query
     public void search(String searchFor)
     {
-        futureLearnWebScraper scraper = new futureLearnWebScraper();
-        scraper.execute(searchFor, this);
+        futureLearnWebScraper futureLearnScraper = new futureLearnWebScraper();
+        futureLearnScraper.execute(searchFor, this);
 
-        codeCademyWebScraper scraper3 = new codeCademyWebScraper();
-        scraper3.execute(searchFor, this);
+        codeCademyWebScraper codeCademyScraper = new codeCademyWebScraper();
+        codeCademyScraper.execute(searchFor, this);
         
-        SkillShareScraper scraper4 = new SkillShareScraper();
-        scraper4.execute(searchFor, this);
+        SkillShareScraper skillShareScraper = new SkillShareScraper();
+        skillShareScraper.execute(searchFor, this);
 
-        CourseraWebScraper scraper2 = new CourseraWebScraper();
-        scraper2.execute(searchFor, this);
+        CourseraWebScraper courseraScraper = new CourseraWebScraper();
+        courseraScraper.execute(searchFor, this);
     }
 
     public String getButtonLink(Button getLink)
