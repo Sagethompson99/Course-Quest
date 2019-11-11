@@ -6,11 +6,29 @@
 
     <item
         android:id="@+id/filterABC"
-        android:title="Abc->" />
+        android:title="Alphabetical ABC" />
     <item
         android:id="@+id/filterZXY"
-        android:title="Zyx->" />
+        android:title="Alphabetical ZYX" />
     <item
-        android:id="@+id/filterProvider"
-        android:title="Provider"/>
+        android:id="@+id/filterDefault"
+        android:title="Alphabetical Default" />
+    <item
+        android:id="@+id/filterCodeCademy"
+        android:title="CodeCademy"/>
+    <item
+        android:id="@+id/filterCoursera"
+        android:title="Coursera"/>
+    <item
+        android:id="@+id/filterFutureLearn"
+        android:title="FutureLearn"/>
+    <item
+        android:id="@+id/filterSkillShare"
+        android:title="SkillShare"/>
+    <item
+        android:id="@+id/searchAllWebsites"
+        android:title="Search all websites"/>
+    <item
+        android:id="@+id/clearFilters"
+        android:title="Clear Filters"/>
 </menu>
