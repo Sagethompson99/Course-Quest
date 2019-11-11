@@ -184,8 +184,8 @@ public class SearchPageResults extends AppCompatActivity {
         SkillShareScraper skillShareScraper = new SkillShareScraper();
         skillShareScraper.execute(searchFor, this);
 
-        CourseraWebScraper courseraScraper = new CourseraWebScraper();
-        courseraScraper.execute(searchFor, this);
+     //   CourseraWebScraper courseraScraper = new CourseraWebScraper();
+     //   courseraScraper.execute(searchFor, this);
     }
 
     public String getButtonLink(Button getLink)

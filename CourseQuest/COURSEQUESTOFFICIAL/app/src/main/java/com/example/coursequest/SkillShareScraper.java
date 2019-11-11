@@ -114,7 +114,7 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 	}
 
 	public String getNoDescription() {
-		return "Click HERE for course information!";
+		return "No description. Click for more information about this course.";
 	}
 	
 	public String getCourseCostType() {
