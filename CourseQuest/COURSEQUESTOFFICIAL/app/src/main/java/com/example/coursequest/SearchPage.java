@@ -34,7 +34,7 @@ public class SearchPage extends AppCompatActivity {
     private ArrayList<String> searchWhichWebsites;
     private LinearLayout popularSearches;
     private LinearLayout recentSearches;
-    private String[] popularSearchTerms = new String[] {"Science", "Math", "Art History", "Engineering", "Politics", "Business"};
+    private String[] popularSearchTerms = new String[] {"Science", "Photography", "Coding", "Math", "Art History", "Engineering", "Politics", "Business"};
     private ArrayList<String> recentSearchTerms;
     private SharedPreferences myRecentSearches;
     String currentSearch;
