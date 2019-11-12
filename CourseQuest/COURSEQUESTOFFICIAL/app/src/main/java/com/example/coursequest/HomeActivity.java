@@ -155,10 +155,9 @@ public class HomeActivity extends AppCompatActivity {
         else{
             for(int i = savedCourses.size()-1; i >= 0; i--) {
                 Button course = new Button(this);
-                course.setTransformationMethod(null);
                 registerForContextMenu(course);
                 course.setText(savedCourses.get(i));
-                courseButtonFormatter.format(this, course);
+                ButtonFormatter.formatCourseButton(this, course);
                 final String courseLink = savedCourseLinks.get(i);
                 setButtonLink(courseLink, course);
                 savedCourseView.addView(course);

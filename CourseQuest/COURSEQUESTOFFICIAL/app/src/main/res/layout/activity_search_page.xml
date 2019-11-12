@@ -166,4 +166,14 @@
             android:orientation="horizontal" />
     </HorizontalScrollView>
 
+    <Button
+        android:id="@+id/deleteRecentSearches"
+        android:layout_width="25dip"
+        android:layout_height="25dip"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/ic_delete"
+        app:layout_constraintBottom_toTopOf="@id/recentSearchesView"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

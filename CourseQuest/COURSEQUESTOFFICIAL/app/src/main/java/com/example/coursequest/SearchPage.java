@@ -1,7 +1,6 @@
 package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.Constraints;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
@@ -25,6 +23,7 @@ import java.util.ArrayList;
 
 public class SearchPage extends AppCompatActivity {
     private Button search;
+    private Button deleteSearchHistory;
     private SearchView searchVal;
     private Button homeButton;
     private Button settingsButton;
@@ -60,6 +59,13 @@ public class SearchPage extends AppCompatActivity {
         loadData();
 
         searchVal = (SearchView) findViewById(R.id.searchFor);
+
+        deleteSearchHistory = (Button) findViewById(R.id.deleteRecentSearches);
+        deleteSearchHistory.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                clearRecentSearches();
+            }
+        });
 
         homeButton = (Button) findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -106,7 +112,7 @@ public class SearchPage extends AppCompatActivity {
                 hideKeyboard(v);
                 startActivity(intent);
                 currentSearch = searchVal.getQuery().toString();
-                if(!(recentSearchTerms.contains(currentSearch))) {
+                if(!(recentSearchTerms.contains(currentSearch)) && currentSearch.length()>0) {
                     recentSearchTerms.add(currentSearch);
                 }
                 saveData();
@@ -138,15 +144,8 @@ public class SearchPage extends AppCompatActivity {
     public void populatePopularSearchesView(){
         for(String term: popularSearchTerms) {
             final Button b = new Button(this);
-            b.setTransformationMethod(null);
             b.setText(term);
-            courseButtonFormatter.format(this, b);
-            Constraints.LayoutParams params = new Constraints.LayoutParams(
-                    Constraints.LayoutParams.WRAP_CONTENT,
-                    Constraints.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(20, 0, 0, 20);
-            b.setLayoutParams(params);
+            ButtonFormatter.formatSearchPageButton(this, b);
             popularSearches.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -157,17 +156,10 @@ public class SearchPage extends AppCompatActivity {
     }
 
     public void populateRecentSearchesView(){
-        for(String term: recentSearchTerms) {
+        for(int i = recentSearchTerms.size()-1; i >= 0; i--) {
             final Button b = new Button(this);
-            b.setTransformationMethod(null);
-            b.setText(term);
-            courseButtonFormatter.format(this, b);
-            Constraints.LayoutParams params = new Constraints.LayoutParams(
-                    Constraints.LayoutParams.WRAP_CONTENT,
-                    Constraints.LayoutParams.WRAP_CONTENT
-            );
-            params.setMargins(20, 0, 0, 0);
-            b.setLayoutParams(params);
+            b.setText(recentSearchTerms.get(i));
+            ButtonFormatter.formatSearchPageButton(this, b);
             recentSearches.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -176,6 +168,15 @@ public class SearchPage extends AppCompatActivity {
             });
         }
 
+    }
+
+    public void clearRecentSearches(){
+        if(recentSearchTerms.size() > 0) {
+            recentSearchTerms.clear();
+            saveData();
+            finish();
+            startActivity(getIntent());
+        }
     }
 
     private void saveData() {

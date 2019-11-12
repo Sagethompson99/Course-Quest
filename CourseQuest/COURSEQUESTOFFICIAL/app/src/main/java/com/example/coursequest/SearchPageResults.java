@@ -128,7 +128,7 @@ public class SearchPageResults extends AppCompatActivity {
     public Button displayCourse(Course course)
     {
         Button courseView = new Button(this);
-        courseButtonFormatter.format(this, courseView);
+        ButtonFormatter.formatCourseButton(this, courseView);
         //adds menu (like,unlike) to button
         registerForContextMenu(courseView);
 
