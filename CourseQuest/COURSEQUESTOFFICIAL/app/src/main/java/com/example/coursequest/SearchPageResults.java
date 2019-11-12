@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -38,11 +39,9 @@ import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 public class SearchPageResults extends AppCompatActivity {
 
+    public static ProgressDialog loadingView;
     private Button backButton;
-    private LinearLayout resultView;
-    private ScrollView results;
     private static ArrayList<Course> courses;
-    private static String[] buttonColors;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
     private String longPressedButtonText;
@@ -66,7 +65,7 @@ public class SearchPageResults extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_search_page_results);
-        resultView = (LinearLayout)findViewById(R.id.resultView);
+        loadingView = new ProgressDialog(this);
 
         backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {

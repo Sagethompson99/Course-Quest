@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -102,6 +103,7 @@ public class SearchPage extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
+                hideKeyboard(v);
                 startActivity(intent);
                 currentSearch = searchVal.getQuery().toString();
                 if(!(recentSearchTerms.contains(currentSearch))) {
@@ -126,6 +128,11 @@ public class SearchPage extends AppCompatActivity {
     public void openSettingsPage() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    private void hideKeyboard(View v) {
+        InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
 
     public void populatePopularSearchesView(){
