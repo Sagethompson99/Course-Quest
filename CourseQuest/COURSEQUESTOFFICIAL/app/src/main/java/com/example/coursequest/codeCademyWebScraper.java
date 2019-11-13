@@ -106,18 +106,13 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 		try {
 			SearchPageResults.courses.addAll(list);
 			page.scraperFinished();
-			SearchPageResults.loadingView.dismiss();
 		}
 		catch(Exception e){
 			System.out.println("Results creation unsuccessful");
 		}
 	}
 
-	@Override
-	protected void onPreExecute() {
-		SearchPageResults.loadingView.setMessage("Finding Courses...");
-		SearchPageResults.loadingView.show();
-	}
+
 	
 	public String getCoursePrice() {
 		return "$19.99/Month";

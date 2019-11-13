@@ -2,21 +2,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical" >
 
     <item
         android:id="@+id/filterOrder"
         android:title="Order">
         <menu>
-            <item
-                android:id="@+id/filterABC"
-                android:title="Alphabetical ABC" />
-            <item
-                android:id="@+id/filterZXY"
-                android:title="Alphabetical ZYX" />
-            <item
-                android:id="@+id/filterDefault"
-                android:title="None" />
+            <group android:id="@+id/orderFilters"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/filterABC"
+                    android:title="Alphabetical ABC" />
+                <item
+                    android:id="@+id/filterZYX"
+                    android:title="Alphabetical ZYX" />
+                <item
+                    android:id="@+id/filterDefault"
+                    android:title="None" />
+            </group>
         </menu>
     </item>
 
@@ -24,6 +27,8 @@
         android:id="@+id/filterProviders"
         android:title="Providers">
         <menu>
+            <group android:id="@+id/providers"
+                android:checkableBehavior="all">
             <item
                 android:id="@+id/filterCodeCademy"
                 android:title="CodeCademy"/>
@@ -36,9 +41,7 @@
             <item
                 android:id="@+id/filterSkillShare"
                 android:title="SkillShare"/>
-            <item
-                android:id="@+id/searchAllWebsites"
-                android:title="Search All"/>
+            </group>
         </menu>
     </item>
 

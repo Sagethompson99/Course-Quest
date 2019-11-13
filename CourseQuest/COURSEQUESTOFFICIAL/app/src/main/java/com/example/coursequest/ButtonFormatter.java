@@ -32,7 +32,7 @@ public class ButtonFormatter  {
                 Constraints.LayoutParams.WRAP_CONTENT,
                 Constraints.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(0, 0, 0, 20);
+        params.setMargins(0, 0, 0, 30);
         b.setLayoutParams(params);
     }
 

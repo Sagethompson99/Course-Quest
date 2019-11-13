@@ -120,9 +120,9 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {
-			//creates course buttons with course info and displays them on SearchPageResults
-			ArrayList<Button> buttons = page.createButtons(list);
-			page.displayResults(list, buttons);
+			//adds courses to a course ArrayList in SearchPageResults
+			SearchPageResults.courses.addAll(list);
+			page.scraperFinished();
 		}
 		catch(Exception e){
 			System.out.println("Results creation unsuccessful");

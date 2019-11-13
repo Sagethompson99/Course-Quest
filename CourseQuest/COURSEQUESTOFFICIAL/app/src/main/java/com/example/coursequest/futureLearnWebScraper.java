@@ -69,9 +69,6 @@ public class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<C
     /**
      * onPostExecute is a pre-defined method that is automatically executed after a successful
      * doInBackground() method execution
-     *
-     * This method calls createButtons() and displayResults() from the SearchPageResults class, passing
-     * them an ArrayList of courses created in the doInBackground() method
      */
     @Override
     protected void onPostExecute(ArrayList<Course> list) {

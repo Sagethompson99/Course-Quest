@@ -9,11 +9,13 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -32,6 +34,8 @@ public class SearchPage extends AppCompatActivity {
     private static final String PREF_DARK_THEME = "dark_theme";
     private String alphabeticalType = "";
     private ArrayList<String> searchWhichWebsites;
+    private int checkedOrderTypeButtonId = 0;
+    private ArrayList<Integer> checkedButtons = new ArrayList<>();
     private LinearLayout popularSearches;
     private LinearLayout recentSearches;
     private String[] popularSearchTerms = new String[] {"Science", "Photography", "Coding", "Math", "Art History", "Engineering", "Politics", "Business"};
@@ -101,7 +105,7 @@ public class SearchPage extends AppCompatActivity {
         });
 
         searchWhichWebsites = new ArrayList<>();
-        addAllWebsites();
+
 
         intent.putExtra("alphabeticalType", alphabeticalType);
         intent.putExtra("searchWebsites", searchWhichWebsites);
@@ -111,12 +115,15 @@ public class SearchPage extends AppCompatActivity {
 
             public void onClick(View v) {
                 hideKeyboard(v);
-                startActivity(intent);
                 currentSearch = searchVal.getQuery().toString();
                 if(!(recentSearchTerms.contains(currentSearch)) && currentSearch.length()>0) {
                     recentSearchTerms.add(currentSearch);
                 }
                 saveData();
+                if(searchWhichWebsites.size() < 1)
+                    addAllWebsites();
+
+                startActivity(intent);
             }
         });
     }
@@ -127,9 +134,13 @@ public class SearchPage extends AppCompatActivity {
     }
 
     public void openResults(String search) {
-        Intent intent = new Intent(this, SearchPageResults.class);
-        intent.putExtra("message", search);
-        startActivity(intent);
+        Intent intent2 = new Intent(this, SearchPageResults.class);
+        intent2.putExtra("message", search);
+        if(searchWhichWebsites.size() < 1)
+            addAllWebsites();
+        intent2.putExtra("searchWebsites", searchWhichWebsites);
+        intent2.putExtra("alphabeticalType", alphabeticalType);
+        startActivity(intent2);
     }
 
     public void openSettingsPage() {
@@ -207,44 +218,66 @@ public class SearchPage extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.filters,menu);
         menu.setHeaderTitle("Filters");
+
+        //repopulates button checked states
+        if(checkedButtons != null){
+            for(int i = 0; i < checkedButtons.size(); i++){
+                menu.findItem(checkedButtons.get(i)).setChecked(true);
+            }
+        }
+        if(checkedOrderTypeButtonId != 0){
+            menu.findItem(checkedOrderTypeButtonId).setChecked(true);
+        }
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onContextItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId())
         {
             case R.id.filterABC:
                 alphabeticalType = "filterABC";
-            case R.id.filterZXY:
+                checkedOrderTypeButtonId = item.getItemId();
+                break;
+            case R.id.filterZYX:
                 alphabeticalType = "filterZYX";
+                checkedOrderTypeButtonId = item.getItemId();
+                break;
             case R.id.filterDefault:
-                alphabeticalType = "filterDefault";
+                alphabeticalType= "filterDefault";
+                checkedOrderTypeButtonId = item.getItemId();
+                break;
             case R.id.filterCodeCademy:
-                addOrRemoveWebsite("CodeCademy");
+                checkOrUncheckWebsite("CodeCademy", item);
+                break;
             case R.id.filterCoursera:
-                addOrRemoveWebsite("Coursera");
+                checkOrUncheckWebsite("Coursera", item);
+                break;
             case R.id.filterFutureLearn:
-                addOrRemoveWebsite("FutureLearn");
+                checkOrUncheckWebsite("FutureLearn", item);
+                break;
             case R.id.filterSkillShare:
-                addOrRemoveWebsite("SkillShare");
-            case R.id.searchAllWebsites:
-                addAllWebsites();
+                checkOrUncheckWebsite("SkillShare", item);
+                break;
             case R.id.clearFilters:
                 addAllWebsites();
                 alphabeticalType = "filterDefault";
+                break;
             default:
-                return super.onOptionsItemSelected(item);
+                break;
         }
+       return super.onContextItemSelected(item);
     }
 
-    public void addOrRemoveWebsite(String website) {
-        if (searchWhichWebsites.contains(website))
-        {
+    public void checkOrUncheckWebsite(String website, MenuItem item) {
+        if(searchWhichWebsites.contains(item.toString())){
+            checkedButtons.remove(Integer.valueOf(item.getItemId()));
+            // If item already checked then unchecked it
             searchWhichWebsites.remove(website);
         }
-        else
-        {
+        else{
+            // If item is unchecked then checked it
+            checkedButtons.add(item.getItemId());
             searchWhichWebsites.add(website);
         }
     }
@@ -257,7 +290,7 @@ public class SearchPage extends AppCompatActivity {
         }
         if (!searchWhichWebsites.contains("Coursera"))
         {
-            searchWhichWebsites.add("Coursera");
+          //  searchWhichWebsites.add("Coursera");
         }
         if (!searchWhichWebsites.contains("FutureLearn"))
         {

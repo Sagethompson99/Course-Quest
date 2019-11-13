@@ -13,7 +13,6 @@ import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * resultsActivity shows the results from seaching, each course listing displayed by resultsActivity
@@ -33,7 +31,6 @@ public class SearchPageResults extends AppCompatActivity {
     public static ProgressDialog loadingView;
     private Button backButton;
     static ArrayList<Course> courses;
-    private ArrayList<Button> courseButtons;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
     private String longPressedButtonText;
@@ -78,7 +75,6 @@ public class SearchPageResults extends AppCompatActivity {
         }
 
         courses = new ArrayList<>();
-        courseButtons = new ArrayList<>();
 
         //calls search method with user query
         search(getIntent().getExtras().getString("message"));
@@ -86,11 +82,20 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //adds course result buttons to the screen
-    public void displayResults(ArrayList<Course> courses, ArrayList<Button> buttons)
+    public void displaySearchResults()
     {
         //Code idea used for adding views programmatically
         //https://github.com/udacity/ud839_Miwok/blob/b7c723c3c38c2c2ca9eb7067e34fb526052cfd34/app/src/main/java/com/example/android/miwok/NumbersActivity.java
         LinearLayout rootView = (LinearLayout) findViewById(R.id.resultView);
+
+
+        if(alphabeticalType.equals("filterABC")) {
+            Course.sortByNameABC(courses);
+        }
+         if(alphabeticalType.equals("filterZYX"))
+        {
+            Course.sortByNameZYX(courses);
+        }
 
         if (courses == null)
         {
@@ -99,30 +104,15 @@ public class SearchPageResults extends AppCompatActivity {
         for (int i = 0; i<courses.size(); i++)
         {
             final Course currentCourse = courses.get(i);
-            Button courseView = displayCourse(currentCourse);
-            TextView t = new TextView(this);
-            t.setHeight(25);
-            rootView.addView(t);
-            if (buttons.get(i) != null)
-                rootView.addView(buttons.get(i));
+            Button courseView = createCourseButton(currentCourse);
+            if (courses.get(i) != null)
+                rootView.addView(courseView);
         }
-    }
-
-    //creates buttons. Called via postExecute method in each website scraper class
-    public ArrayList<Button> createButtons(ArrayList<Course> courses) {
-
-        ArrayList<Button> buttons = new ArrayList<Button>();
-        Iterator<Course> iter = courses.iterator();
-
-        while(iter.hasNext())
-            buttons.add(displayCourse(iter.next()));
-
-        return buttons;
     }
 
 
     //displayResults uses this method in a loop - displaying each course
-    public Button displayCourse(Course course)
+    public Button createCourseButton(Course course)
     {
         Button courseView = new Button(this);
         ButtonFormatter.formatCourseButton(this, courseView);
@@ -172,47 +162,40 @@ public class SearchPageResults extends AppCompatActivity {
 
     public void scraperFinished()
     {
-        Course.sortByNameABC(courses);
-        courseButtons.addAll(createButtons(courses));
         numScrapersFinished++;
-        if (numScrapersFinished==1)
+        if (numScrapersFinished==searchWhichWebsites.size())
         {
-            displayResults(courses, courseButtons);
+            displaySearchResults();
+            loadingView.dismiss();
         }
     }
 
     //gets search results from website scrapers for a given search query
     public void search(String searchFor)
     {
-        if (searchWhichWebsites.contains("FutureLearn"))
+        if(searchWhichWebsites.contains("FutureLearn"))
         {
             futureLearnWebScraper scraper = new futureLearnWebScraper();
             scraper.execute(searchFor, this);
-            //numScrapersFinished++;
-
         }
-        if (searchWhichWebsites.contains("CodeCademy"))
+        if(searchWhichWebsites.contains("CodeCademy"))
         {
-            //codeCademyWebScraper scraper3 = new codeCademyWebScraper();
-            //scraper3.execute(searchFor, this);
-            //numScrapersFinished++;
+            codeCademyWebScraper scraper3 = new codeCademyWebScraper();
+            scraper3.execute(searchFor, this);
         }
-        if (searchWhichWebsites.contains("SkillShare"))
+        if(searchWhichWebsites.contains("SkillShare"))
         {
-            //SkillShareScraper scraper4 = new SkillShareScraper();
-            //scraper4.execute(searchFor, this);
-            //numScrapersFinished++;
+            SkillShareScraper scraper4 = new SkillShareScraper();
+            scraper4.execute(searchFor, this);
         }
 
-        //Course.sortByNameABC(courses);
-
-        if (searchWhichWebsites.contains("Cousera"))
+        if(searchWhichWebsites.contains("Cousera"))
         {
-            //   CourseraWebScraper scraper2 = new CourseraWebScraper();
-            //   scraper2.execute(searchFor, this);
-            //numScrapersFinished++;
+            //CourseraWebScraper scraper2 = new CourseraWebScraper();
+            //scraper2.execute(searchFor, this);
         }
-
+        loadingView.setMessage("Finding Courses...");
+        loadingView.show();
     }
 
     public String getButtonLink(Button getLink)
