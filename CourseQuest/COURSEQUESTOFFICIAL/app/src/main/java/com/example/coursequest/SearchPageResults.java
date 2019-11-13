@@ -57,7 +57,7 @@ public class SearchPageResults extends AppCompatActivity {
         setContentView(R.layout.activity_search_page_results);
         loadingView = new ProgressDialog(this);
 
-        backButton = (Button) findViewById(R.id.backButton);
+        backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openSearchPage();
@@ -65,7 +65,7 @@ public class SearchPageResults extends AppCompatActivity {
         });
 
         //populates searchVal textview with user's search query
-        TextView searchVal = (TextView) findViewById(R.id.searchVal);
+        TextView searchVal = findViewById(R.id.searchVal);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
         {
@@ -92,16 +92,16 @@ public class SearchPageResults extends AppCompatActivity {
         if(alphabeticalType.equals("filterABC")) {
             Course.sortByNameABC(courses);
         }
-         if(alphabeticalType.equals("filterZYX"))
+        else if(alphabeticalType.equals("filterZYX"))
         {
             Course.sortByNameZYX(courses);
         }
 
-        if (courses == null)
+        if(courses == null)
         {
             return;
         }
-        for (int i = 0; i<courses.size(); i++)
+        for(int i = 0; i<courses.size(); i++)
         {
             final Course currentCourse = courses.get(i);
             Button courseView = createCourseButton(currentCourse);
@@ -150,7 +150,6 @@ public class SearchPageResults extends AppCompatActivity {
             );
             courseView.setTag(courseLink);
         }
-
     }
 
     //exits search results page and opens search page

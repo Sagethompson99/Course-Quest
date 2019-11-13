@@ -9,13 +9,11 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.SubMenu;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,22 +22,23 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class SearchPage extends AppCompatActivity {
-    private Button search;
-    private Button deleteSearchHistory;
-    private SearchView searchVal;
+
+    private Button searchButton;
+    private Button deleteSearchHistoryButton;
     private Button homeButton;
     private Button settingsButton;
-    private Button filter;
+    private Button filterButton;
+    private SearchView searchVal;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
     private String alphabeticalType = "";
     private ArrayList<String> searchWhichWebsites;
     private int checkedOrderTypeButtonId = 0;
     private ArrayList<Integer> checkedButtons = new ArrayList<>();
-    private LinearLayout popularSearches;
-    private LinearLayout recentSearches;
-    private String[] popularSearchTerms = new String[] {"Science", "Photography", "Coding", "Math", "Art History", "Engineering", "Politics", "Business"};
+    private LinearLayout popularSearchesView;
+    private LinearLayout recentSearchesView;
     private ArrayList<String> recentSearchTerms;
+    private String[] popularSearchTerms = new String[] {"Science", "Photography", "Coding", "Math", "Art History", "Engineering", "Politics", "Business"};
     private SharedPreferences myRecentSearches;
     String currentSearch;
 
@@ -53,42 +52,45 @@ public class SearchPage extends AppCompatActivity {
         if(useDarkTheme) {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
+
+        searchWhichWebsites = new ArrayList<>();
+
         setContentView(R.layout.activity_search_page);
 
         myRecentSearches = getSharedPreferences("shared preferences", MODE_PRIVATE);
-        recentSearches =  (LinearLayout) findViewById(R.id.recentSearches);
+        recentSearchesView = findViewById(R.id.recentSearches);
 
         loadData();
 
-        searchVal = (SearchView) findViewById(R.id.searchFor);
+        searchVal = findViewById(R.id.searchFor);
 
-        deleteSearchHistory = (Button) findViewById(R.id.deleteRecentSearches);
-        deleteSearchHistory.setOnClickListener(new View.OnClickListener() {
+        deleteSearchHistoryButton = findViewById(R.id.deleteRecentSearches);
+        deleteSearchHistoryButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 clearRecentSearches();
             }
         });
 
-        homeButton = (Button) findViewById(R.id.homeButton);
+        homeButton = findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openHomePage();
             }
         });
 
-        settingsButton = (Button) findViewById(R.id.settingsButton);
+        settingsButton = findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openSettingsPage();
             }
         });
 
-        popularSearches = (LinearLayout) findViewById(R.id.popularSearches);
+        popularSearchesView = findViewById(R.id.popularSearches);
         populatePopularSearchesView();
         populateRecentSearchesView();
 
-        filter = findViewById(R.id.filter);
-        registerForContextMenu(filter);
+        filterButton = findViewById(R.id.filter);
+        registerForContextMenu(filterButton);
 
         final Intent intent = new Intent(SearchPage.this, SearchPageResults.class);
 
@@ -104,14 +106,11 @@ public class SearchPage extends AppCompatActivity {
             }
         });
 
-        searchWhichWebsites = new ArrayList<>();
-
-
         intent.putExtra("alphabeticalType", alphabeticalType);
         intent.putExtra("searchWebsites", searchWhichWebsites);
 
-        search = (Button) findViewById(R.id.search);
-        search.setOnClickListener(new View.OnClickListener() {
+        searchButton = findViewById(R.id.search);
+        searchButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 hideKeyboard(v);
@@ -134,13 +133,14 @@ public class SearchPage extends AppCompatActivity {
     }
 
     public void openResults(String search) {
-        Intent intent2 = new Intent(this, SearchPageResults.class);
-        intent2.putExtra("message", search);
+        Intent intent = new Intent(this, SearchPageResults.class);
+        intent.putExtra("message", search);
+        intent.putExtra("alphabeticalType", alphabeticalType);
         if(searchWhichWebsites.size() < 1)
             addAllWebsites();
-        intent2.putExtra("searchWebsites", searchWhichWebsites);
-        intent2.putExtra("alphabeticalType", alphabeticalType);
-        startActivity(intent2);
+        intent.putExtra("searchWebsites", searchWhichWebsites);
+
+        startActivity(intent);
     }
 
     public void openSettingsPage() {
@@ -158,7 +158,7 @@ public class SearchPage extends AppCompatActivity {
             final Button b = new Button(this);
             b.setText(term);
             ButtonFormatter.formatSearchPageButton(this, b);
-            popularSearches.addView(b);
+            popularSearchesView.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     openResults(b.getText().toString());
@@ -172,7 +172,7 @@ public class SearchPage extends AppCompatActivity {
             final Button b = new Button(this);
             b.setText(recentSearchTerms.get(i));
             ButtonFormatter.formatSearchPageButton(this, b);
-            recentSearches.addView(b);
+            recentSearchesView.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     openResults(b.getText().toString());
@@ -270,13 +270,13 @@ public class SearchPage extends AppCompatActivity {
     }
 
     public void checkOrUncheckWebsite(String website, MenuItem item) {
-        if(searchWhichWebsites.contains(item.toString())){
+        //If item already checked then unchecked it
+        if(searchWhichWebsites.contains(item.toString())) {
             checkedButtons.remove(Integer.valueOf(item.getItemId()));
-            // If item already checked then unchecked it
             searchWhichWebsites.remove(website);
         }
-        else{
-            // If item is unchecked then checked it
+        //If item is unchecked then checked it
+        else {
             checkedButtons.add(item.getItemId());
             searchWhichWebsites.add(website);
         }
@@ -284,21 +284,9 @@ public class SearchPage extends AppCompatActivity {
 
     public void addAllWebsites()
     {
-        if (!searchWhichWebsites.contains("CodeCademy"))
-        {
-            searchWhichWebsites.add("CodeCademy");
-        }
-        if (!searchWhichWebsites.contains("Coursera"))
-        {
-          //  searchWhichWebsites.add("Coursera");
-        }
-        if (!searchWhichWebsites.contains("FutureLearn"))
-        {
-            searchWhichWebsites.add("FutureLearn");
-        }
-        if (!searchWhichWebsites.contains("SkillShare"))
-        {
-            searchWhichWebsites.add("SkillShare");
-        }
+        searchWhichWebsites.add("CodeCademy");
+        //searchWhichWebsites.add("Coursera");
+        searchWhichWebsites.add("FutureLearn");
+        searchWhichWebsites.add("SkillShare");
     }
 }

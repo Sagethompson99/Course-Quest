@@ -54,18 +54,18 @@ public class HomeActivity extends AppCompatActivity {
         loadData();
 
         setContentView(R.layout.activity_home);
-        savedCourseView = (LinearLayout) findViewById(R.id.savedCourseView);
-        noCoursesImage = (ImageView) findViewById(R.id.noCoursesImage);
-        noCoursesText = (TextView) findViewById((R.id.noCoursesText));
+        savedCourseView = findViewById(R.id.savedCourseView);
+        noCoursesImage = findViewById(R.id.noCoursesImage);
+        noCoursesText = findViewById((R.id.noCoursesText));
 
-        searchButton = (Button) findViewById(R.id.searchButton2);
+        searchButton = findViewById(R.id.searchButton2);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openSearchPage();
             }
         });
 
-        settingsButton = (Button) findViewById(R.id.settingsButton);
+        settingsButton = findViewById(R.id.settingsButton);
         settingsButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openSettingsPage();
@@ -133,14 +133,14 @@ public class HomeActivity extends AppCompatActivity {
         if(!courseLink.equals(""))
         {
             courseView.setOnClickListener(new View.OnClickListener() {
-                                              public void onClick(View v) {
-                                                  Intent intent = new Intent();
-                                                  intent.setAction(Intent.ACTION_VIEW);
-                                                  intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                                                  intent.setData(Uri.parse(courseLink));
-                                                  startActivity(intent);
-                                              }
-                                          }
+              public void onClick(View v) {
+                 Intent intent = new Intent();
+                 intent.setAction(Intent.ACTION_VIEW);
+                 intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                 intent.setData(Uri.parse(courseLink));
+                 startActivity(intent);
+              }
+            }
             );
             courseView.setTag(courseLink);
         }
