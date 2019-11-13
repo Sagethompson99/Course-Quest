@@ -4,12 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,22 +17,17 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
-
-import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 /**
  * resultsActivity shows the results from seaching, each course listing displayed by resultsActivity
  * functions as a button that, when clicked, opens up a corresponding url for the course
  * There will be a button on this page that takes the user back to the main search screen (MainActivity)
  */
-
 public class SearchPageResults extends AppCompatActivity {
 
     public static ProgressDialog loadingView;
