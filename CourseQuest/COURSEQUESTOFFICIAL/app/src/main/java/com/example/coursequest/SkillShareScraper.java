@@ -123,14 +123,14 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {
-			ArrayList<Button> buttons = page.createButtons(list);
-			page.displayResults(list,buttons);
+			SearchPageResults.courses.addAll(list);
+			page.scraperFinished();
 		}
 		catch(Exception e) {
 			System.out.println("ERROR [Skill Share]: couldn't get classes :(");
 		}
 	}
-	
+
 //	public static void main(String[] args) {
 //		SkillShareScraper scraper = new SkillShareScraper();
 //		scraper.getCourses("algebra");

@@ -104,9 +104,8 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 	@Override
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {
-			//creates course buttons with course info and displays them on SearchPageResults
-			ArrayList<Button> buttons = page.createButtons(list);
-			page.displayResults(list, buttons);
+			SearchPageResults.courses.addAll(list);
+			page.scraperFinished();
 			SearchPageResults.loadingView.dismiss();
 		}
 		catch(Exception e){
