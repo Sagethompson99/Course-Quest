@@ -41,13 +41,15 @@ public class SearchPageResults extends AppCompatActivity {
 
     public static ProgressDialog loadingView;
     private Button backButton;
-    private static ArrayList<Course> courses;
+    static ArrayList<Course> courses;
+    private ArrayList<Button> courseButtons;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
     private String longPressedButtonText;
     private String longPressedButtonLink;
     private ArrayList<String> searchWhichWebsites;
     private String alphabeticalType;
+    private int numScrapersFinished = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -84,8 +86,12 @@ public class SearchPageResults extends AppCompatActivity {
             alphabeticalType = getIntent().getExtras().getString("alphabeticalType");
         }
 
+        courses = new ArrayList<>();
+        courseButtons = new ArrayList<>();
+
         //calls search method with user query
         search(getIntent().getExtras().getString("message"));
+
     }
 
     //adds course result buttons to the screen
@@ -167,25 +173,55 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //exits search results page and opens search page
-    public void openSearchPage() {
+    public void openSearchPage()
+    {
         Intent intent = new Intent(this, SearchPage.class);
         startActivity(intent);
+    }
+
+    public void scraperFinished()
+    {
+        Course.sortByNameABC(courses);
+        courseButtons.addAll(createButtons(courses));
+        numScrapersFinished++;
+        if (numScrapersFinished==1)
+        {
+            displayResults(courses, courseButtons);
+        }
     }
 
     //gets search results from website scrapers for a given search query
     public void search(String searchFor)
     {
-        futureLearnWebScraper scraper = new futureLearnWebScraper();
-        scraper.execute(searchFor, this);
+        if (searchWhichWebsites.contains("FutureLearn"))
+        {
+            futureLearnWebScraper scraper = new futureLearnWebScraper();
+            scraper.execute(searchFor, this);
+            //numScrapersFinished++;
 
-        codeCademyWebScraper scraper3 = new codeCademyWebScraper();
-        scraper3.execute(searchFor, this);
-        
-        SkillShareScraper scraper4 = new SkillShareScraper();
-        scraper4.execute(searchFor, this);
+        }
+        if (searchWhichWebsites.contains("CodeCademy"))
+        {
+            //codeCademyWebScraper scraper3 = new codeCademyWebScraper();
+            //scraper3.execute(searchFor, this);
+            //numScrapersFinished++;
+        }
+        if (searchWhichWebsites.contains("SkillShare"))
+        {
+            //SkillShareScraper scraper4 = new SkillShareScraper();
+            //scraper4.execute(searchFor, this);
+            //numScrapersFinished++;
+        }
 
-     //   CourseraWebScraper scraper2 = new CourseraWebScraper();
-     //   scraper2.execute(searchFor, this);
+        //Course.sortByNameABC(courses);
+
+        if (searchWhichWebsites.contains("Cousera"))
+        {
+            //   CourseraWebScraper scraper2 = new CourseraWebScraper();
+            //   scraper2.execute(searchFor, this);
+            //numScrapersFinished++;
+        }
+
     }
 
     public String getButtonLink(Button getLink)

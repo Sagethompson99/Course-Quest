@@ -43,8 +43,6 @@ public class SearchPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchWhichWebsites = new ArrayList<>();
-
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean useDarkTheme = preferences.getBoolean(PREF_DARK_THEME, false);
 
@@ -101,6 +99,9 @@ public class SearchPage extends AppCompatActivity {
                 return false;
             }
         });
+
+        searchWhichWebsites = new ArrayList<>();
+        addAllWebsites();
 
         intent.putExtra("alphabeticalType", alphabeticalType);
         intent.putExtra("searchWebsites", searchWhichWebsites);
@@ -220,13 +221,13 @@ public class SearchPage extends AppCompatActivity {
             case R.id.filterDefault:
                 alphabeticalType = "filterDefault";
             case R.id.filterCodeCademy:
-                searchWhichWebsites.add("CodeCademy");
+                addOrRemoveWebsite("CodeCademy");
             case R.id.filterCoursera:
-                searchWhichWebsites.add("Coursera");
+                addOrRemoveWebsite("Coursera");
             case R.id.filterFutureLearn:
-                searchWhichWebsites.add("FutureLearn");
+                addOrRemoveWebsite("FutureLearn");
             case R.id.filterSkillShare:
-                searchWhichWebsites.add("SkillShare");
+                addOrRemoveWebsite("SkillShare");
             case R.id.searchAllWebsites:
                 addAllWebsites();
             case R.id.clearFilters:
@@ -237,11 +238,34 @@ public class SearchPage extends AppCompatActivity {
         }
     }
 
+    public void addOrRemoveWebsite(String website) {
+        if (searchWhichWebsites.contains(website))
+        {
+            searchWhichWebsites.remove(website);
+        }
+        else
+        {
+            searchWhichWebsites.add(website);
+        }
+    }
+
     public void addAllWebsites()
     {
+        if (!searchWhichWebsites.contains("CodeCademy"))
+        {
             searchWhichWebsites.add("CodeCademy");
+        }
+        if (!searchWhichWebsites.contains("Coursera"))
+        {
             searchWhichWebsites.add("Coursera");
+        }
+        if (!searchWhichWebsites.contains("FutureLearn"))
+        {
             searchWhichWebsites.add("FutureLearn");
+        }
+        if (!searchWhichWebsites.contains("SkillShare"))
+        {
             searchWhichWebsites.add("SkillShare");
+        }
     }
 }
