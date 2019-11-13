@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -70,15 +71,21 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void refreshPage(Activity a){
+        final Intent intent = this.getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        a.finish();
+        a.overridePendingTransition(0, 0);
+        a.startActivity(intent);
+        a.overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
     //sets app theme to dark mode if darkModeSwitch is checked
     public void toggleTheme(boolean darkTheme){
         SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
         editor.putBoolean(PREF_DARK_THEME, darkTheme);
         editor.apply();
-
-        Intent intent = getIntent();
-        finish();
-
-        startActivity(intent);
+        refreshPage(this);
     }
 }

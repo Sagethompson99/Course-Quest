@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -85,11 +86,23 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void refreshPage(Activity a){
+        final Intent intent = this.getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        a.finish();
+        a.overridePendingTransition(0, 0);
+        a.startActivity(intent);
+        a.overridePendingTransition(0, 0);
+        startActivity(intent);
+    }
+
     public static void addNewSavedCourse(String buttonText, String link)
     {
-        savedCourses.add(buttonText);
-        savedCourseLinks.add(link);
-        saveData();
+        if(!(savedCourses.contains(buttonText))) {
+            savedCourses.add(buttonText);
+            savedCourseLinks.add(link);
+            saveData();
+        }
     }
 
     public static void deleteSavedCourse(String buttonText)
@@ -173,20 +186,17 @@ public class HomeActivity extends AppCompatActivity {
         longPressedButtonText = b.getText().toString();
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.course_options,menu);
+        menu.removeItem(menu.getItem(0).getItemId());
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         // Handle item click
         switch (item.getItemId()){
-            case R.id.save :
-                Toast.makeText(this,"course already saved", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.unsave :
-                Toast.makeText(this,"Course unsaved:(",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"Course deleted",Toast.LENGTH_SHORT).show();
                 deleteSavedCourse(longPressedButtonText);
-                finish();
-                startActivity(getIntent());
+                refreshPage(this);
                 break;
             default:
                 break;

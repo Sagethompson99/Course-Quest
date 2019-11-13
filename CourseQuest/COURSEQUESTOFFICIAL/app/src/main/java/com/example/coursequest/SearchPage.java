@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,7 +34,7 @@ public class SearchPage extends AppCompatActivity {
     private static final String PREF_DARK_THEME = "dark_theme";
     private String alphabeticalType = "";
     private ArrayList<String> searchWhichWebsites;
-    private int checkedOrderTypeButtonId = 0;
+    private int checkedFilterOrderButtonId = 0;
     private ArrayList<Integer> checkedButtons = new ArrayList<>();
     private LinearLayout popularSearchesView;
     private LinearLayout recentSearchesView;
@@ -131,7 +132,7 @@ public class SearchPage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openResults(String search) {
+    public void openResultsPage(String search) {
         Intent intent = new Intent(this, SearchPageResults.class);
         intent.putExtra("message", search);
         intent.putExtra("alphabeticalType", alphabeticalType);
@@ -144,6 +145,16 @@ public class SearchPage extends AppCompatActivity {
 
     public void openSettingsPage() {
         Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void refreshPage(Activity a){
+        final Intent intent = this.getIntent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        a.finish();
+        a.overridePendingTransition(0, 0);
+        a.startActivity(intent);
+        a.overridePendingTransition(0, 0);
         startActivity(intent);
     }
 
@@ -160,7 +171,7 @@ public class SearchPage extends AppCompatActivity {
             popularSearchesView.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    openResults(b.getText().toString());
+                    openResultsPage(b.getText().toString());
                 }
             });
         }
@@ -174,7 +185,7 @@ public class SearchPage extends AppCompatActivity {
             recentSearchesView.addView(b);
             b.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
-                    openResults(b.getText().toString());
+                    openResultsPage(b.getText().toString());
                   }
             });
         }
@@ -185,8 +196,7 @@ public class SearchPage extends AppCompatActivity {
         if(recentSearchTerms.size() > 0) {
             recentSearchTerms.clear();
             saveData();
-            finish();
-            startActivity(getIntent());
+            refreshPage(this);
         }
     }
 
@@ -224,8 +234,8 @@ public class SearchPage extends AppCompatActivity {
                 menu.findItem(checkedButtons.get(i)).setChecked(true);
             }
         }
-        if(checkedOrderTypeButtonId != 0){
-            menu.findItem(checkedOrderTypeButtonId).setChecked(true);
+        if(checkedFilterOrderButtonId != 0){
+            menu.findItem(checkedFilterOrderButtonId).setChecked(true);
         }
     }
 
@@ -236,15 +246,15 @@ public class SearchPage extends AppCompatActivity {
         {
             case R.id.filterABC:
                 alphabeticalType = "filterABC";
-                checkedOrderTypeButtonId = item.getItemId();
+                checkedFilterOrderButtonId = item.getItemId();
                 break;
             case R.id.filterZYX:
                 alphabeticalType = "filterZYX";
-                checkedOrderTypeButtonId = item.getItemId();
+                checkedFilterOrderButtonId = item.getItemId();
                 break;
             case R.id.filterDefault:
                 alphabeticalType= "filterDefault";
-                checkedOrderTypeButtonId = item.getItemId();
+                checkedFilterOrderButtonId = item.getItemId();
                 break;
             case R.id.filterCodeCademy:
                 checkOrUncheckWebsite("CodeCademy", item);

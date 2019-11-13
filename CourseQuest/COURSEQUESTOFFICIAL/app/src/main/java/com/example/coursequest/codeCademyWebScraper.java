@@ -64,7 +64,7 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 	    	}
 	    }
 	    catch(Exception e) {
-	    	System.out.println("Invalid Search.");
+	    	System.out.println("[CodeCademy] Invalid Search.");
 	    }
 		
 	    /*

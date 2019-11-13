@@ -62,7 +62,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toTopOf="@+id/Navigation"
