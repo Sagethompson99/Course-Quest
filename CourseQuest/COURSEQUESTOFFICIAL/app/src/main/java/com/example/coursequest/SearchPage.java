@@ -106,9 +106,6 @@ public class SearchPage extends AppCompatActivity {
             }
         });
 
-        intent.putExtra("alphabeticalType", alphabeticalType);
-        intent.putExtra("searchWebsites", searchWhichWebsites);
-
         searchButton = findViewById(R.id.search);
         searchButton.setOnClickListener(new View.OnClickListener() {
 
@@ -122,6 +119,8 @@ public class SearchPage extends AppCompatActivity {
                 if(searchWhichWebsites.size() < 1)
                     addAllWebsites();
 
+                intent.putExtra("alphabeticalType", alphabeticalType);
+                intent.putExtra("searchWebsites", searchWhichWebsites);
                 startActivity(intent);
             }
         });
