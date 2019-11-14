@@ -10,7 +10,7 @@ import java.util.Random;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
 
-/* This class has a method which takes a button as a parameter and applies the standard course button styles
+/* This class has a method which takes a button as a parameter and applies a set of standard button styles
  * to it.
  */
 public class ButtonFormatter  {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@drawable/results_card"
+    android:backgroundTint="?attr/colorAccent"
+    android:padding="35dip">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Use your words; null is an invalid search:/"
+        android:layout_marginBottom="30dip"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="19sp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Close"
+        android:id="@+id/closePopupBtn"
+        android:textColor="@color/colorTextDarkMode"
+        android:background="@drawable/results_card"
+        android:backgroundTint="@color/colorPrimaryDark"/>
+
+</LinearLayout>

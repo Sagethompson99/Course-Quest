@@ -1,12 +1,17 @@
 package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Constraints;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,7 +19,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -42,6 +49,8 @@ public class SearchPage extends AppCompatActivity {
     private String[] popularSearchTerms = new String[] {"Science", "Photography", "Coding", "Math", "Art History", "Engineering", "Politics", "Business"};
     private SharedPreferences myRecentSearches;
     String currentSearch;
+    private PopupWindow invalidSearchView;
+    private TextView popupText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,10 @@ public class SearchPage extends AppCompatActivity {
         searchWhichWebsites = new ArrayList<>();
 
         setContentView(R.layout.activity_search_page);
+        LinearLayout main = findViewById(R.layout.activity_search_page);
+
+        popupText = new TextView(this);
+        popupText.setText("invalid search");
 
         myRecentSearches = getSharedPreferences("shared preferences", MODE_PRIVATE);
         recentSearchesView = findViewById(R.id.recentSearches);
@@ -94,7 +107,6 @@ public class SearchPage extends AppCompatActivity {
         registerForContextMenu(filterButton);
 
         final Intent intent = new Intent(SearchPage.this, SearchPageResults.class);
-
         searchVal.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -113,6 +125,7 @@ public class SearchPage extends AppCompatActivity {
             public void onClick(View v) {
                 hideKeyboard(v);
                 currentSearch = searchVal.getQuery().toString();
+                if(currentSearch.length() > 1){
                 if(!(recentSearchTerms.contains(currentSearch)) && currentSearch.length()>0) {
                     recentSearchTerms.add(currentSearch);
                 }
@@ -123,6 +136,10 @@ public class SearchPage extends AppCompatActivity {
                 intent.putExtra("alphabeticalType", alphabeticalType);
                 intent.putExtra("searchWebsites", searchWhichWebsites);
                 startActivity(intent);
+                }
+                else{
+                    createPopup();
+                }
             }
         });
     }
@@ -146,6 +163,27 @@ public class SearchPage extends AppCompatActivity {
     public void openSettingsPage() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    public void createPopup(){
+        LayoutInflater layoutInflater = (LayoutInflater) SearchPage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View customView = layoutInflater.inflate(R.layout.invalid_search_popup,null);
+
+        Button closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
+
+        //instantiate popup window
+        invalidSearchView = new PopupWindow(customView, Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.WRAP_CONTENT);
+
+        //display the popup window
+        invalidSearchView.showAtLocation(findViewById(R.id.search), Gravity.CENTER, 0, 0);
+
+        //close the popup window on button click
+        closePopupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invalidSearchView.dismiss();
+            }
+        });
     }
 
     public void refreshPage(Activity a){
