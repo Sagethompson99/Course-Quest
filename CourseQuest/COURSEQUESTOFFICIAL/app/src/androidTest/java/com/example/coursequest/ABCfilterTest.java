@@ -118,7 +118,7 @@ public class ABCfilterTest {
         appCompatButton3.perform(click());
 
         ViewInteraction button = onView(
-                allOf(withText("Advanced Java Programming with Eclipse\n\nNo description. Click for more information about this course.\n\nSkill Share"),
+                allOf(withText("Advanced Data Structures in Java\n\nNo description. Click for more information about this course.\n\nCoursera"),
                         childAtPosition(
                                 allOf(withId(R.id.resultView),
                                         childAtPosition(

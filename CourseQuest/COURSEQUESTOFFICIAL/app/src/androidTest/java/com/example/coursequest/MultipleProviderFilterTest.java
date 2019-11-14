@@ -1,6 +1,6 @@
 /*
-Class name: ZYXfilterTest.java
-Scenario: Given a user who is searching a course, when they click Z-A on the filter, then results will populate in reverse alphabetical order.
+Class name: MultipleProviderFilterTest.java
+Scenario: Given a user who wants courses offered by multiple providers, when the user clicks the filter and choose Skill Share and futureLearn then only courses by both those providers will populate.
  */
 package com.example.coursequest;
 
@@ -26,7 +26,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -37,13 +36,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class ZYXfilterTest {
+public class MultipleProviderFilterTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void zYXfilterTest() {
+    public void multipleProviderFilterTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.searchButton2),
                         childAtPosition(
@@ -66,7 +65,7 @@ public class ZYXfilterTest {
         appCompatButton2.perform(longClick());
 
         ViewInteraction textView = onView(
-                allOf(withId(android.R.id.title), withText("Order"),
+                allOf(withId(android.R.id.title), withText("Providers"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -76,7 +75,7 @@ public class ZYXfilterTest {
         textView.perform(click());
 
         ViewInteraction textView2 = onView(
-                allOf(withId(android.R.id.title), withText("Alphabetical ZYX"),
+                allOf(withId(android.R.id.title), withText("SkillShare"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -84,6 +83,36 @@ public class ZYXfilterTest {
                                 0),
                         isDisplayed()));
         textView2.perform(click());
+
+        ViewInteraction appCompatButton3 = onView(
+                allOf(withId(R.id.filter),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                4),
+                        isDisplayed()));
+        appCompatButton3.perform(longClick());
+
+        ViewInteraction textView3 = onView(
+                allOf(withId(android.R.id.title), withText("Providers"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textView3.perform(click());
+
+        ViewInteraction textView4 = onView(
+                allOf(withId(android.R.id.title), withText("CodeCademy"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textView4.perform(click());
 
         ViewInteraction appCompatImageView = onView(
                 allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageView")), withContentDescription("Search"),
@@ -107,7 +136,7 @@ public class ZYXfilterTest {
                         isDisplayed()));
         searchAutoComplete.perform(replaceText("java"), closeSoftKeyboard());
 
-        ViewInteraction appCompatButton3 = onView(
+        ViewInteraction appCompatButton4 = onView(
                 allOf(withId(R.id.search), withText("Go!"),
                         childAtPosition(
                                 childAtPosition(
@@ -115,17 +144,7 @@ public class ZYXfilterTest {
                                         0),
                                 2),
                         isDisplayed()));
-        appCompatButton3.perform(click());
-
-        ViewInteraction button = onView(
-                allOf(withText("Основы HTML и CSS\n\nNo description. Click for more information about this course.\n\nCoursera"),
-                        childAtPosition(
-                                allOf(withId(R.id.resultView),
-                                        childAtPosition(
-                                                withId(R.id.results),
-                                                0)),
-                                0)));
-        button.perform(scrollTo(), click());
+        appCompatButton4.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
