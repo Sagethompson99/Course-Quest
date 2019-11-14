@@ -1,6 +1,6 @@
 /*
-Class name: LinkTest.java
-Scenario: Given I search for a class and results pop up, when I click on a course from the results, it accesses the link to the course on its website
+Class name: NoProviderFilterTest.java
+Scenario: Given a user who doesn't filter by providers, when a user searches for a class, then all course providers still show their results.
  */
 package com.example.coursequest;
 
@@ -25,7 +25,6 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -36,13 +35,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LinkTest {
+public class NoProviderFilterTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void linkTest() {
+    public void noProviderFilterTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.searchButton2),
                         childAtPosition(
@@ -85,16 +84,6 @@ public class LinkTest {
                                 2),
                         isDisplayed()));
         appCompatButton2.perform(click());
-
-        ViewInteraction button = onView(
-                allOf(withText("Begin Programming: Build Your First Mobile Game\n\nLearn basic Java programming by developing a mobile game that you can run on your computer, Android phone or tablet.\n\nFuture Learn"),
-                        childAtPosition(
-                                allOf(withId(R.id.resultView),
-                                        childAtPosition(
-                                                withId(R.id.results),
-                                                0)),
-                                0)));
-        button.perform(scrollTo(), click());
     }
 
     private static Matcher<View> childAtPosition(

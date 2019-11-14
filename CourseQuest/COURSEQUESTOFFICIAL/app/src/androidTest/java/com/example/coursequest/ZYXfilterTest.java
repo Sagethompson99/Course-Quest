@@ -1,6 +1,6 @@
 /*
-Class name: LinkTest.java
-Scenario: Given I search for a class and results pop up, when I click on a course from the results, it accesses the link to the course on its website
+Class name: ZYXfilterTest.java
+Scenario: Given a user who is searching a course, when they click Z-A on the filter, then results will populate in reverse alphabetical order.
  */
 package com.example.coursequest;
 
@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -36,13 +37,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LinkTest {
+public class ZYXfilterTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void linkTest() {
+    public void zYXfilterTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.searchButton2),
                         childAtPosition(
@@ -53,6 +54,36 @@ public class LinkTest {
                                 1),
                         isDisplayed()));
         appCompatButton.perform(click());
+
+        ViewInteraction appCompatButton2 = onView(
+                allOf(withId(R.id.filter),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                4),
+                        isDisplayed()));
+        appCompatButton2.perform(longClick());
+
+        ViewInteraction textView = onView(
+                allOf(withId(android.R.id.title), withText("Order"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textView.perform(click());
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(android.R.id.title), withText("Alphabetical ZYX"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textView2.perform(click());
 
         ViewInteraction appCompatImageView = onView(
                 allOf(withClassName(is("androidx.appcompat.widget.AppCompatImageView")), withContentDescription("Search"),
@@ -76,7 +107,7 @@ public class LinkTest {
                         isDisplayed()));
         searchAutoComplete.perform(replaceText("java"), closeSoftKeyboard());
 
-        ViewInteraction appCompatButton2 = onView(
+        ViewInteraction appCompatButton3 = onView(
                 allOf(withId(R.id.search), withText("Go!"),
                         childAtPosition(
                                 childAtPosition(
@@ -84,10 +115,10 @@ public class LinkTest {
                                         0),
                                 2),
                         isDisplayed()));
-        appCompatButton2.perform(click());
+        appCompatButton3.perform(click());
 
         ViewInteraction button = onView(
-                allOf(withText("Begin Programming: Build Your First Mobile Game\n\nLearn basic Java programming by developing a mobile game that you can run on your computer, Android phone or tablet.\n\nFuture Learn"),
+                allOf(withText("Основы HTML и CSS\n\nNo description. Click for more information about this course.\n\nCoursera"),
                         childAtPosition(
                                 allOf(withId(R.id.resultView),
                                         childAtPosition(
