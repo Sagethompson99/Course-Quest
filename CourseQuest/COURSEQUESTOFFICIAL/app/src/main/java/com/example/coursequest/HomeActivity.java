@@ -107,10 +107,12 @@ public class HomeActivity extends AppCompatActivity {
 
     public static void deleteSavedCourse(String buttonText)
     {
-        int index = savedCourses.indexOf(buttonText);
-        savedCourses.remove(index);
-        savedCourseLinks.remove(index);
-        saveData();
+        if(savedCourses.contains(buttonText)) {
+            int index = savedCourses.indexOf(buttonText);
+            savedCourses.remove(index);
+            savedCourseLinks.remove(index);
+            saveData();
+        }
     }
 
     private static void saveData() {

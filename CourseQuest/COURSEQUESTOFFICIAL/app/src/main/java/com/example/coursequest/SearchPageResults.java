@@ -188,10 +188,10 @@ public class SearchPageResults extends AppCompatActivity {
             scraper4.execute(searchFor, this);
         }
 
-        if(searchWhichWebsites.contains("Cousera"))
+        if(searchWhichWebsites.contains("Coursera"))
         {
-            //CourseraWebScraper scraper2 = new CourseraWebScraper();
-            //scraper2.execute(searchFor, this);
+            CourseraWebScraper scraper2 = new CourseraWebScraper();
+            scraper2.execute(searchFor, this);
         }
         loadingView.setMessage("Finding Courses...");
         loadingView.show();

@@ -294,7 +294,7 @@ public class SearchPage extends AppCompatActivity {
     public void addAllWebsites()
     {
         searchWhichWebsites.add("CodeCademy");
-        //searchWhichWebsites.add("Coursera");
+        searchWhichWebsites.add("Coursera");
         searchWhichWebsites.add("FutureLearn");
         searchWhichWebsites.add("SkillShare");
     }
