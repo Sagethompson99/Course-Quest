@@ -1,6 +1,6 @@
 /*
-Class name: LinkTest.java
-Scenario: Given I search for a class and results pop up, when I click on a course from the results, it accesses the link to the course on its website
+Class name: LinkSaveTest.java
+Scenario: Given a user who found a course they have interest in, when they hold down on a course and click the "like" button, then it saves the course.
  */
 package com.example.coursequest;
 
@@ -24,6 +24,7 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -36,13 +37,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LinkTest {
+public class LikeSaveTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void linkTest() {
+    public void likeSaveTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.searchButton2),
                         childAtPosition(
@@ -94,7 +95,17 @@ public class LinkTest {
                                                 withId(R.id.results),
                                                 0)),
                                 0)));
-        button.perform(scrollTo(), click());
+        button.perform(scrollTo(), longClick());
+
+        ViewInteraction textView = onView(
+                allOf(withId(android.R.id.title), withText("Like:)"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textView.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
