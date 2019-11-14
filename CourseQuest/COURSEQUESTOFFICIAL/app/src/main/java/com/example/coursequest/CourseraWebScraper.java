@@ -75,7 +75,7 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 		getCourseLinks(allLinks, courseLinks);
 		for(int i = 0; i < titlesList.size(); i++) {
 			Course courseObj = new Course();
-			courseObj.setCourseLink(allLinks.get(i));
+			courseObj.setCourseLink(courseLinks.get(i));
 			courseObj.setCourseName(titlesList.get(i));
 			courseObj.setCourseSubject(searchTerm);
 			courseObj.setCourseWebsite("Coursera");
