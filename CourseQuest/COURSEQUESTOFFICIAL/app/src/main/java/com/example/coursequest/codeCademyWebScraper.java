@@ -1,8 +1,6 @@
 package com.example.coursequest;
 
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +31,18 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 		ArrayList<Course> courseList = new ArrayList<Course>();
 		
 		int pageNumber = 1; //current page number
-		int numPages = 0; //number of pages to parse (determined by numOfResults)
+		int numPages; //number of pages to parse (determined by numResults)
 		
 	    try {        	
 	    	// finds the number of search results
 	    	doc = Jsoup.connect(url + pageNumber + "&query=" + query).get();
-	    	Elements numResults = doc.getElementsByClass("resultsInfo__1kdRooMNwAuwJCXclRXaPY");
-	    	String str = numResults.first().text();
-	    	String numOfResults = str.substring(0, 2);
+	    	Elements numResultsText = doc.getElementsByClass("resultsInfo__1kdRooMNwAuwJCXclRXaPY");
+	    	String unformattedNumResults = numResultsText.first().text();
+	    	int numResults = Integer.parseInt(unformattedNumResults.substring(0, 2));
 	    	
 	    	//determines number of pages to parse based on number of search results
-	    	numPages = (Integer.parseInt(numOfResults)/10);
-	    	    if(numPages % 10 != 0)
+	    	numPages = (numResults/10);
+	    	    if(numResults % 10 != 0)
 	    	    	numPages += 1;
 	    	   
 	    	//loops through numPages of search results
@@ -74,7 +72,7 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 	    for(int i = 0; i < courses.size(); i++) {
 	    	String unformattedDesc = courseDescriptions.get(i);
 	    	int courseNameLength = courses.get(i).length() + 8;
-	    	courseDescriptions.set(i, unformattedDesc.substring(courseNameLength, unformattedDesc.length()));
+	    	courseDescriptions.set(i, unformattedDesc.substring(courseNameLength));
 		    
 	    	String baseURL = "https://www.codecademy.com";
 	    	String fullLink = baseURL + courseLinks.get(i);
@@ -83,12 +81,12 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 	    
 	    //creates course objects from data
 	    for(int i = 0; i < courses.size(); i++) {
-	    	Course a = new Course();
-	    	a.setCourseLink(courseLinks.get(i));
-	    	a.setCourseDescription(courseDescriptions.get(i));
-	    	a.setCourseName(courses.get(i));
-	        a.setCourseWebsite(getCourseProvider());
-	    	courseList.add(a);	    	
+	    	Course course = new Course();
+	    	course.setCourseLink(courseLinks.get(i));
+	    	course.setCourseDescription(courseDescriptions.get(i));
+	    	course.setCourseName(courses.get(i));
+	        course.setCourseWebsite(getCourseProvider());
+	    	courseList.add(course);
 	    } 
 	    
 	    return courseList;
@@ -108,7 +106,7 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 			page.scraperFinished();
 		}
 		catch(Exception e){
-			System.out.println("Results creation unsuccessful");
+			System.out.println("[CodeCademy] Results creation unsuccessful");
 		}
 	}
 
@@ -119,11 +117,11 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 	}
 	
 	public String getCourseProfessors() {
-		return "";
+		return "Not Available";
 	}
 	
 	public String getCourseRating() {
-		return "";
+		return "Not Available";
 	}
 	
 	public String getCourseProvider() {

@@ -8,21 +8,15 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 /**
- * resultsActivity shows the results from seaching, each course listing displayed by resultsActivity
+ * resultsActivity shows the results from searching, each course listing displayed by resultsActivity
  * functions as a button that, when clicked, opens up a corresponding url for the course
  * There will be a button on this page that takes the user back to the main search screen (MainActivity)
  */
@@ -33,11 +27,12 @@ public class SearchPageResults extends AppCompatActivity {
     static ArrayList<Course> courses;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
-    private String longPressedButtonText;
-    private String longPressedButtonLink;
     private ArrayList<String> searchWhichWebsites;
     private String alphabeticalType;
     private int numScrapersFinished = 0;
+    public LinearLayout resultsView;
+    private static String searchQuery;
+    private optionsBarHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,6 +52,9 @@ public class SearchPageResults extends AppCompatActivity {
         setContentView(R.layout.activity_search_page_results);
         loadingView = new ProgressDialog(this);
 
+        resultsView = findViewById(R.id.resultView);
+
+
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -64,7 +62,7 @@ public class SearchPageResults extends AppCompatActivity {
             }
         });
 
-        //populates searchVal textview with user's search query
+        //populates searchVal text view with user's search query
         TextView searchVal = findViewById(R.id.searchVal);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null)
@@ -73,11 +71,12 @@ public class SearchPageResults extends AppCompatActivity {
             searchWhichWebsites = getIntent().getExtras().getStringArrayList("searchWebsites");
             alphabeticalType = getIntent().getExtras().getString("alphabeticalType");
         }
+        searchQuery = bundle.getString("message");
 
         courses = new ArrayList<>();
 
         //calls search method with user query
-        search(getIntent().getExtras().getString("message"));
+        search(searchQuery);
 
     }
 
@@ -86,22 +85,16 @@ public class SearchPageResults extends AppCompatActivity {
     {
         //Code idea used for adding views programmatically
         //https://github.com/udacity/ud839_Miwok/blob/b7c723c3c38c2c2ca9eb7067e34fb526052cfd34/app/src/main/java/com/example/android/miwok/NumbersActivity.java
-        LinearLayout rootView = (LinearLayout) findViewById(R.id.resultView);
+        LinearLayout rootView = findViewById(R.id.resultView);
 
+        sortCourses();
 
-        if(alphabeticalType.equals("filterABC")) {
-            Course.sortByNameABC(courses);
-        }
-        else if(alphabeticalType.equals("filterZYX"))
+        if(courses.size() == 0)
         {
-            Course.sortByNameZYX(courses);
+            TextView noResultsText = findViewById(R.id.noResultsText);
+            noResultsText.setVisibility(View.VISIBLE);
         }
-
-        if(courses == null)
-        {
-            return;
-        }
-        for(int i = 0; i<courses.size(); i++)
+        for(int i = 0; i < courses.size(); i++)
         {
             final Course currentCourse = courses.get(i);
             Button courseView = createCourseButton(currentCourse);
@@ -111,13 +104,35 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
 
+    public void sortCourses(){
+        if(alphabeticalType.equals("filterABC")) {
+            Course.sortByNameABC(courses);
+        }
+        else if(alphabeticalType.equals("filterZYX"))
+        {
+            Course.sortByNameZYX(courses);
+        }
+        else {
+            //Default case. Used to present most relevant results first
+            courseCompareByKeyword.sort(courses, searchQuery.toUpperCase());
+        }
+    }
+
     //displayResults uses this method in a loop - displaying each course
     public Button createCourseButton(Course course)
     {
         Button courseView = new Button(this);
         ButtonFormatter.formatCourseButton(this, courseView);
-        //adds menu (like,unlike) to button
-        registerForContextMenu(courseView);
+
+        courseView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Button b = (Button)view;
+                handler = new optionsBarHandler(resultsView, SearchPageResults.this, b, "Results");
+                handler.openCourseOptionsBar();
+                return true;
+            }
+        });
 
         courseView.setText("");
 
@@ -131,6 +146,7 @@ public class SearchPageResults extends AppCompatActivity {
         else
             return courseView;
     }
+
 
     public void setLink(Course course, Button courseView)
     {
@@ -162,7 +178,7 @@ public class SearchPageResults extends AppCompatActivity {
     public void scraperFinished()
     {
         numScrapersFinished++;
-        if (numScrapersFinished==searchWhichWebsites.size())
+        if (numScrapersFinished == searchWhichWebsites.size())
         {
             displaySearchResults();
             loadingView.dismiss();
@@ -193,48 +209,9 @@ public class SearchPageResults extends AppCompatActivity {
             CourseraWebScraper scraper2 = new CourseraWebScraper();
             scraper2.execute(searchFor, this);
         }
+
         loadingView.setMessage("Finding Courses...");
         loadingView.show();
-    }
-
-    public String getButtonLink(Button getLink)
-    {
-        String link = "";
-        if (getLink.getTag() != null)
-        {
-            link = (String) getLink.getTag();
-        }
-        return link;
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
-    {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        Button b = (Button)v;
-        longPressedButtonText = b.getText().toString();
-        longPressedButtonLink = getButtonLink(b);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.course_options,menu);
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item)
-    {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        // Handle item click
-        switch (item.getItemId()){
-            case R.id.save :
-                Toast.makeText(this,"course saved:)", Toast.LENGTH_SHORT).show();
-                HomeActivity.addNewSavedCourse(longPressedButtonText, longPressedButtonLink);
-                break;
-            case R.id.unsave :
-                Toast.makeText(this,"Course unsaved:(",Toast.LENGTH_SHORT).show();
-                HomeActivity.deleteSavedCourse(longPressedButtonText);
-                break;
-            default:
-                break;
-        }
-        return super.onContextItemSelected(item);
+        loadingView.setCanceledOnTouchOutside(false);
     }
 }

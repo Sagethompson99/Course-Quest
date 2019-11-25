@@ -2,23 +2,22 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Constraints;
+import androidx.core.view.ViewCompat;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.ContextMenu;
+import android.view.ContextThemeWrapper;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -41,8 +40,6 @@ public class SearchPage extends AppCompatActivity {
     private static final String PREF_DARK_THEME = "dark_theme";
     private String alphabeticalType = "";
     private ArrayList<String> searchWhichWebsites;
-    private int checkedFilterOrderButtonId = 0;
-    private ArrayList<Integer> checkedButtons = new ArrayList<>();
     private LinearLayout popularSearchesView;
     private LinearLayout recentSearchesView;
     private ArrayList<String> recentSearchTerms;
@@ -51,6 +48,7 @@ public class SearchPage extends AppCompatActivity {
     String currentSearch;
     private PopupWindow invalidSearchView;
     private TextView popupText;
+    private PopupMenu filterMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +61,26 @@ public class SearchPage extends AppCompatActivity {
             setTheme(R.style.AppTheme_Dark_NoActionBar);
         }
 
+        setContentView(R.layout.activity_search_page);
+
         searchWhichWebsites = new ArrayList<>();
 
-        setContentView(R.layout.activity_search_page);
-        LinearLayout main = findViewById(R.layout.activity_search_page);
+        filterButton = findViewById(R.id.filter);
+        Context wrapper = new ContextThemeWrapper(this, R.style.PopupTheme);
+        filterMenu = new PopupMenu(wrapper, filterButton);
+        filterMenu.getMenuInflater().inflate(R.menu.filters, filterMenu.getMenu());
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                filterMenu.show();
+
+                filterMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return onFilterItemClick(item);
+                    }
+                });
+            }
+        });
 
         popupText = new TextView(this);
         popupText.setText("invalid search");
@@ -102,9 +116,6 @@ public class SearchPage extends AppCompatActivity {
         popularSearchesView = findViewById(R.id.popularSearches);
         populatePopularSearchesView();
         populateRecentSearchesView();
-
-        filterButton = findViewById(R.id.filter);
-        registerForContextMenu(filterButton);
 
         final Intent intent = new Intent(SearchPage.this, SearchPageResults.class);
         searchVal.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -169,13 +180,14 @@ public class SearchPage extends AppCompatActivity {
         LayoutInflater layoutInflater = (LayoutInflater) SearchPage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View customView = layoutInflater.inflate(R.layout.invalid_search_popup,null);
 
-        Button closePopupBtn = (Button) customView.findViewById(R.id.closePopupBtn);
+        Button closePopupBtn = customView.findViewById(R.id.closePopupBtn);
 
         //instantiate popup window
         invalidSearchView = new PopupWindow(customView, Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.WRAP_CONTENT);
 
         //display the popup window
         invalidSearchView.showAtLocation(findViewById(R.id.search), Gravity.CENTER, 0, 0);
+        customView.setAlpha((float) .97);
 
         //close the popup window on button click
         closePopupBtn.setOnClickListener(new View.OnClickListener() {
@@ -258,73 +270,64 @@ public class SearchPage extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo)
-    {
-        super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.filters,menu);
-        menu.setHeaderTitle("Filters");
 
-        //repopulates button checked states
-        if(checkedButtons != null){
-            for(int i = 0; i < checkedButtons.size(); i++){
-                menu.findItem(checkedButtons.get(i)).setChecked(true);
-            }
-        }
-        if(checkedFilterOrderButtonId != 0){
-            menu.findItem(checkedFilterOrderButtonId).setChecked(true);
-        }
-    }
+    public boolean onFilterItemClick(MenuItem item) {
+        item.setChecked(!item.isChecked());
+        boolean onSubMenu = false;
 
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId())
         {
             case R.id.filterABC:
                 alphabeticalType = "filterABC";
-                checkedFilterOrderButtonId = item.getItemId();
+                onSubMenu =true;
                 break;
             case R.id.filterZYX:
                 alphabeticalType = "filterZYX";
-                checkedFilterOrderButtonId = item.getItemId();
+                onSubMenu = true;
                 break;
             case R.id.filterDefault:
                 alphabeticalType= "filterDefault";
-                checkedFilterOrderButtonId = item.getItemId();
+                onSubMenu = true;
                 break;
             case R.id.filterCodeCademy:
                 checkOrUncheckWebsite("CodeCademy", item);
+                onSubMenu =true;
                 break;
             case R.id.filterCoursera:
                 checkOrUncheckWebsite("Coursera", item);
+                onSubMenu = true;
                 break;
             case R.id.filterFutureLearn:
                 checkOrUncheckWebsite("FutureLearn", item);
+                onSubMenu = true;
                 break;
             case R.id.filterSkillShare:
                 checkOrUncheckWebsite("SkillShare", item);
+                onSubMenu = true;
                 break;
             case R.id.clearFilters:
                 addAllWebsites();
                 alphabeticalType = "filterDefault";
+                onSubMenu = false;
                 break;
             default:
                 break;
         }
-       return super.onContextItemSelected(item);
+        //prevents menu from closing while selecting filters
+        if(onSubMenu) {
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
+            item.setActionView(new View(SearchPage.this));
+        }
+        return false;
     }
 
     public void checkOrUncheckWebsite(String website, MenuItem item) {
         //If item already checked then unchecked it
         if(searchWhichWebsites.contains(item.toString())) {
-            checkedButtons.remove(Integer.valueOf(item.getItemId()));
             searchWhichWebsites.remove(website);
         }
         //If item is unchecked then checked it
         else {
-            checkedButtons.add(item.getItemId());
             searchWhichWebsites.add(website);
         }
     }

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical" >
+
 
     <item
         android:id="@+id/filterOrder"
@@ -12,7 +10,7 @@
                 android:checkableBehavior="single">
                 <item
                     android:id="@+id/filterABC"
-                    android:title="Alphabetical ABC" />
+                    android:title="Alphabetical ABC"/>
                 <item
                     android:id="@+id/filterZYX"
                     android:title="Alphabetical ZYX" />
@@ -23,25 +21,26 @@
         </menu>
     </item>
 
+
     <item
         android:id="@+id/filterProviders"
         android:title="Providers">
         <menu>
             <group android:id="@+id/providers"
                 android:checkableBehavior="all">
-            <item
-                android:id="@+id/filterCodeCademy"
-                android:title="CodeCademy"/>
-            <item
-                android:id="@+id/filterCoursera"
-                android:title="Coursera"/>
-            <item
-                android:id="@+id/filterFutureLearn"
-                android:title="FutureLearn"/>
-            <item
-                android:id="@+id/filterSkillShare"
-                android:title="SkillShare"/>
-            </group>
+                <item
+                    android:id="@+id/filterCodeCademy"
+                    android:title="CodeCademy"/>
+                <item
+                    android:id="@+id/filterCoursera"
+                    android:title="Coursera"/>
+                <item
+                    android:id="@+id/filterFutureLearn"
+                    android:title="FutureLearn"/>
+                <item
+                    android:id="@+id/filterSkillShare"
+                    android:title="SkillShare"/>
+                </group>
         </menu>
     </item>
 

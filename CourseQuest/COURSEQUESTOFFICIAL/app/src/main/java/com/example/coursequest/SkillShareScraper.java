@@ -20,6 +20,8 @@ import android.os.AsyncTask;
 import android.widget.Button;
 
 public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
+
+	private final String url = "https://www.skillshare.com/search?query=";
 	SearchPageResults page;
 	ArrayList<Course> finalCourses;
 
@@ -31,14 +33,12 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 		ArrayList<String> skillLinks = new ArrayList<String>();
 		ArrayList<Course> allCourses = new ArrayList<Course>();
 		try {
-			Document doc = Jsoup.connect("https://www.skillshare.com/search?query=" + userSearch).get();
-			//spaces don't matter because browser catches
+			Document doc = Jsoup.connect(url + userSearch).get();
 
 			Elements titles = doc.getElementsByClass("ss-card__title");
 			Elements links = doc.getElementsByTag("a");
 
 			for (Element title : titles) {
-				//System.out.println("Title : " + title.text());
 				skillTitles.add(title.text());
 					//What else is needed? Images?
 			}
@@ -57,11 +57,6 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 
 			ArrayList<String> finalLinks = removeDuplicates(skillLinks);
 
-//			for (int c = 0; c < finalLinks.size(); c++) {
-//				System.out.println("Links fr: " + finalLinks.get(c));
-//			}
-
-			//System.out.println("array list counts: " + skillTitles.size() + " and " + finalLinks.size());
 			allCourses = makeCourseObjects(skillTitles,finalLinks);
 		}
 		catch (IOException e) {
@@ -93,7 +88,7 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 				//need to add course cost type
 				allCourses.add(course);
 			}
-			//System.out.println("course count: " + allCourses.size());
+
 			finalCourses = allCourses;
 			return allCourses;
 		}
@@ -121,6 +116,7 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 		return "Subscription";
 	}
 
+
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {
 			SearchPageResults.courses.addAll(list);
@@ -131,8 +127,4 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 		}
 	}
 
-//	public static void main(String[] args) {
-//		SkillShareScraper scraper = new SkillShareScraper();
-//		scraper.getCourses("algebra");
-//	}
 }

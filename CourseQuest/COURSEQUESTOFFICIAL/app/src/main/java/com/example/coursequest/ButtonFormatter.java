@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.Button;
 
 import androidx.constraintlayout.widget.Constraints;
+
 import java.util.Random;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
@@ -15,19 +16,21 @@ import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
  */
 public class ButtonFormatter  {
 
-    private static int textSize = 19;                   //yellow    dark blue   green      teal        purple     orange   green-blue  red        blue
-    private static String[] buttonColors = new String[]{"#F1C40F", "#2E86C1", "#2ECC71", "#45B39D",  "#AE73FF", "#FFAE0D", "#43B89E", "#FF5348", "#2BADF8"};
+    private static int textSize = 20;                   //yellow     green      teal        purple     orange   green-blue  red        blue
+    private static String[] buttonColors = new String[]{"#F1C40F", "#2ECC71", "#45B39D",  "#AE73FF", "#FFAE0D", "#43B89E", "#FF5348", "#2BADF8"};
+    private static int color;
 
     public static void formatCourseButton(Context c, Button b)
     {
-        int color = new Random().nextInt(9); //randomizer for card background color
+        color = new Random().nextInt(buttonColors.length-1); //random color for card background color
         b.setTransformationMethod(null);
         Drawable card = getDrawable(c, R.drawable.results_card);
         card.setTint(Color.parseColor(buttonColors[color]));
         b.setBackground(card);
+        b.setPadding(55, 55, 55, 55);
+        b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
         b.setTextSize(COMPLEX_UNIT_SP, textSize);
         b.setTextColor(Color.parseColor("#F9F9F9"));
-        b.setPadding(55, 55, 55, 55);
         Constraints.LayoutParams params = new Constraints.LayoutParams(
                 Constraints.LayoutParams.WRAP_CONTENT,
                 Constraints.LayoutParams.WRAP_CONTENT
@@ -38,19 +41,21 @@ public class ButtonFormatter  {
 
     public static void formatSearchPageButton(Context c, Button b)
     {
-        int color = new Random().nextInt(8); //randomizer for card background color
+        color = new Random().nextInt(buttonColors.length-1); //random color for card background color
         b.setTransformationMethod(null);
         Drawable card = getDrawable(c, R.drawable.results_card);
         card.setTint(Color.parseColor(buttonColors[color]));
+
         b.setBackground(card);
-        b.setTextSize(COMPLEX_UNIT_SP, textSize);
+        b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
+        b.setTextSize(COMPLEX_UNIT_SP, 19);
         b.setTextColor(Color.parseColor("#F9F9F9"));
         b.setPadding(55, 55, 55, 55);
         Constraints.LayoutParams params = new Constraints.LayoutParams(
                 Constraints.LayoutParams.WRAP_CONTENT,
                 Constraints.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(20, 0, 0, 0);
+        params.setMargins(20, 0, 0, 15);
         b.setLayoutParams(params);
     }
 }

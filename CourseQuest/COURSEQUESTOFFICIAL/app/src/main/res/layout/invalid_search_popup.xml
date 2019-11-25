@@ -3,9 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/results_card"
+    android:background="@drawable/round_button"
     android:backgroundTint="?attr/colorAccent"
-    android:padding="35dip">
+    android:padding="35dip"
+    android:clipToPadding="false">
 
     <TextView
         android:layout_width="wrap_content"
@@ -17,12 +18,12 @@
         android:textSize="19sp"/>
 
     <Button
+        android:id="@+id/closePopupBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:text="Close"
-        android:id="@+id/closePopupBtn"
-        android:textColor="@color/colorTextDarkMode"
-        android:background="@drawable/results_card"
-        android:backgroundTint="@color/colorPrimaryDark"/>
+        android:textColor="@color/colorTextDarkMode" />
 
 </LinearLayout>
