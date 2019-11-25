@@ -1,5 +1,5 @@
 /*
-Class name: ABCfilterTest.java
+Class name: ABCfilterTestOld.java
 Scenario: Given a user who is search a course, when they click A-Z on the filter then results will display in normal alphabetical order.
  */
 package com.example.coursequest;
@@ -26,7 +26,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -116,16 +115,6 @@ public class ABCfilterTest {
                                 2),
                         isDisplayed()));
         appCompatButton3.perform(click());
-
-        ViewInteraction button = onView(
-                allOf(withText("Advanced Data Structures in Java\n\nNo description. Click for more information about this course.\n\nCoursera"),
-                        childAtPosition(
-                                allOf(withId(R.id.resultView),
-                                        childAtPosition(
-                                                withId(R.id.results),
-                                                0)),
-                                0)));
-        button.perform(scrollTo(), click());
     }
 
     private static Matcher<View> childAtPosition(
