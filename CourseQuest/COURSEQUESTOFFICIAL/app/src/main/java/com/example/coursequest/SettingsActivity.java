@@ -13,15 +13,15 @@ import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private Button searchButton;
-    private Button homeButton;
-    private Button settingsButton;
-    private Switch darkModeSwitch;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Button searchButton;
+        Button homeButton;
+        Switch darkModeSwitch;
 
         //saved user preferences. Used to save dark mode/light mode preferences for each launch
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -35,21 +35,21 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        searchButton = (Button) findViewById(R.id.searchButton2);
+        searchButton = findViewById(R.id.searchButton2);
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openSearchPage();
             }
         });
 
-        homeButton = (Button) findViewById(R.id.homeButton);
+        homeButton = findViewById(R.id.homeButton);
         homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openHomePage();
             }
         });
 
-        darkModeSwitch = (Switch) findViewById(R.id.DarkModeSwitch);
+        darkModeSwitch = findViewById(R.id.DarkModeSwitch);
         darkModeSwitch.setChecked(useDarkTheme);
         darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -60,18 +60,18 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     //opens search page
-    public void openSearchPage() {
+    private void openSearchPage() {
         Intent intent = new Intent(this, SearchPage.class);
         startActivity(intent);
     }
 
     //opens home page
-    public void openHomePage() {
+    private void openHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
-    public void refreshPage(Activity a){
+    private void refreshPage(Activity a){
         final Intent intent = this.getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         a.finish();
@@ -82,7 +82,7 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     //sets app theme to dark mode if darkModeSwitch is checked
-    public void toggleTheme(boolean darkTheme){
+    private void toggleTheme(boolean darkTheme){
         SharedPreferences.Editor editor = getSharedPreferences(PREFS_NAME, MODE_PRIVATE).edit();
         editor.putBoolean(PREF_DARK_THEME, darkTheme);
         editor.apply();

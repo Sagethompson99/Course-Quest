@@ -17,21 +17,20 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.os.AsyncTask;
-import android.widget.Button;
 
-public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
+class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 
-	private final String url = "https://www.skillshare.com/search?query=";
-	SearchPageResults page;
-	ArrayList<Course> finalCourses;
+	private SearchPageResults page;
+	private ArrayList<Course> finalCourses;
 
 	protected ArrayList<Course> doInBackground(Object... params) {
+		final String url = "https://www.skillshare.com/search?query=";
 		String userSearch = (String) params[0];
 		page = (SearchPageResults) params[1];
-		ArrayList<String> skillTitles = new ArrayList<String>();
-		ArrayList<String> skillLinksTemp = new ArrayList<String>();
-		ArrayList<String> skillLinks = new ArrayList<String>();
-		ArrayList<Course> allCourses = new ArrayList<Course>();
+		ArrayList<String> skillTitles = new ArrayList<>();
+		ArrayList<String> skillLinksTemp = new ArrayList<>();
+		ArrayList<String> skillLinks = new ArrayList<>();
+		ArrayList<Course> allCourses = new ArrayList<>();
 		try {
 			Document doc = Jsoup.connect(url + userSearch).get();
 
@@ -65,8 +64,8 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 		return allCourses;
 	}
 
-	public ArrayList<String> removeDuplicates(ArrayList<String> tempLinks) {
-		ArrayList<String> links = new ArrayList<String>();
+	private ArrayList<String> removeDuplicates(ArrayList<String> tempLinks) {
+		ArrayList<String> links = new ArrayList<>();
 		for (String link : tempLinks) {
 			if(!links.contains(link)) {
 				links.add(link);
@@ -75,16 +74,16 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 		return links;
 	}
 	
-	public ArrayList<Course> makeCourseObjects(ArrayList<String> titles, ArrayList<String> links) {
-		ArrayList<Course> allCourses = new ArrayList<Course>();
+	private ArrayList<Course> makeCourseObjects(ArrayList<String> titles, ArrayList<String> links) {
+		ArrayList<Course> allCourses = new ArrayList<>();
 		if (titles.size() == links.size()) { //to make sure the titles and links aren't offset
 			for(int i = 0; i < titles.size(); i++) {
 				Course course = new Course();
-				course.setCourseName(course, titles.get(i));
-				course.setCourseLink(course, links.get(i));
-				course.setCourseWebsite(course, getWebsite());
-				course.setCost(course, getCost());
-				course.setCourseDescription(course,getNoDescription());
+				Course.setCourseName(course, titles.get(i));
+				Course.setCourseLink(course, links.get(i));
+				Course.setCourseWebsite(course, "Skill Share");
+				Course.setCost(course, "$15/month or $99/year");
+				Course.setCourseDescription(course,"No description. Click for more information about this course.");
 				//need to add course cost type
 				allCourses.add(course);
 			}
@@ -98,24 +97,6 @@ public class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Cours
 	public ArrayList<Course> getCourses() {
 		return finalCourses;
 	}
-
-	
-	public String getWebsite() {
-		return "Skill Share";
-	}
-	
-	public String getCost() {
-		return "$15/month or $99/year";
-	}
-
-	public String getNoDescription() {
-		return "No description. Click for more information about this course.";
-	}
-	
-	public String getCourseCostType() {
-		return "Subscription";
-	}
-
 
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {

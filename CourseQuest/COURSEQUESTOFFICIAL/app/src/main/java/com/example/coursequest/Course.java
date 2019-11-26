@@ -2,7 +2,6 @@ package com.example.coursequest;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,7 +19,7 @@ public class Course implements Parcelable
         return 0;
     }
 
-    public Course(Parcel in)
+    private Course(Parcel in)
     {
         readFromParcel(in);
     }
@@ -75,159 +74,89 @@ public class Course implements Parcelable
 
     }
 
-    public void setCourseSubject(String courseSubject)
+    void setCourseSubject(String courseSubject)
     {
         this.courseSubject = courseSubject;
     }
 
-    public static void setCourseSubject(Course course, String courseSubject)
-    {
-        course.courseSubject = courseSubject;
-    }
-
-    public void setCourseName(String courseName)
+    void setCourseName(String courseName)
     {
         this.courseName = courseName;
     }
 
-    public static void setCourseName(Course course, String courseName)
+    static void setCourseName(Course course, String courseName)
     {
         course.courseName = courseName;
     }
 
 
-    public void setCourseWebsite(String courseWebsite)
+    void setCourseWebsite(String courseWebsite)
     {
         this.courseWebsite = courseWebsite;
     }
 
-    public static void setCourseWebsite(Course course, String courseWebsite)
+    static void setCourseWebsite(Course course, String courseWebsite)
     {
         course.courseWebsite = courseWebsite;
     }
 
-    public void setCourseLink(String courseLink)
+    void setCourseLink(String courseLink)
     {
         this.courseLink = courseLink;
     }
 
-    public static void setCourseLink(Course course, String courseLink)
+    static void setCourseLink(Course course, String courseLink)
     {
         course.courseLink = courseLink;
     }
 
-    public void setCourseDescription(String courseDescription)
+    void setCourseDescription(String courseDescription)
     {
         this.courseDescription = courseDescription;
     }
 
-    public static void setCourseDescription(Course course, String courseDescription)
+    static void setCourseDescription(Course course, String courseDescription)
     {
         course.courseDescription = courseDescription;
     }
 
-    public void setCost(String cost)
-    {
-        this.cost = cost;
-    }
-
-    public static void setCost(Course course, String cost)
+    static void setCost(Course course, String cost)
     {
         course.cost = cost;
     }
 
-    public void setRating(String rating)
-    {
-        this.rating = rating;
-    }
-
-    public static void setRating(Course course, String rating)
-    {
-        course.rating = rating;
-    }
-
-    public static String getCourseSubject(Course course)
-    {
-        return course.courseSubject;
-    }
-
-    public static String getCourseName(Course course)
+    static String getCourseName(Course course)
     {
         return course.courseName;
     }
 
-    public static String getCourseWebsite(Course course)
+    private static String getCourseWebsite(Course course)
     {
         return course.courseWebsite;
     }
 
-    public static String getCourseLink(Course course)
+    static String getCourseLink(Course course)
     {
         return course.courseLink;
     }
 
-    public static String getCourseDescription(Course course)
+    private static String getCourseDescription(Course course)
     {
         return course.courseDescription;
     }
 
-    public static String getCost(Course course)
-    {
-        return course.cost;
-    }
-
-    public static String getRating(Course course)
-    {
-        return course.rating;
-    }
-
-    public static void sortByCourseName(ArrayList<Course> courses)
-    {
-        Collections.sort(courses, new courseCompareByCourseName());
-    }
-
-    public static void sortBySubject(ArrayList<Course> courses)
-    {
-        Collections.sort(courses, new courseCompareBySubject());
-    }
-
-    public static void sortByWebsite(ArrayList<Course> courses)
-    {
-        Collections.sort(courses, new courseCompareByWebsite());
-    }
-
-    public static void sortByNameABC(ArrayList<Course> courses)
+    static void sortByNameABC(ArrayList<Course> courses)
     {
         Collections.sort(courses, new courseCompareByNameABC());
     }
 
-    public static void sortByNameZYX(ArrayList<Course> courses)
+    static void sortByNameZYX(ArrayList<Course> courses)
     {
         Collections.sort(courses, new courseCompareByNameZYX());
     }
 
-    public static void removeByWebsite(String website, ArrayList<Course> courses)
+    static String getInfoString(Course course)
     {
-        int i = 0;
-        while (i < courses.size())
-        {
-            if (courses.get(i)==null)
-            {
-                courses.remove(i);
-            }
-            else if (getCourseWebsite(courses.get(i)).equals(website))
-            {
-                courses.remove(i);
-            }
-            else
-            {
-                i++;
-            }
-        }
-    }
-
-
-    public static String getInfoString(Course course) {
         String courseInfo = "";
         String courseName = Course.getCourseName(course) + "\n\n";
         String courseDesc = Course.getCourseDescription(course) + "\n\n";

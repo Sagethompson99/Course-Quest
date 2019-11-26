@@ -2,7 +2,6 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -21,21 +20,20 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private Button searchButton;
-    private Button homeButton;
-    private Button settingsButton;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
-    static ArrayList<String> savedCourses;
-    static ArrayList<String> savedCourseLinks;
+    private static ArrayList<String> savedCourses;
+    private static ArrayList<String> savedCourseLinks;
     private LinearLayout savedCourseView;
     private ImageView noCoursesImage;
     private TextView noCoursesText;
-    public static SharedPreferences mySavedCourses;
+    private static SharedPreferences mySavedCourses;
     private optionsBarHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button searchButton;
+        Button settingsButton;
         super.onCreate(savedInstanceState);
 
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -72,23 +70,13 @@ public class HomeActivity extends AppCompatActivity {
         populateSavedCoursesView();
     }
 
-    public void openSearchPage() {
+    private void openSearchPage() {
         Intent intent = new Intent(this, SearchPage.class);
         startActivity(intent);
     }
 
-    public void openSettingsPage() {
+    private void openSettingsPage() {
         Intent intent = new Intent(this, SettingsActivity.class);
-        startActivity(intent);
-    }
-
-    public void refreshPage(Activity a){
-        final Intent intent = this.getIntent();
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        a.finish();
-        a.overridePendingTransition(0, 0);
-        a.startActivity(intent);
-        a.overridePendingTransition(0, 0);
         startActivity(intent);
     }
 
@@ -139,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void setButtonLink(final String courseLink, Button courseView)
+    private void setButtonLink(final String courseLink, Button courseView)
     {
         if(!courseLink.equals(""))
         {
@@ -157,7 +145,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    public void populateSavedCoursesView(){
+    private void populateSavedCoursesView(){
         if(savedCourses.size() < 1){
             noCoursesImage.setVisibility(View.VISIBLE);
             noCoursesText.setVisibility(View.VISIBLE);

@@ -1,7 +1,6 @@
 package com.example.coursequest;
 
 import android.os.AsyncTask;
-import android.widget.Button;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +13,9 @@ import org.jsoup.select.Elements;
  Creates a web scraper that pulls information from futurelearn.com for a given user search query
  and passes that info to the Search Results Page class
 */
-public class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
+class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 
-    private final String url = "https://www.futurelearn.com";
-    private Document doc;
-    SearchPageResults page;
+    private SearchPageResults page;
 
     /**
      * doInBackground is a pre-defined method that runs an asynchronous task on a separate thread from the UI.
@@ -28,13 +25,15 @@ public class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<C
      */
     @Override
     protected ArrayList<Course> doInBackground(Object... params) {
+        final String url = "https://www.futurelearn.com";
+        Document doc;
         String query = (String) params[0];
         page = (SearchPageResults) params[1];
-        List<String>courses = new ArrayList<String>();
-        List<String>courseDescriptions = new ArrayList<String>();
-        List<String>courseLinks = new ArrayList<String>();
+        List<String>courses = new ArrayList<>();
+        List<String>courseDescriptions = new ArrayList<>();
+        List<String>courseLinks = new ArrayList<>();
 
-        ArrayList<Course> courseList = new ArrayList<Course>();
+        ArrayList<Course> courseList = new ArrayList<>();
 
         try {
             //connects to futurelearn URL
@@ -59,7 +58,7 @@ public class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<C
             a.setCourseLink(url + courseLinks.get(i));
             a.setCourseDescription(courseDescriptions.get(i));
             a.setCourseName(courses.get(i));
-            a.setCourseWebsite(getCourseProvider());
+            a.setCourseWebsite("Future Learn");
             courseList.add(a);
         }
 
@@ -79,18 +78,6 @@ public class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<C
         catch(Exception e){
             System.out.println("Results creation unsuccessful");
         }
-    }
-
-    public String getCoursePrice() {
-        return "Free";
-    }
-
-    public String getCourseProfessors() {
-        return "";
-    }
-
-    public String getCourseProvider() {
-        return "Future Learn";
     }
 
 }

@@ -22,21 +22,21 @@ import java.util.ArrayList;
  */
 public class SearchPageResults extends AppCompatActivity {
 
-    public static ProgressDialog loadingView;
-    private Button backButton;
+    private static ProgressDialog loadingView;
     static ArrayList<Course> courses;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
     private ArrayList<String> searchWhichWebsites;
     private String alphabeticalType;
     private int numScrapersFinished = 0;
-    public LinearLayout resultsView;
+    private LinearLayout resultsView;
     private static String searchQuery;
     private optionsBarHandler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Button backButton;
         super.onCreate(savedInstanceState);
 
         //saved user preferences. Used to save dark mode/light mode preferences for each launch
@@ -81,7 +81,7 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //adds course result buttons to the screen
-    public void displaySearchResults()
+    private void displaySearchResults()
     {
         //Code idea used for adding views programmatically
         //https://github.com/udacity/ud839_Miwok/blob/b7c723c3c38c2c2ca9eb7067e34fb526052cfd34/app/src/main/java/com/example/android/miwok/NumbersActivity.java
@@ -104,7 +104,7 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
 
-    public void sortCourses(){
+    private void sortCourses(){
         if(alphabeticalType.equals("filterABC")) {
             Course.sortByNameABC(courses);
         }
@@ -119,7 +119,7 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //displayResults uses this method in a loop - displaying each course
-    public Button createCourseButton(Course course)
+    private Button createCourseButton(Course course)
     {
         Button courseView = new Button(this);
         ButtonFormatter.formatCourseButton(this, courseView);
@@ -148,7 +148,7 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
 
-    public void setLink(Course course, Button courseView)
+    private void setLink(Course course, Button courseView)
     {
         final String courseLink = Course.getCourseLink(course);
         if(!courseLink.equals(""))
@@ -169,7 +169,7 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //exits search results page and opens search page
-    public void openSearchPage()
+    private void openSearchPage()
     {
         Intent intent = new Intent(this, SearchPage.class);
         startActivity(intent);
@@ -186,7 +186,7 @@ public class SearchPageResults extends AppCompatActivity {
     }
 
     //gets search results from website scrapers for a given search query
-    public void search(String searchFor)
+    private void search(String searchFor)
     {
         if(searchWhichWebsites.contains("FutureLearn"))
         {

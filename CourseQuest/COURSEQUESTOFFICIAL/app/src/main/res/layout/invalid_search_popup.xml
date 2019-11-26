@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Use your words; null is an invalid search:/"
+        android:text="@string/invalid_search"
         android:layout_marginBottom="30dip"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textSize="19sp"/>
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/round_button"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Close"
+        android:text="@string/close"
         android:textColor="@color/colorTextDarkMode" />
 
 </LinearLayout>

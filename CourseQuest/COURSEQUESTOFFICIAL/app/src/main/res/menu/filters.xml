@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/filterOrder"
-        android:title="Order">
+        android:title="@string/order">
         <menu>
             <group android:id="@+id/orderFilters"
                 android:checkableBehavior="single">
                 <item
                     android:id="@+id/filterABC"
-                    android:title="Alphabetical ABC"/>
+                    android:title="@string/filterABC"/>
                 <item
                     android:id="@+id/filterZYX"
-                    android:title="Alphabetical ZYX" />
+                    android:title="@string/filterZYX" />
                 <item
                     android:id="@+id/filterDefault"
-                    android:title="None" />
+                    android:title="@string/filterDefault" />
             </group>
         </menu>
     </item>
@@ -24,27 +24,27 @@
 
     <item
         android:id="@+id/filterProviders"
-        android:title="Providers">
+        android:title="@string/providers">
         <menu>
             <group android:id="@+id/providers"
                 android:checkableBehavior="all">
                 <item
                     android:id="@+id/filterCodeCademy"
-                    android:title="CodeCademy"/>
+                    android:title="@string/filterCodeCademy"/>
                 <item
                     android:id="@+id/filterCoursera"
-                    android:title="Coursera"/>
+                    android:title="@string/filterCoursera"/>
                 <item
                     android:id="@+id/filterFutureLearn"
-                    android:title="FutureLearn"/>
+                    android:title="@string/filterFutureLearn"/>
                 <item
                     android:id="@+id/filterSkillShare"
-                    android:title="SkillShare"/>
+                    android:title="@string/filterSkillShare"/>
                 </group>
         </menu>
     </item>
 
     <item
         android:id="@+id/clearFilters"
-        android:title="Clear Filters"/>
+        android:title="@string/clear_filters"/>
 </menu>

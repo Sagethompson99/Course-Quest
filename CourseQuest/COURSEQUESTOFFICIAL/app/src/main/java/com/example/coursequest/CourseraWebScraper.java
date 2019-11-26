@@ -10,11 +10,9 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Course>>{
-		
-	private Document document;
-	private final String url = "https://www.coursera.org/search?query=";
-	SearchPageResults page;
+class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Course>>{
+
+	private SearchPageResults page;
 
 	/**
 	 * doInBackground is a pre-defined method that runs an asynchronous task on a separate thread from the UI.
@@ -23,11 +21,13 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 	 * and creates course objects with that information
 	 */
 	protected ArrayList<Course> doInBackground(Object... params) {
+		Document document;
+		final String url = "https://www.coursera.org/search?query=";
 		String searchTerm = (String) params[0];
 		page = (SearchPageResults) params[1];
-		List<String> titlesList = new ArrayList<String>();
-		List<String> allLinks = new ArrayList<String>();
-		List<String> courseLinks = new ArrayList<String>();
+		List<String> titlesList = new ArrayList<>();
+		List<String> allLinks = new ArrayList<>();
+		List<String> courseLinks = new ArrayList<>();
 		ArrayList<Course> allCourses = new ArrayList<>();
 		
 		try {
@@ -86,10 +86,11 @@ public class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Cour
 	}
 	
 	
-	public static void setCourseLinks(List<String> allLinks, List<String> courseLinks) {
+	private static void setCourseLinks(List<String> allLinks, List<String> courseLinks) {
 		for(int r = 0; r < allLinks.size(); r ++) {
 			String potential_Link = allLinks.get(r);
-			if(potential_Link.contains("learn/") || potential_Link.contains("specializations/") || potential_Link.contains("professional-certificates/")) {
+			if(potential_Link.contains("learn/") || potential_Link.contains("specializations/") || potential_Link.contains("professional-certificates/")
+					|| potential_Link.contains("degrees/") || potential_Link.contains("master track")) {
 				courseLinks.add("https://www.coursera.org" + potential_Link);
 			}
 		}

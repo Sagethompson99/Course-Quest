@@ -8,11 +8,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
-public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
-	
-	private final String url = "https://www.codecademy.com/search?page=";
-	private Document doc;
-	SearchPageResults page;
+class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
+
+	private SearchPageResults page;
 
 	/**
 	 * doInBackground is a pre-defined method that runs an asynchronous task on a separate thread from the UI.
@@ -22,13 +20,15 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 	 */
 	@Override
 	protected ArrayList<Course> doInBackground(Object... params) {
+		Document doc;
+		final String url = "https://www.codecademy.com/search?page=";
 		String query = (String) params[0];
 		page = (SearchPageResults) params[1];
-		List<String>courses = new ArrayList<String>();
-		List<String>courseDescriptions = new ArrayList<String>();
-		List<String>courseLinks = new ArrayList<String>();
+		List<String>courses = new ArrayList<>();
+		List<String>courseDescriptions = new ArrayList<>();
+		List<String>courseLinks = new ArrayList<>();
 		
-		ArrayList<Course> courseList = new ArrayList<Course>();
+		ArrayList<Course> courseList = new ArrayList<>();
 		
 		int pageNumber = 1; //current page number
 		int numPages; //number of pages to parse (determined by numResults)
@@ -85,7 +85,7 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 	    	course.setCourseLink(courseLinks.get(i));
 	    	course.setCourseDescription(courseDescriptions.get(i));
 	    	course.setCourseName(courses.get(i));
-	        course.setCourseWebsite(getCourseProvider());
+	        course.setCourseWebsite("CodeCademy");
 	    	courseList.add(course);
 	    } 
 	    
@@ -108,24 +108,6 @@ public class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Co
 		catch(Exception e){
 			System.out.println("[CodeCademy] Results creation unsuccessful");
 		}
-	}
-
-
-	
-	public String getCoursePrice() {
-		return "$19.99/Month";
-	}
-	
-	public String getCourseProfessors() {
-		return "Not Available";
-	}
-	
-	public String getCourseRating() {
-		return "Not Available";
-	}
-	
-	public String getCourseProvider() {
-		return "CodeCademy";
 	}
 
 }

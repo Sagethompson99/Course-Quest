@@ -12,7 +12,7 @@ import android.os.Handler;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static int TIMEOUT = 0;
+    private static final int TIMEOUT = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

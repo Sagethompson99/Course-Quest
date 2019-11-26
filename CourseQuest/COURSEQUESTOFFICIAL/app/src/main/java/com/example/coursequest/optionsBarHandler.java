@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-public class optionsBarHandler  {
+class optionsBarHandler {
 
     private Button close;
     private Button like;
@@ -23,19 +22,18 @@ public class optionsBarHandler  {
     private Button share;
     private View optionsBar;
     private View shareBar;
-    private Context context;
-    private Button currentCourse;
-    private Button cancelShare;
-    private LayoutInflater inflater;
-    private LinearLayout layout;
+    private final Context context;
+    private final Button currentCourse;
+    private final LayoutInflater inflater;
+    private final LinearLayout layout;
     private boolean shareBarOpen = false;
-    public static String longPressedButtonText = "";
-    public static String longPressedButtonLink = "";
-    public int optionsBarIndex = -1;
-    public static String currentPage;
+    private static String longPressedButtonText = "";
+    private static String longPressedButtonLink = "";
+    private int optionsBarIndex = -1;
+    private static String currentPage;
 
 
-    public optionsBarHandler(LinearLayout l, Context c, Button course, String page){
+    optionsBarHandler(LinearLayout l, Context c, Button course, String page){
         layout = l;
         context = c;
         currentCourse = course;
@@ -75,19 +73,19 @@ public class optionsBarHandler  {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(shareBarOpen==false) {
+                if(!shareBarOpen) {
                     openShareOptionsBar();
                 }
             }
         });
     }
 
-    public void closeCourseOptionsBar(){
+    void closeCourseOptionsBar(){
         layout.removeViewAt(layout.indexOfChild(currentCourse)+1);
         optionsBarIndex = -1;
     }
 
-    public void openCourseOptionsBar(){
+    void openCourseOptionsBar(){
 
         if(optionsBarIndex != -1) {
             layout.removeViewAt(layout.indexOfChild(currentCourse)+1);
@@ -108,6 +106,7 @@ public class optionsBarHandler  {
     }
 
     private void openShareOptionsBar(){
+        Button cancelShare;
         ConstraintLayout main = (ConstraintLayout) layout.getParent().getParent();
         shareBar = inflater.inflate(R.layout.course_share_bar, main, false);
         cancelShare = shareBar.findViewById(R.id.cancelButton);

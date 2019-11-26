@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
-        android:text="Share with"
+        android:text="@string/share_with"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textSize="20sp" />
@@ -37,51 +37,56 @@
                 android:id="@+id/messageShare"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#5EE260"
-                android:text="M" />
+                android:text="@string/M"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/emailShare"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#F5F5F5"
-                android:text="E" />
+                android:text="@string/E"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/twitterShare"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#03A9F4"
-                android:text="T" />
+                android:text="@string/T"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/noteShare"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#FFEB3B"
-                android:text="N" />
+                android:text="@string/N"
+                style="?android:attr/buttonBarButtonStyle"/>
 
             <Button
                 android:id="@+id/copyLinkShare"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#E91E63"
-                android:text="C" />
+                android:text="@string/C"
+                style="?android:attr/buttonBarButtonStyle"/>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -91,6 +96,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Cancel"
+        android:text="@string/cancel"
         android:textAlignment="center" />
 </LinearLayout>

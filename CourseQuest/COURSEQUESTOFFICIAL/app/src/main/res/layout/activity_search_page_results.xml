@@ -60,7 +60,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="125dp"
                 android:gravity="center"
-                android:text="No results :/"
+                android:text="@string/no_results"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                 android:textSize="40sp"
                 android:visibility="gone"/>

@@ -16,27 +16,29 @@
         android:paddingTop="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">>
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/homeButton"
             android:layout_width="39dip"
             android:layout_height="37dip"
             android:layout_gravity="center"
-            android:layout_marginRight="60dip"
+            android:layout_marginEnd="60dip"
             android:layout_marginBottom="1dip"
             android:background="@drawable/ic_home"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/searchButton2"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_marginRight="60dip"
+            android:layout_marginEnd="60dip"
             android:layout_weight="0"
             android:background="@drawable/ic_search_black_24dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/settingsButton"
@@ -44,7 +46,8 @@
             android:layout_height="50dip"
             android:layout_weight="0"
             android:background="@drawable/ic_settings_black_24dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 
     <TextView
@@ -52,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="My Courses"
+        android:text="@string/saved_course_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="You have no saved courses:/"
+                android:text="@string/saved_course_message"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                 android:textSize="23sp"
                 android:visibility="gone" />

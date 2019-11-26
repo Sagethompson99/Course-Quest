@@ -16,24 +16,26 @@
         android:paddingTop="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">>
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/homeButton"
             android:layout_width="39dip"
             android:layout_height="37dip"
-            android:layout_marginRight="60dip"
+            android:layout_marginEnd="60dip"
             android:background="@drawable/ic_home"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/searchButton2"
             android:layout_width="50dip"
             android:layout_height="50dip"
-            android:layout_marginRight="60dip"
+            android:layout_marginEnd="60dip"
             android:layout_weight="0"
             android:background="@drawable/ic_search_black_24dp"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"/>
 
         <Button
             android:id="@+id/settingsButton"
@@ -42,7 +44,8 @@
             android:layout_weight="0"
             android:background="@drawable/ic_settings_black_24dp"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            style="?android:attr/buttonBarButtonStyle"/>
     </LinearLayout>
 
 
@@ -51,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Settings"
+        android:text="@string/settings"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="7dp"
-                android:text="Dark Mode"
+                android:text="@string/dark_mode"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                 android:textColor="?android:attr/textColor"
                 android:textSize="20sp" />

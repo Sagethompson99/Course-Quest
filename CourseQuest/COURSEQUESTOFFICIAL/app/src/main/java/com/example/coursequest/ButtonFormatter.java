@@ -14,13 +14,13 @@ import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
 /* This class has a method which takes a button as a parameter and applies a set of standard button styles
  * to it.
  */
-public class ButtonFormatter  {
+class ButtonFormatter  {
 
-    private static int textSize = 20;                   //yellow     green      teal        purple     orange   green-blue  red        blue
-    private static String[] buttonColors = new String[]{"#F1C40F", "#2ECC71", "#45B39D",  "#AE73FF", "#FFAE0D", "#43B89E", "#FF5348", "#2BADF8"};
+    private static final int textSize = 20;                   //yellow     green      teal        purple     orange   green-blue  red        blue
+    private static final String[] buttonColors = new String[]{"#F1C40F", "#2ECC71", "#45B39D",  "#AE73FF", "#FFAE0D", "#43B89E", "#FF5348", "#2BADF8"};
     private static int color;
 
-    public static void formatCourseButton(Context c, Button b)
+    static void formatCourseButton(Context c, Button b)
     {
         color = new Random().nextInt(buttonColors.length-1); //random color for card background color
         b.setTransformationMethod(null);
@@ -39,7 +39,7 @@ public class ButtonFormatter  {
         b.setLayoutParams(params);
     }
 
-    public static void formatSearchPageButton(Context c, Button b)
+    static void formatSearchPageButton(Context c, Button b)
     {
         color = new Random().nextInt(buttonColors.length-1); //random color for card background color
         b.setTransformationMethod(null);

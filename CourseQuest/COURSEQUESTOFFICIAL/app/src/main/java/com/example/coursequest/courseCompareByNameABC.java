@@ -2,7 +2,7 @@ package com.example.coursequest;
 
 import java.util.Comparator;
 
-public class courseCompareByNameABC implements Comparator<Course>
+class courseCompareByNameABC implements Comparator<Course>
 {
     @Override
     public int compare(Course course1, Course course2) {

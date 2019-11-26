@@ -2,7 +2,6 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Constraints;
-import androidx.core.view.ViewCompat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -30,11 +29,6 @@ import java.util.ArrayList;
 
 public class SearchPage extends AppCompatActivity {
 
-    private Button searchButton;
-    private Button deleteSearchHistoryButton;
-    private Button homeButton;
-    private Button settingsButton;
-    private Button filterButton;
     private SearchView searchVal;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
@@ -43,15 +37,20 @@ public class SearchPage extends AppCompatActivity {
     private LinearLayout popularSearchesView;
     private LinearLayout recentSearchesView;
     private ArrayList<String> recentSearchTerms;
-    private String[] popularSearchTerms = new String[] {"Science", "Photography", "Coding", "Math", "Art History", "Engineering", "Politics", "Business"};
+    private final String[] popularSearchTerms = new String[] {"Science", "Photography", "Coding", "Math", "Art History", "Engineering", "Politics", "Business"};
     private SharedPreferences myRecentSearches;
-    String currentSearch;
+    private String currentSearch;
     private PopupWindow invalidSearchView;
-    private TextView popupText;
     private PopupMenu filterMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        TextView popupText;
+        Button searchButton;
+        Button deleteSearchHistoryButton;
+        Button homeButton;
+        Button settingsButton;
+        Button filterButton;
         super.onCreate(savedInstanceState);
 
         SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
@@ -83,7 +82,8 @@ public class SearchPage extends AppCompatActivity {
         });
 
         popupText = new TextView(this);
-        popupText.setText("invalid search");
+        String popupTextString = "invalid search";
+        popupText.setText(popupTextString);
 
         myRecentSearches = getSharedPreferences("shared preferences", MODE_PRIVATE);
         recentSearchesView = findViewById(R.id.recentSearches);
@@ -137,7 +137,7 @@ public class SearchPage extends AppCompatActivity {
                 hideKeyboard(v);
                 currentSearch = searchVal.getQuery().toString();
                 if(currentSearch.length() > 1){
-                if(!(recentSearchTerms.contains(currentSearch)) && currentSearch.length()>0) {
+                if(!(recentSearchTerms.contains(currentSearch))) {
                     recentSearchTerms.add(currentSearch);
                 }
                 saveData();
@@ -155,12 +155,12 @@ public class SearchPage extends AppCompatActivity {
         });
     }
 
-    public void openHomePage() {
+    private void openHomePage() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
     }
 
-    public void openResultsPage(String search) {
+    private void openResultsPage(String search) {
         Intent intent = new Intent(this, SearchPageResults.class);
         intent.putExtra("message", search);
         intent.putExtra("alphabeticalType", alphabeticalType);
@@ -171,12 +171,12 @@ public class SearchPage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openSettingsPage() {
+    private void openSettingsPage() {
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
 
-    public void createPopup(){
+    private void createPopup(){
         LayoutInflater layoutInflater = (LayoutInflater) SearchPage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View customView = layoutInflater.inflate(R.layout.invalid_search_popup,null);
 
@@ -198,7 +198,7 @@ public class SearchPage extends AppCompatActivity {
         });
     }
 
-    public void refreshPage(Activity a){
+    private void refreshPage(Activity a){
         final Intent intent = this.getIntent();
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         a.finish();
@@ -213,7 +213,7 @@ public class SearchPage extends AppCompatActivity {
         inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
     }
 
-    public void populatePopularSearchesView(){
+    private void populatePopularSearchesView(){
         for(String term: popularSearchTerms) {
             final Button b = new Button(this);
             b.setText(term);
@@ -227,7 +227,7 @@ public class SearchPage extends AppCompatActivity {
         }
     }
 
-    public void populateRecentSearchesView(){
+    private void populateRecentSearchesView(){
         for(int i = recentSearchTerms.size()-1; i >= 0; i--) {
             final Button b = new Button(this);
             b.setText(recentSearchTerms.get(i));
@@ -242,7 +242,7 @@ public class SearchPage extends AppCompatActivity {
 
     }
 
-    public void clearRecentSearches(){
+    private void clearRecentSearches(){
         if(recentSearchTerms.size() > 0) {
             recentSearchTerms.clear();
             saveData();
@@ -271,7 +271,7 @@ public class SearchPage extends AppCompatActivity {
     }
 
 
-    public boolean onFilterItemClick(MenuItem item) {
+    private boolean onFilterItemClick(MenuItem item) {
         item.setChecked(!item.isChecked());
         boolean onSubMenu = false;
 
@@ -321,7 +321,7 @@ public class SearchPage extends AppCompatActivity {
         return false;
     }
 
-    public void checkOrUncheckWebsite(String website, MenuItem item) {
+    private void checkOrUncheckWebsite(String website, MenuItem item) {
         //If item already checked then unchecked it
         if(searchWhichWebsites.contains(item.toString())) {
             searchWhichWebsites.remove(website);
@@ -332,7 +332,7 @@ public class SearchPage extends AppCompatActivity {
         }
     }
 
-    public void addAllWebsites()
+    private void addAllWebsites()
     {
         searchWhichWebsites.add("CodeCademy");
         searchWhichWebsites.add("Coursera");
