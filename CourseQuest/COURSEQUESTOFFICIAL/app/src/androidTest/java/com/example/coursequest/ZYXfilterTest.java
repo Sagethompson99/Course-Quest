@@ -26,7 +26,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -116,16 +115,6 @@ public class ZYXfilterTest {
                                 2),
                         isDisplayed()));
         appCompatButton3.perform(click());
-
-        ViewInteraction button = onView(
-                allOf(withText("Основы HTML и CSS\n\nNo description. Click for more information about this course.\n\nCoursera"),
-                        childAtPosition(
-                                allOf(withId(R.id.resultView),
-                                        childAtPosition(
-                                                withId(R.id.results),
-                                                0)),
-                                0)));
-        button.perform(scrollTo(), click());
     }
 
     private static Matcher<View> childAtPosition(
