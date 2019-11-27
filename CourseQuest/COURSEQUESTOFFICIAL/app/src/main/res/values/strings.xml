@@ -9,14 +9,13 @@
     <string name="explore">Explore</string>
     <string name="settings">Settings</string>
     <string name="dark_mode">Dark Mode</string>
+
+
     <string name="share_with">Share With</string>
-    <string name="M">M</string>
-    <string name="E">E</string>
-    <string name="T">T</string>
-    <string name="N">N</string>
-    <string name="C">C</string>
     <string name="cancel">Cancel</string>
+
     <string name="no_results">No Results :/</string>
+
     <string name="order">Order</string>
     <string name="filterABC">Alphabetical ABC</string>
     <string name="filterZYX">Alphabetical ZYX</string>
@@ -27,6 +26,10 @@
     <string name="filterFutureLearn">FutureLearn</string>
     <string name="filterSkillShare">SkillShare</string>
     <string name="clear_filters">Clear Filters</string>
+
     <string name="invalid_search">Use your words; null is an invalid search:/</string>
     <string name="close">Close</string>
+
+    <string name="blurEffectDescription">Adds a blur effect to screen to add focus to the share options</string>
+    <string name="noCourseImageDescription">An image view that is displayed on the home page only when the user has no saved courses</string>
 </resources>

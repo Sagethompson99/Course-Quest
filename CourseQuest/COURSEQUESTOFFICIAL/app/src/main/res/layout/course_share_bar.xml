@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="bottom"
-    android:background="@drawable/round_button"
+    android:background="@drawable/share_bar_background"
     android:backgroundTint="?attr/colorAccent"
     android:orientation="vertical">
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="15dp"
         android:text="@string/share_with"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display4"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:scrollbars="none">
 
         <LinearLayout
@@ -35,58 +35,68 @@
 
             <Button
                 android:id="@+id/messageShare"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#5EE260"
-                android:text="@string/M"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:foreground="@drawable/ic_message"
+                android:foregroundGravity="center"
+                android:foregroundTint="#FFFFFF" />
 
             <Button
                 android:id="@+id/emailShare"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#F5F5F5"
-                android:text="@string/E"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:foreground="@drawable/ic_email"
+                android:foregroundGravity="center"
+                android:foregroundTint="#3C3C3C" />
 
             <Button
                 android:id="@+id/twitterShare"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#03A9F4"
-                android:text="@string/T"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:foreground="@drawable/ic_twitter"
+                android:foregroundGravity="center"
+                android:foregroundTint="#FFFFFF" />
 
             <Button
                 android:id="@+id/noteShare"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
-                android:backgroundTint="#FFEB3B"
-                android:text="@string/N"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:backgroundTint="#FAE334"
+                android:foreground="@drawable/ic_notes"
+                android:foregroundGravity="center"
+                android:foregroundTint="#3C3C3C" />
 
             <Button
                 android:id="@+id/copyLinkShare"
+                style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginEnd="5dp"
                 android:layout_marginBottom="2dp"
                 android:background="@drawable/round_button"
                 android:backgroundTint="#E91E63"
-                android:text="@string/C"
-                style="?android:attr/buttonBarButtonStyle"/>
+                android:foreground="@drawable/ic_copy"
+                android:foregroundGravity="center"
+                android:foregroundTint="#F0F0F0" />
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -96,6 +106,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/colorPrimary"
         android:text="@string/cancel"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="@color/colorTextDarkMode" />
 </LinearLayout>

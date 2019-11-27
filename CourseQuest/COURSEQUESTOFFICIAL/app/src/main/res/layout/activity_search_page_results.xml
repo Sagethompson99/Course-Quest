@@ -67,4 +67,17 @@
         </LinearLayout>
     </ScrollView>
 
+    <ImageView
+        android:id="@+id/blurEffect"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:alpha="10"
+        android:background="#80000000"
+        android:contentDescription="@string/blurEffectDescription"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

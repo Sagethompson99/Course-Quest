@@ -11,34 +11,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
 class optionsBarHandler {
 
     private Button close;
     private Button like;
     private Button dislike;
     private Button share;
+    private View[] buttons;
     private View optionsBar;
-    private View shareBar;
     private final Context context;
     private final Button currentCourse;
     private final LayoutInflater inflater;
     private final LinearLayout layout;
-    private boolean shareBarOpen = false;
-    private static String longPressedButtonText = "";
-    private static String longPressedButtonLink = "";
-    private int optionsBarIndex = -1;
+    private static String currentButtonText = "";
+    private static String currentButtonLink = "";
     private static String currentPage;
 
 
-    optionsBarHandler(LinearLayout l, Context c, Button course, String page){
-        layout = l;
-        context = c;
+    optionsBarHandler(LinearLayout givenList, Context givenContext, Button course, String page){
+        layout = givenList;
+        context = givenContext;
         currentCourse = course;
         currentPage = page;
-        inflater = LayoutInflater.from(c);
+        inflater = LayoutInflater.from(givenContext);
 
         prepareOptionsBar();
     }
@@ -73,30 +68,28 @@ class optionsBarHandler {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!shareBarOpen) {
-                    openShareOptionsBar();
-                }
+                shareBarHandler shareBar = new shareBarHandler(context, layout, currentCourse.getTag().toString());
             }
         });
     }
 
     void closeCourseOptionsBar(){
-        layout.removeViewAt(layout.indexOfChild(currentCourse)+1);
-        optionsBarIndex = -1;
+       // Animation a = playAnimation(optionsBar, context, R.layout.animation_slide_left, 0);
+        layout.removeView(optionsBar);
     }
 
     void openCourseOptionsBar(){
 
-        if(optionsBarIndex != -1) {
-            layout.removeViewAt(layout.indexOfChild(currentCourse)+1);
+        if(layout.indexOfChild(optionsBar) > 0) {
+            closeCourseOptionsBar();
         }
 
-        longPressedButtonText = currentCourse.getText().toString();
-        longPressedButtonLink = currentCourse.getTag().toString();
-
-        View[] buttons = new View[]{close, share, dislike, like};
+        currentButtonText = currentCourse.getText().toString();
+        currentButtonLink = currentCourse.getTag().toString();
 
         layout.addView(optionsBar, layout.indexOfChild(currentCourse)+1);
+
+        buttons = new View[]{close, share, dislike, like};
 
         int incrementDuration = 0;
         for(View view: buttons) {
@@ -105,42 +98,14 @@ class optionsBarHandler {
         }
     }
 
-    private void openShareOptionsBar(){
-        Button cancelShare;
-        ConstraintLayout main = (ConstraintLayout) layout.getParent().getParent();
-        shareBar = inflater.inflate(R.layout.course_share_bar, main, false);
-        cancelShare = shareBar.findViewById(R.id.cancelButton);
-        cancelShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeShareOptionsBar();
-            }
-        });
-
-        ConstraintSet constraints = new ConstraintSet();
-        main.addView(shareBar);
-        constraints.clone(main);
-        constraints.connect(shareBar.getId(), ConstraintSet.BOTTOM, R.id.Navigation, ConstraintSet.BOTTOM);
-        constraints.applyTo(main);
-
-        shareBarOpen = true;
-    }
-
-    private void closeShareOptionsBar(){
-        ConstraintLayout main = (ConstraintLayout) layout.getParent().getParent();
-        main.removeView(shareBar);
-
-        shareBarOpen = false;
-    }
-
     private void likeCourse(){
         displayToast("Course Saved:)");
-        HomeActivity.addNewSavedCourse(longPressedButtonText, longPressedButtonLink);
+        HomeActivity.addNewSavedCourse(currentButtonText, currentButtonLink);
     }
 
     private void dislikeCourse(){
         displayToast("Course Unsaved:(");
-        HomeActivity.deleteSavedCourse(longPressedButtonText);
+        HomeActivity.deleteSavedCourse(currentButtonText);
     }
 
     private Animation playAnimation(View v, Context context, int animationId, int durationDelay)

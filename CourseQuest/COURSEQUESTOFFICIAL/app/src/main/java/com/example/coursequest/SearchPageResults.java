@@ -127,8 +127,8 @@ public class SearchPageResults extends AppCompatActivity {
         courseView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                Button b = (Button)view;
-                handler = new optionsBarHandler(resultsView, SearchPageResults.this, b, "Results");
+                Button course = (Button)view;
+                handler = new optionsBarHandler(resultsView, SearchPageResults.this, course, "Results");
                 handler.openCourseOptionsBar();
                 return true;
             }
