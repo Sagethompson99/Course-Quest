@@ -69,9 +69,9 @@ public class shareBarHandler {
             @Override
             public void onClick(View view) {
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I found a course you might like");
-                emailIntent.putExtra(Intent.EXTRA_TEXT   , courseLink);
                 emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I found a course you might like!");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, courseLink);
                 context.startActivity(emailIntent);
             }
         });
