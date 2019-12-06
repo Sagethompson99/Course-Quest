@@ -38,4 +38,5 @@
     <string name="blurEffectDescription">Adds a blur effect to screen to add focus to the share options</string>
     <string name="noCourseImageDescription">An image view that is displayed on the home page only when the user has no saved courses</string>
     <string name="descSplashScreen">The image displayed when the app is opening nad loading</string>
+    <string name="done">Done</string>
 </resources>
