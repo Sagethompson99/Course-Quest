@@ -18,23 +18,10 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-<<<<<<< HEAD
 public class shareBarHandler {
-
-    private Button cancelShare;
-    private Button shareSMS;
-    private Button shareEmail;
-    private Button shareTwitter;
-    private Button copyLink;
-    private Button shareOther;
-    private String courseLink;
-    private float[] touchCoordinates = new float[2];
-=======
-class shareBarHandler {
 
     private final String courseLink;
     private final float[] touchCoordinates = new float[2];
->>>>>>> 922fad3a56fdd7a6ff1d2c16fc20f17146805ac3
     private View shareBar;
     private ImageView blurEffect;
     private final Context context;
@@ -56,6 +43,7 @@ class shareBarHandler {
         Button shareEmail;
         Button shareTwitter;
         Button copyLink;
+        Button shareOther;
         shareBar = inflater.inflate(R.layout.course_share_bar, mainLayout, false);
 
         cancelShare = shareBar.findViewById(R.id.cancelButton);
@@ -114,8 +102,10 @@ class shareBarHandler {
             public void onClick(View view) {
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Course Link", courseLink);
-<<<<<<< HEAD
-                clipboard.setPrimaryClip(clip);
+                if (clipboard != null)
+                {
+                    clipboard.setPrimaryClip(clip);
+                }
             }
         });
 
@@ -129,13 +119,6 @@ class shareBarHandler {
 
                 Intent shareIntent = Intent.createChooser(otherIntent, null);
                 context.startActivity(shareIntent);
-=======
-                if (clipboard != null)
-                {
-                    clipboard.setPrimaryClip(clip);
-                }
-                Toast.makeText(context, "Course link copied", Toast.LENGTH_SHORT).show();
->>>>>>> 922fad3a56fdd7a6ff1d2c16fc20f17146805ac3
             }
         });
 
@@ -151,7 +134,7 @@ class shareBarHandler {
         constraints.clone(mainLayout);
         constraints.connect(shareBar.getId(), ConstraintSet.BOTTOM, R.id.Navigation, ConstraintSet.BOTTOM);
         constraints.applyTo(mainLayout);
-        playAnimation(shareBar, context, R.layout.animation_slide_up, 0);
+        playAnimation(shareBar, context, R.layout.animation_slide_up);
 
         blurEffect.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -167,21 +150,19 @@ class shareBarHandler {
         });
     }
 
-    private void playAnimation(View v, Context context, int animationId, int durationDelay)
+    private void playAnimation(View v, Context context, int animationId)
     {
         if(v != null)
         {
             Animation animation = AnimationUtils.loadAnimation(context, animationId);
             v.startAnimation(animation);
-            animation.setDuration(animation.getDuration()+durationDelay);
+            animation.setDuration(animation.getDuration());
 
-            //return animation;
         }
-        //return null;
     }
 
     private void closeShareBar(){
-        playAnimation(shareBar, context, R.layout.animation_slide_down, 0);
+        playAnimation(shareBar, context, R.layout.animation_slide_down);
         mainLayout.removeView(shareBar);
         blurEffect.setVisibility(View.GONE);
     }
