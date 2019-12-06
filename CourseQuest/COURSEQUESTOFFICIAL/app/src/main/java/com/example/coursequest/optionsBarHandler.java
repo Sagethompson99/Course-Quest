@@ -106,7 +106,7 @@ class optionsBarHandler {
     }
 
     private void dislikeCourse(){
-        displayToast("Course Unsaved:(");
+        displayToast("Course Unsaved");
         HomeActivity.deleteSavedCourse(currentButtonText);
 
         if(currentPage.equals("Home")) {
@@ -123,10 +123,7 @@ class optionsBarHandler {
             Animation animation = AnimationUtils.loadAnimation(context, animationId);
             v.startAnimation(animation);
             animation.setDuration(animation.getDuration()+durationDelay);
-
-            //return animation;
         }
-        //return null;
     }
 
     private void displayToast(String toastText){

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/colorPaletteView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:background="@drawable/round_button"
+    android:backgroundTint="?attr/colorAccent"
+    android:clipToPadding="false"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingStart="35dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="35dp"
+    android:paddingBottom="20dp">
+
+    <TextView
+        android:id="@+id/colorPaletteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:gravity="center"
+        android:text="@string/courseColorsText"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+        android:textSize="25sp" />
+
+    <ScrollView
+        android:id="@+id/paletteColorsView"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+
+        <LinearLayout
+            android:id="@+id/paletteColorList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"/>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/closePalette"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/round_button"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:text="Done"
+        android:textColor="#FFFFFF" />
+
+</LinearLayout>

@@ -7,6 +7,7 @@ import android.widget.Button;
 
 import androidx.constraintlayout.widget.Constraints;
 
+import java.util.ArrayList;
 import java.util.Random;
 import static android.util.TypedValue.COMPLEX_UNIT_SP;
 import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
@@ -16,18 +17,19 @@ import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
  */
 class ButtonFormatter  {
 
-    private static final int textSize = 20;                   //yellow     green      teal        purple     orange   green-blue  red        blue
-    private static final String[] buttonColors = new String[]{"#F1C40F", "#2ECC71", "#45B39D",  "#AE73FF", "#FFAE0D", "#43B89E", "#FF5348", "#2BADF8"};
-    private static int color;
+    private static final int textSize = 20;
+    private static int colorNum;
 
     static void formatCourseButton(Context c, Button b)
     {
-        color = new Random().nextInt(buttonColors.length-1); //random color for card background color
+        colorManager ColorManager = new colorManager(c);
+        ArrayList<String> colors = ColorManager.getCurrentSavedColorValues();
+        colorNum = new Random().nextInt(colors.size()); //random color for card background color
         b.setTransformationMethod(null);
         Drawable card = getDrawable(c, R.drawable.results_card);
         if (card != null)
         {
-            card.setTint(Color.parseColor(buttonColors[color]));
+            card.setTint(Color.parseColor(colors.get(colorNum)));
         }
         b.setBackground(card);
         b.setPadding(55, 55, 55, 55);
@@ -44,12 +46,14 @@ class ButtonFormatter  {
 
     static void formatSearchPageButton(Context c, Button b)
     {
-        color = new Random().nextInt(buttonColors.length-1); //random color for card background color
+        colorManager ColorManager = new colorManager(c);
+        ArrayList<String> colors = ColorManager.getCurrentSavedColorValues();
+        colorNum = new Random().nextInt(colors.size()); //random color for card background color
         b.setTransformationMethod(null);
         Drawable card = getDrawable(c, R.drawable.results_card);
         if (card != null)
         {
-            card.setTint(Color.parseColor(buttonColors[color]));
+            card.setTint(Color.parseColor(colors.get(colorNum)));
         }
         b.setBackground(card);
         b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);

@@ -92,7 +92,7 @@ public class shareBarHandler {
                     context.startActivity(twitterIntent);
                 } catch (Exception e) {
                     //displays toast if twitter is not installed
-                    Toast.makeText(context, "Twitter is not installed on your device", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Twitter not found", Toast.LENGTH_SHORT).show();
                 }
             }
         });

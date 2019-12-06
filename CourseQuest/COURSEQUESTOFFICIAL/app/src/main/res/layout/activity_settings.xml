@@ -62,27 +62,73 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:id="@+id/settingsView"
         style="@android:style/Widget.ScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settingsLabel">
 
         <LinearLayout
+            android:id="@+id/settingsItems"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/settingsAppearanceText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/settingsAppearanceTitle"
+                android:textAlignment="textStart"
+                android:textSize="17sp"
+                android:textStyle="bold" />
 
             <Switch
                 android:id="@+id/DarkModeSwitch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="7dp"
+                android:padding="15dp"
                 android:text="@string/dark_mode"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                 android:textColor="?android:attr/textColor"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/courseColorsButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:drawableEnd="@drawable/ic_forward_arrow"
+                android:padding="15dp"
+                android:text="@string/courseColorsText"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/settingsGeneralText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/settingsGeneralTitle"
+                android:textAlignment="textStart"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/helpButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF"
+                android:drawableEnd="@drawable/ic_forward_arrow"
+                android:padding="15dp"
+                android:text="@string/FAQ"
+                android:textAlignment="textStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                 android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>

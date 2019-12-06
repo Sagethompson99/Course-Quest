@@ -17,8 +17,8 @@ import java.util.ArrayList;
 
 /**
  * resultsActivity shows the results from searching, each course listing displayed by resultsActivity
- * functions as a button that, when clicked, opens up a corresponding url for the course
- * There will be a button on this page that takes the user back to the main search screen (MainActivity)
+ * functions as a button that, when clicked, opens up a corresponding url for the course.
+ * There is a button on this page that takes the user back to the main search screen
  */
 public class SearchPageResults extends AppCompatActivity {
 

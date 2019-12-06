@@ -88,10 +88,10 @@
                 android:layout_width="250dip"
                 android:layout_height="220dip"
                 android:layout_gravity="center"
-                android:layout_marginTop="50dip"
+                android:layout_marginTop="85dip"
                 android:background="@drawable/no_courses_icon"
                 android:contentDescription="@string/noCourseImageDescription"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/noCoursesText"
@@ -101,7 +101,7 @@
                 android:text="@string/saved_course_message"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                 android:textSize="23sp"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>

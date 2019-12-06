@@ -10,7 +10,4 @@
     <color name="colorTextDarkMode">#FFFFFF</color>
 
     <color name="colorButtonsLightMode">#6C6C6C</color>
-
-    <color name="likeButtonColor">#60D453</color>
-    <color name="dislikeButtonColor">#E75A5A</color>
 </resources>
