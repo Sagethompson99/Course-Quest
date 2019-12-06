@@ -45,7 +45,7 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/round_button"
         android:backgroundTint="@color/colorPrimaryDark"
-        android:text="Done"
+        android:text="@string/done"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>
