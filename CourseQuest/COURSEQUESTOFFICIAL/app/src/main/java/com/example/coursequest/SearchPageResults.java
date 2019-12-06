@@ -70,8 +70,8 @@ public class SearchPageResults extends AppCompatActivity {
             searchVal.setText(bundle.getString("message"));
             searchWhichWebsites = getIntent().getExtras().getStringArrayList("searchWebsites");
             alphabeticalType = getIntent().getExtras().getString("alphabeticalType");
+            searchQuery = bundle.getString("message");
         }
-        searchQuery = bundle.getString("message");
 
         courses = new ArrayList<>();
 

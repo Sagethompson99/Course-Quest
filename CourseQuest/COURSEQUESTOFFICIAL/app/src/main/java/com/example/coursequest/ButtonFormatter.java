@@ -25,7 +25,10 @@ class ButtonFormatter  {
         color = new Random().nextInt(buttonColors.length-1); //random color for card background color
         b.setTransformationMethod(null);
         Drawable card = getDrawable(c, R.drawable.results_card);
-        card.setTint(Color.parseColor(buttonColors[color]));
+        if (card != null)
+        {
+            card.setTint(Color.parseColor(buttonColors[color]));
+        }
         b.setBackground(card);
         b.setPadding(55, 55, 55, 55);
         b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
@@ -44,8 +47,10 @@ class ButtonFormatter  {
         color = new Random().nextInt(buttonColors.length-1); //random color for card background color
         b.setTransformationMethod(null);
         Drawable card = getDrawable(c, R.drawable.results_card);
-        card.setTint(Color.parseColor(buttonColors[color]));
-
+        if (card != null)
+        {
+            card.setTint(Color.parseColor(buttonColors[color]));
+        }
         b.setBackground(card);
         b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
         b.setTextSize(COMPLEX_UNIT_SP, 19);
