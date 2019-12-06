@@ -33,7 +33,7 @@ class ButtonFormatter  {
         }
         b.setBackground(card);
         b.setPadding(55, 55, 55, 55);
-        b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
+        b.setTextAppearance(R.style.TextAppearance_AppCompat_Display2);
         b.setTextSize(COMPLEX_UNIT_SP, textSize);
         b.setTextColor(Color.parseColor("#F9F9F9"));
         Constraints.LayoutParams params = new Constraints.LayoutParams(
@@ -56,7 +56,7 @@ class ButtonFormatter  {
             card.setTint(Color.parseColor(colors.get(colorNum)));
         }
         b.setBackground(card);
-        b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
+        b.setTextAppearance(R.style.TextAppearance_AppCompat_Display2);
         b.setTextSize(COMPLEX_UNIT_SP, 19);
         b.setTextColor(Color.parseColor("#F9F9F9"));
         b.setPadding(55, 55, 55, 55);

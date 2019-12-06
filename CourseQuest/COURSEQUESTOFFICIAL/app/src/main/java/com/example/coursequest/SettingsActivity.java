@@ -22,6 +22,7 @@ import android.widget.PopupWindow;
 import android.widget.Switch;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -123,7 +124,8 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                     Drawable colorPreview;
                     //if (getDrawable(R.drawable.ic_circle)!=null) {
-                        colorPreview = getDrawable(R.drawable.ic_circle).mutate();
+
+                        colorPreview = Objects.requireNonNull(getDrawable(R.drawable.ic_circle)).mutate();
                         c.setText(colorNames.get(i));
                         colorPreview.setTint(Color.parseColor(colorValues.get(i)));
                         c.setCompoundDrawablesWithIntrinsicBounds(null, null, colorPreview, null);
