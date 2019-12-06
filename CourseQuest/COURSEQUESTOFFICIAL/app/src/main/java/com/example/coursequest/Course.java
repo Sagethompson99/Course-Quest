@@ -89,16 +89,9 @@ public class Course implements Parcelable
         course.courseName = courseName;
     }
 
-
     void setCourseWebsite(String courseWebsite)
     {
         this.courseWebsite = courseWebsite;
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void setCourseWebsite(Course course, String courseWebsite)
-    {
-        course.courseWebsite = courseWebsite;
     }
 
     void setCourseLink(String courseLink)
@@ -114,17 +107,6 @@ public class Course implements Parcelable
     void setCourseDescription(String courseDescription)
     {
         this.courseDescription = courseDescription;
-    }
-    @SuppressWarnings("SameParameterValue")
-    static void setCourseDescription(Course course, String courseDescription)
-    {
-        course.courseDescription = courseDescription;
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    static void setCost(Course course, String cost)
-    {
-        course.cost = cost;
     }
 
     static String getCourseName(Course course)

@@ -81,9 +81,9 @@ class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 				Course course = new Course();
 				Course.setCourseName(course, titles.get(i));
 				Course.setCourseLink(course, links.get(i));
-				Course.setCourseWebsite(course, "Skill Share");
-				Course.setCost(course, "$15/month or $99/year");
-				Course.setCourseDescription(course,"No description. Click for more information about this course.");
+				course.setCourseWebsite("Skill Share");
+				//Course.setCost(course, "$15/month or $99/year");
+				course.setCourseDescription("No description. Click for more information about this course.");
 				//need to add course cost type
 				allCourses.add(course);
 			}
