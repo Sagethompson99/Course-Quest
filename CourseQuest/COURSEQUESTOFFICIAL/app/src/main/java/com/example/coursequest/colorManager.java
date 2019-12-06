@@ -12,43 +12,43 @@ import java.util.Arrays;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class colorManager {
+class colorManager {
 
-    private ArrayList<String> colorValues = new ArrayList<>(Arrays.asList("#F1C40F", "#FF5348", "#2ECC71", "#23B91C", "#AE73FF", "#F760DE", "#FFAE0D", "#43B89E", "#2BADF8", "#2887FF"));
-    private ArrayList<String> colorNames = new ArrayList<>(Arrays.asList("Yellow", "Red", "Green", "Dark Green", "Purple", "Pink", "Orange", "Aquamarine", "Blue", "Dark Blue"));
+    private final ArrayList<String> colorValues = new ArrayList<>(Arrays.asList("#F1C40F", "#FF5348", "#2ECC71", "#23B91C", "#AE73FF", "#F760DE", "#FFAE0D", "#43B89E", "#2BADF8", "#2887FF"));
+    private final ArrayList<String> colorNames = new ArrayList<>(Arrays.asList("Yellow", "Red", "Green", "Dark Green", "Purple", "Pink", "Orange", "Aquamarine", "Blue", "Dark Blue"));
     private ArrayList<String> colorStates;
-    private SharedPreferences chosenColors;
+    private final SharedPreferences chosenColors;
 
-    public colorManager(Context c){
+    colorManager(Context c){
          chosenColors = c.getSharedPreferences("color list", MODE_PRIVATE);
          loadData(c);
     }
 
-    public ArrayList<String> getColorNames(){
+    ArrayList<String> getColorNames(){
         return colorNames;
     }
 
-    public ArrayList<String> getColorValues(){
+    ArrayList<String> getColorValues(){
         return colorValues;
     }
 
-    public ArrayList<String> getColorStates(){
+    ArrayList<String> getColorStates(){
         return colorStates;
     }
 
-    public void removeColor(String colorName){
+    void removeColor(String colorName){
         int i = colorNames.indexOf(colorName);
         colorStates.set(i, "0");
         saveData();
     }
 
-    public void addColor(String colorName){
+    void addColor(String colorName){
         int i = colorNames.indexOf(colorName);
         colorStates.set(i, "1");
         saveData();
     }
 
-    public ArrayList<String> getCurrentSavedColorValues(){
+    ArrayList<String> getCurrentSavedColorValues(){
         ArrayList<String> currentColorValues = new ArrayList<>();
         for(int i = 0; i < colorValues.size(); i++){
             if(colorStates.get(i).equals("1"))

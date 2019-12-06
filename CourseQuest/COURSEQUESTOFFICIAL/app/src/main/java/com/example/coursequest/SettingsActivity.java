@@ -22,7 +22,6 @@ import android.widget.PopupWindow;
 import android.widget.Switch;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -100,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void openColorPalette(){
         LayoutInflater inflater = this.getLayoutInflater();
         View popup;
-        if(inflater != null) {
+        //if(inflater != null) {
             popup = inflater.inflate(R.layout.color_palette_popup, settingsView, false);
             Button closePopupBtn = popup.findViewById(R.id.closePalette);
 
@@ -119,28 +118,31 @@ public class SettingsActivity extends AppCompatActivity {
             for(int i = 0; i < colorNames.size(); i++){
                 CheckBox c = new CheckBox(this);
                     if(checkState.get(i).equals("1"))
+                    {
                         c.setChecked(true);
-                Drawable colorPreview = getDrawable(R.drawable.ic_circle).mutate();
-                c.setText(colorNames.get(i));
-                colorPreview.setTint(Color.parseColor(colorValues.get(i)));
-                c.setCompoundDrawablesWithIntrinsicBounds(null, null, colorPreview, null);
-                c.setPadding(0, 0, 20, 0);
-                c.setTag(colorNames.get(i));
-                colorList.addView(c);
-                c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    @Override
-                    public void onCheckedChanged(CompoundButton button, boolean b) {
-                        if(!(button.isChecked())) {
-                            System.out.println("Removed " + button.getTag().toString());
-                            ColorManager.removeColor(button.getTag().toString());
-                        }
-                        else {
-                            System.out.println("Added " + button.getTag().toString());
-                            ColorManager.addColor(button.getTag().toString());
-                        }
                     }
-                });
-            }
+                    Drawable colorPreview;
+                    //if (getDrawable(R.drawable.ic_circle)!=null) {
+                        colorPreview = getDrawable(R.drawable.ic_circle).mutate();
+                        c.setText(colorNames.get(i));
+                        colorPreview.setTint(Color.parseColor(colorValues.get(i)));
+                        c.setCompoundDrawablesWithIntrinsicBounds(null, null, colorPreview, null);
+                        c.setPadding(0, 0, 20, 0);
+                        c.setTag(colorNames.get(i));
+                        colorList.addView(c);
+                        c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                            @Override
+                            public void onCheckedChanged(CompoundButton button, boolean b) {
+                                if (!(button.isChecked())) {
+                                    System.out.println("Removed " + button.getTag().toString());
+                                    ColorManager.removeColor(button.getTag().toString());
+                                } else {
+                                    System.out.println("Added " + button.getTag().toString());
+                                    ColorManager.addColor(button.getTag().toString());
+                                }
+                            }
+                        });
+                    //}
 
             //create popup
             colorPalettePopup = new PopupWindow(popup, Constraints.LayoutParams.MATCH_PARENT, Constraints.LayoutParams.WRAP_CONTENT);

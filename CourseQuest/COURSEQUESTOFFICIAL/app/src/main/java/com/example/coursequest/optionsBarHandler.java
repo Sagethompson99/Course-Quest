@@ -69,7 +69,7 @@ class optionsBarHandler {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareBarHandler shareBar = new shareBarHandler(context, linLayout, currentCourse.getTag().toString());
+                new shareBarHandler(context, linLayout, currentCourse.getTag().toString());
             }
         });
     }
@@ -116,6 +116,7 @@ class optionsBarHandler {
         }
     }
 
+    @SuppressWarnings("SameParameterValue")
     private void playAnimation(View v, Context context, int animationId, int durationDelay)
     {
         if(v != null)
