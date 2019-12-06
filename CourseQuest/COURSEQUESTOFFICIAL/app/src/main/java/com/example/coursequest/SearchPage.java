@@ -178,24 +178,27 @@ public class SearchPage extends AppCompatActivity {
 
     private void createPopup(){
         LayoutInflater layoutInflater = (LayoutInflater) SearchPage.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View customView = layoutInflater.inflate(R.layout.invalid_search_popup,null);
+        View customView;
+        if (layoutInflater != null)
+        {
+            customView = layoutInflater.inflate(R.layout.invalid_search_popup, searchVal, false);
+            Button closePopupBtn = customView.findViewById(R.id.closePopupBtn);
 
-        Button closePopupBtn = customView.findViewById(R.id.closePopupBtn);
+            //instantiate popup window
+            invalidSearchView = new PopupWindow(customView, Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.WRAP_CONTENT);
 
-        //instantiate popup window
-        invalidSearchView = new PopupWindow(customView, Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.WRAP_CONTENT);
+            //display the popup window
+            invalidSearchView.showAtLocation(findViewById(R.id.search), Gravity.CENTER, 0, 0);
+            customView.setAlpha((float) .97);
 
-        //display the popup window
-        invalidSearchView.showAtLocation(findViewById(R.id.search), Gravity.CENTER, 0, 0);
-        customView.setAlpha((float) .97);
-
-        //close the popup window on button click
-        closePopupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                invalidSearchView.dismiss();
-            }
-        });
+            //close the popup window on button click
+            closePopupBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    invalidSearchView.dismiss();
+                }
+            });
+        }
     }
 
     private void refreshPage(Activity a){
@@ -210,7 +213,10 @@ public class SearchPage extends AppCompatActivity {
 
     private void hideKeyboard(View v) {
         InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(),0);
+        if (inputMethodManager!=null)
+        {
+            inputMethodManager.hideSoftInputFromWindow(v.getApplicationWindowToken(), 0);
+        }
     }
 
     private void populatePopularSearchesView(){
@@ -272,6 +278,10 @@ public class SearchPage extends AppCompatActivity {
 
 
     private boolean onFilterItemClick(MenuItem item) {
+        if (item == null)
+        {
+            return true;
+        }
         item.setChecked(!item.isChecked());
         boolean onSubMenu = false;
 
@@ -314,7 +324,8 @@ public class SearchPage extends AppCompatActivity {
                 break;
         }
         //prevents menu from closing while selecting filters
-        if(onSubMenu) {
+        if(onSubMenu)
+        {
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW);
             item.setActionView(new View(SearchPage.this));
         }

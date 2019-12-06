@@ -21,7 +21,7 @@ import android.os.AsyncTask;
 class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 
 	private SearchPageResults page;
-	private ArrayList<Course> finalCourses;
+	//private ArrayList<Course> finalCourses;
 
 	protected ArrayList<Course> doInBackground(Object... params) {
 		final String url = "https://www.skillshare.com/search?query=";
@@ -88,14 +88,10 @@ class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 				allCourses.add(course);
 			}
 
-			finalCourses = allCourses;
+			//finalCourses = allCourses;
 			return allCourses;
 		}
 		return null; //maybe return string notifying error?
-	}
-
-	public ArrayList<Course> getCourses() {
-		return finalCourses;
 	}
 
 	protected void onPostExecute(ArrayList<Course> list) {

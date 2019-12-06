@@ -18,19 +18,18 @@ class optionsBarHandler {
     private Button like;
     private Button dislike;
     private Button share;
-    private View[] buttons;
     private View optionsBar;
     private final Context context;
     private final Button currentCourse;
     private final LayoutInflater inflater;
-    private final LinearLayout layout;
+    private final LinearLayout linLayout;
     private static String currentButtonText = "";
     private static String currentButtonLink = "";
     private static String currentPage;
 
 
     optionsBarHandler(LinearLayout givenList, Context givenContext, Button course, String page){
-        layout = givenList;
+        linLayout = givenList;
         context = givenContext;
         currentCourse = course;
         currentPage = page;
@@ -40,7 +39,8 @@ class optionsBarHandler {
     }
 
     private void prepareOptionsBar(){
-        optionsBar = inflater.inflate(R.layout.course_options_bar, null);
+
+        optionsBar = inflater.inflate(R.layout.course_options_bar, linLayout, false);
 
         like = optionsBar.findViewById(R.id.likeButton);
         if(currentPage.equals("Home"))
@@ -69,26 +69,27 @@ class optionsBarHandler {
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareBarHandler shareBar = new shareBarHandler(context, layout, currentCourse.getTag().toString());
+                shareBarHandler shareBar = new shareBarHandler(context, linLayout, currentCourse.getTag().toString());
             }
         });
     }
 
     void closeCourseOptionsBar(){
        // Animation a = playAnimation(optionsBar, context, R.layout.animation_slide_left, 0);
-        layout.removeView(optionsBar);
+        linLayout.removeView(optionsBar);
     }
 
     void openCourseOptionsBar(){
+        View[] buttons;
 
-        if(layout.indexOfChild(optionsBar) > 0) {
+        if(linLayout.indexOfChild(optionsBar) > 0) {
             closeCourseOptionsBar();
         }
 
         currentButtonText = currentCourse.getText().toString();
         currentButtonLink = currentCourse.getTag().toString();
 
-        layout.addView(optionsBar, layout.indexOfChild(currentCourse)+1);
+        linLayout.addView(optionsBar, linLayout.indexOfChild(currentCourse)+1);
 
         buttons = new View[]{close, share, dislike, like};
 
@@ -115,7 +116,7 @@ class optionsBarHandler {
         }
     }
 
-    private Animation playAnimation(View v, Context context, int animationId, int durationDelay)
+    private void playAnimation(View v, Context context, int animationId, int durationDelay)
     {
         if(v != null)
         {
@@ -123,22 +124,22 @@ class optionsBarHandler {
             v.startAnimation(animation);
             animation.setDuration(animation.getDuration()+durationDelay);
 
-            return animation;
+            //return animation;
         }
-        return null;
+        //return null;
     }
 
     private void displayToast(String toastText){
 
-        View layout = inflater.inflate(R.layout.course_toast, null);
+        View toastLayout = inflater.inflate(R.layout.course_toast, linLayout, false);
 
-        TextView text = layout.findViewById(R.id.text);
+        TextView text = toastLayout.findViewById(R.id.text);
         text.setText(toastText);
 
         Toast toast = new Toast(context);
         toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
         toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
+        toast.setView(toastLayout);
         toast.show();
     }
 
