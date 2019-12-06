@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
+<<<<<<< HEAD
 public class shareBarHandler {
 
     private Button cancelShare;
@@ -28,11 +29,17 @@ public class shareBarHandler {
     private Button shareOther;
     private String courseLink;
     private float[] touchCoordinates = new float[2];
+=======
+class shareBarHandler {
+
+    private final String courseLink;
+    private final float[] touchCoordinates = new float[2];
+>>>>>>> 922fad3a56fdd7a6ff1d2c16fc20f17146805ac3
     private View shareBar;
     private ImageView blurEffect;
-    private Context context;
-    private LayoutInflater inflater;
-    private ConstraintLayout mainLayout;
+    private final Context context;
+    private final LayoutInflater inflater;
+    private final ConstraintLayout mainLayout;
 
     shareBarHandler(Context c, LinearLayout layout, String buttonLink){
         mainLayout = (ConstraintLayout) layout.getParent().getParent();
@@ -44,6 +51,11 @@ public class shareBarHandler {
     }
 
     private void prepareShareBar(){
+        Button cancelShare;
+        Button shareSMS;
+        Button shareEmail;
+        Button shareTwitter;
+        Button copyLink;
         shareBar = inflater.inflate(R.layout.course_share_bar, mainLayout, false);
 
         cancelShare = shareBar.findViewById(R.id.cancelButton);
@@ -102,6 +114,7 @@ public class shareBarHandler {
             public void onClick(View view) {
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Course Link", courseLink);
+<<<<<<< HEAD
                 clipboard.setPrimaryClip(clip);
             }
         });
@@ -116,6 +129,13 @@ public class shareBarHandler {
 
                 Intent shareIntent = Intent.createChooser(otherIntent, null);
                 context.startActivity(shareIntent);
+=======
+                if (clipboard != null)
+                {
+                    clipboard.setPrimaryClip(clip);
+                }
+                Toast.makeText(context, "Course link copied", Toast.LENGTH_SHORT).show();
+>>>>>>> 922fad3a56fdd7a6ff1d2c16fc20f17146805ac3
             }
         });
 
@@ -147,7 +167,7 @@ public class shareBarHandler {
         });
     }
 
-    private Animation playAnimation(View v, Context context, int animationId, int durationDelay)
+    private void playAnimation(View v, Context context, int animationId, int durationDelay)
     {
         if(v != null)
         {
@@ -155,9 +175,9 @@ public class shareBarHandler {
             v.startAnimation(animation);
             animation.setDuration(animation.getDuration()+durationDelay);
 
-            return animation;
+            //return animation;
         }
-        return null;
+        //return null;
     }
 
     private void closeShareBar(){
