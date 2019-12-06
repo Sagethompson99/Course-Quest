@@ -18,7 +18,7 @@ import android.widget.Toast;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
-public class shareBarHandler {
+class shareBarHandler {
 
     private final String courseLink;
     private final float[] touchCoordinates = new float[2];
@@ -141,10 +141,9 @@ public class shareBarHandler {
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 touchCoordinates[0] = motionEvent.getX();
                 touchCoordinates[1] = motionEvent.getY();
-
-                if(touchCoordinates[1] > shareBar.getHeight())
+                if(touchCoordinates[1] > shareBar.getHeight()) {
                     closeShareBar();
-
+                }
                 return true;
             }
         });

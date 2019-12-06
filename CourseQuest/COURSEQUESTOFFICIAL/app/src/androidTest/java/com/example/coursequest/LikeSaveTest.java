@@ -36,6 +36,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
+@SuppressWarnings("deprecation")
 @RunWith(AndroidJUnit4.class)
 public class LikeSaveTest {
 
