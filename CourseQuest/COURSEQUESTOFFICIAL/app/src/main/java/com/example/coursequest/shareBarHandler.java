@@ -25,6 +25,7 @@ public class shareBarHandler {
     private Button shareEmail;
     private Button shareTwitter;
     private Button copyLink;
+    private Button shareOther;
     private String courseLink;
     private float[] touchCoordinates = new float[2];
     private View shareBar;
@@ -84,8 +85,10 @@ public class shareBarHandler {
                 try {
                     // get the Twitter app if possible
                     context.getPackageManager().getPackageInfo("com.twitter.android", 0);
-                    twitterIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("twitter://user?user_id=USERID"));
-                    twitterIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    twitterIntent = new Intent(Intent.ACTION_SEND);
+                    twitterIntent.setType("text/plain");
+                    twitterIntent.setClassName("com.twitter.android", "com.twitter.composer.SelfThreadComposerActivity");
+                    twitterIntent.putExtra(Intent.EXTRA_TEXT, courseLink);
                     context.startActivity(twitterIntent);
                 } catch (Exception e) {
                     //displays toast if twitter is not installed
@@ -100,7 +103,19 @@ public class shareBarHandler {
                 ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Course Link", courseLink);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(context, "Course link copied", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        shareOther = shareBar.findViewById(R.id.otherShare);
+        shareOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent otherIntent = new Intent(Intent.ACTION_SEND);
+                otherIntent.setType("text/plain");
+                otherIntent.putExtra(Intent.EXTRA_TEXT, courseLink);
+
+                Intent shareIntent = Intent.createChooser(otherIntent, null);
+                context.startActivity(shareIntent);
             }
         });
 

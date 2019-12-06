@@ -1,6 +1,7 @@
 package com.example.coursequest;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,6 +107,12 @@ class optionsBarHandler {
     private void dislikeCourse(){
         displayToast("Course Unsaved:(");
         HomeActivity.deleteSavedCourse(currentButtonText);
+
+        if(currentPage.equals("Home")) {
+            Intent intent = new Intent(context, HomeActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            context.startActivity(intent);
+        }
     }
 
     private Animation playAnimation(View v, Context context, int animationId, int durationDelay)

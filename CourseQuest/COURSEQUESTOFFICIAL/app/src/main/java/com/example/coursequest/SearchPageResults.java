@@ -37,6 +37,10 @@ public class SearchPageResults extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState)
     {
         Button backButton;
+        Button homeButton;
+        Button settingsButton;
+        Button searchButton;
+
         super.onCreate(savedInstanceState);
 
         //saved user preferences. Used to save dark mode/light mode preferences for each launch
@@ -50,10 +54,30 @@ public class SearchPageResults extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_search_page_results);
+
+        homeButton = findViewById(R.id.homeButton);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openHomePage();
+            }
+        });
+
+        settingsButton = findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openSettingsPage();
+            }
+        });
+
+        searchButton = findViewById(R.id.searchButton2);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openSearchPage();
+            }
+        });
+
         loadingView = new ProgressDialog(this);
-
         resultsView = findViewById(R.id.resultView);
-
 
         backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +152,9 @@ public class SearchPageResults extends AppCompatActivity {
             @Override
             public boolean onLongClick(View view) {
                 Button course = (Button)view;
+                if(handler != null){
+                    handler.closeCourseOptionsBar();
+                }
                 handler = new optionsBarHandler(resultsView, SearchPageResults.this, course, "Results");
                 handler.openCourseOptionsBar();
                 return true;
@@ -168,13 +195,6 @@ public class SearchPageResults extends AppCompatActivity {
         }
     }
 
-    //exits search results page and opens search page
-    private void openSearchPage()
-    {
-        Intent intent = new Intent(this, SearchPage.class);
-        startActivity(intent);
-    }
-
     public void scraperFinished()
     {
         numScrapersFinished++;
@@ -213,5 +233,24 @@ public class SearchPageResults extends AppCompatActivity {
         loadingView.setMessage("Finding Courses...");
         loadingView.show();
         loadingView.setCanceledOnTouchOutside(false);
+    }
+
+    private void openHomePage()
+    {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+    }
+
+    private void openSettingsPage()
+    {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    //exits search results page and opens search page
+    private void openSearchPage()
+    {
+        Intent intent = new Intent(this, SearchPage.class);
+        startActivity(intent);
     }
 }
