@@ -36,10 +36,26 @@ public class colorManager {
         return colorStates;
     }
 
-    public void removeColor(String colorName){
+    public boolean removeColor(String colorName){
+        boolean removed;
         int i = colorNames.indexOf(colorName);
-        colorStates.set(i, "0");
+
+        int numStatesChecked = 0;
+        for(String state: colorStates){
+            if(state.equals("1"))
+                numStatesChecked++;
+        }
+
+        if(numStatesChecked > 1) { //Ensures there is at least one color selected before removal
+            colorStates.set(i, "0");
+            removed = true;
+        }
+        else{
+            removed = false;
+        }
+
         saveData();
+        return removed;
     }
 
     public void addColor(String colorName){

@@ -89,7 +89,7 @@
                 android:layout_height="220dip"
                 android:layout_gravity="center"
                 android:layout_marginTop="85dip"
-                android:background="@drawable/no_courses_icon"
+                android:background="@drawable/ic_no_saved_classes"
                 android:contentDescription="@string/noCourseImageDescription"
                 android:visibility="gone"/>
 

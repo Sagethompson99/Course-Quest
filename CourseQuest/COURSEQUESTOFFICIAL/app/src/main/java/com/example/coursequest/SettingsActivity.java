@@ -20,9 +20,9 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -131,11 +131,13 @@ public class SettingsActivity extends AppCompatActivity {
                     @Override
                     public void onCheckedChanged(CompoundButton button, boolean b) {
                         if(!(button.isChecked())) {
-                            System.out.println("Removed " + button.getTag().toString());
-                            ColorManager.removeColor(button.getTag().toString());
+                            boolean removeColor = ColorManager.removeColor(button.getTag().toString());
+                            if(!removeColor){
+                                Toast.makeText(SettingsActivity.this, "At least one color must be selected", Toast.LENGTH_SHORT).show();
+                                button.setChecked(true);
+                            }
                         }
                         else {
-                            System.out.println("Added " + button.getTag().toString());
                             ColorManager.addColor(button.getTag().toString());
                         }
                     }

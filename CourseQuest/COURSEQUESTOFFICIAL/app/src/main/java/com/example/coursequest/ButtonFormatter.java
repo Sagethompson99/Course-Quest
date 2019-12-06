@@ -19,6 +19,7 @@ class ButtonFormatter  {
 
     private static final int textSize = 20;
     private static int colorNum;
+    private static String textColor = "#F9F9F9";
 
     static void formatCourseButton(Context c, Button b)
     {
@@ -35,7 +36,7 @@ class ButtonFormatter  {
         b.setPadding(55, 55, 55, 55);
         b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
         b.setTextSize(COMPLEX_UNIT_SP, textSize);
-        b.setTextColor(Color.parseColor("#F9F9F9"));
+        b.setTextColor(Color.parseColor(textColor));
         Constraints.LayoutParams params = new Constraints.LayoutParams(
                 Constraints.LayoutParams.WRAP_CONTENT,
                 Constraints.LayoutParams.WRAP_CONTENT
@@ -58,7 +59,7 @@ class ButtonFormatter  {
         b.setBackground(card);
         b.setTextAppearance(c, R.style.TextAppearance_AppCompat_Display2);
         b.setTextSize(COMPLEX_UNIT_SP, 19);
-        b.setTextColor(Color.parseColor("#F9F9F9"));
+        b.setTextColor(Color.parseColor(textColor));
         b.setPadding(55, 55, 55, 55);
         Constraints.LayoutParams params = new Constraints.LayoutParams(
                 Constraints.LayoutParams.WRAP_CONTENT,
