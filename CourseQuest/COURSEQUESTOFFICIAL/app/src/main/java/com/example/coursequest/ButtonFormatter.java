@@ -23,6 +23,7 @@ class ButtonFormatter  {
 
     static void formatCourseButton(Context c, Button b)
     {
+        Drawable logo;
         colorManager ColorManager = new colorManager(c);
         ArrayList<String> colors = ColorManager.getCurrentSavedColorValues();
         colorNum = new Random().nextInt(colors.size()); //random color for card background color
@@ -43,6 +44,26 @@ class ButtonFormatter  {
         );
         params.setMargins(0, 0, 0, 30);
         b.setLayoutParams(params);
+        b.setCompoundDrawablePadding(70);
+
+        if(b.getTag().toString().contains("futurelearn")){
+            logo = c.getDrawable(R.drawable.ic_future_learn);
+        }
+        else if(b.getTag().toString().contains("codecademy")){
+            logo = c.getDrawable(R.drawable.ic_codecademy);
+        }
+        else if(b.getTag().toString().contains("skillshare")){
+            logo = c.getDrawable(R.drawable.ic_skillshare);
+        }
+        else{
+            logo = c.getDrawable(R.drawable.ic_coursera);
+            b.setCompoundDrawablePadding(110);
+        }
+
+        if (logo != null) {
+            logo.setTint(Color.parseColor(textColor));
+            b.setCompoundDrawablesWithIntrinsicBounds(null, null, null, logo);
+        }
     }
 
     static void formatSearchPageButton(Context c, Button b)

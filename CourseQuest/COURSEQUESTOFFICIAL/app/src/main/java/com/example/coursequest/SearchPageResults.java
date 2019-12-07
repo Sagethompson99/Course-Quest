@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -154,7 +156,6 @@ public class SearchPageResults extends AppCompatActivity {
     private Button createCourseButton(Course course)
     {
         Button courseView = new Button(this);
-        ButtonFormatter.formatCourseButton(this, courseView);
 
         courseView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -173,9 +174,14 @@ public class SearchPageResults extends AppCompatActivity {
 
         //gets course link and adds onClick function to open the link in an external browser
         setLink(course, courseView);
+        ButtonFormatter.formatCourseButton(this, courseView);
+        courseView.setWidth(resultsView.getWidth());
 
         //appends course information to each courseView button
-        courseView.append(Course.getInfoString(course));
+       // courseView.append(Course.getInfoString(course));
+        courseView.append(Course.getCourseName(course) + "\n\n");
+        courseView.append(Course.getCourseDescription(course));
+
         if (courseView.getText().equals(""))
             return null;
         else

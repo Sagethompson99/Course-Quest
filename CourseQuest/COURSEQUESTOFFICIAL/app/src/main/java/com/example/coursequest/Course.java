@@ -124,7 +124,7 @@ public class Course implements Parcelable
         return course.courseLink;
     }
 
-    private static String getCourseDescription(Course course)
+    public static String getCourseDescription(Course course)
     {
         return course.courseDescription;
     }
@@ -139,25 +139,4 @@ public class Course implements Parcelable
         Collections.sort(courses, new courseCompareByNameZYX());
     }
 
-    static String getInfoString(Course course)
-    {
-        String courseInfo = "";
-        String courseName = Course.getCourseName(course) + "\n\n";
-        String courseDesc = Course.getCourseDescription(course) + "\n\n";
-        String courseWebsite = Course.getCourseWebsite(course);
-        if (!courseName.equals(""))
-        {
-            courseInfo += courseName;
-        }
-        if (!courseDesc.equals(""))
-        {
-            courseInfo += courseDesc;
-        }
-
-        if (!courseWebsite.equals(""))
-        {
-            courseInfo += courseWebsite;
-        }
-        return courseInfo;
-    }
 }

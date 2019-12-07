@@ -154,9 +154,9 @@ public class HomeActivity extends AppCompatActivity {
             for(int i = savedCourses.size()-1; i >= 0; i--) {
                 Button course = new Button(this);
                 course.setText(savedCourses.get(i));
-                ButtonFormatter.formatCourseButton(this, course);
                 final String courseLink = savedCourseLinks.get(i);
                 setButtonLink(courseLink, course);
+                ButtonFormatter.formatCourseButton(this, course);
                 course.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
