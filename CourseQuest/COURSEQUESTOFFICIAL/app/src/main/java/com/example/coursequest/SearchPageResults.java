@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,7 +24,8 @@ import java.util.ArrayList;
  */
 public class SearchPageResults extends AppCompatActivity {
 
-    private static ProgressDialog loadingView;
+    private static Dialog loadingView;
+    private TextView numResults;
     static ArrayList<Course> courses;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
@@ -76,7 +79,11 @@ public class SearchPageResults extends AppCompatActivity {
             }
         });
 
-        loadingView = new ProgressDialog(this);
+        loadingView = new Dialog(this);
+        loadingView.setContentView(R.layout.loading_view);
+        loadingView.setCancelable(false);
+        numResults = loadingView.findViewById(R.id.numResults);
+
         resultsView = findViewById(R.id.resultView);
 
         backButton = findViewById(R.id.backButton);
@@ -125,6 +132,7 @@ public class SearchPageResults extends AppCompatActivity {
             if (courses.get(i) != null)
                 rootView.addView(courseView);
         }
+        loadingView.dismiss();
     }
 
 
@@ -198,10 +206,12 @@ public class SearchPageResults extends AppCompatActivity {
     public void scraperFinished()
     {
         numScrapersFinished++;
+        String currentNumResults = courses.size()+"";
+        numResults.setText(currentNumResults);
+
         if (numScrapersFinished == searchWhichWebsites.size())
         {
             displaySearchResults();
-            loadingView.dismiss();
         }
     }
 
@@ -230,9 +240,7 @@ public class SearchPageResults extends AppCompatActivity {
             scraper2.execute(searchFor, this);
         }
 
-        loadingView.setMessage("Finding Courses...");
         loadingView.show();
-        loadingView.setCanceledOnTouchOutside(false);
     }
 
     private void openHomePage()
