@@ -99,6 +99,10 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    public static ArrayList<String> getSavedCourses(){
+        return savedCourses;
+    }
+
     private static void saveData() {
         SharedPreferences.Editor editor = mySavedCourses.edit();
         Gson gson = new Gson();

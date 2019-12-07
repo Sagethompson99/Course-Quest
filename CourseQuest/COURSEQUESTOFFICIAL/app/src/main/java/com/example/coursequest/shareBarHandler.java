@@ -92,7 +92,7 @@ class shareBarHandler {
                     context.startActivity(twitterIntent);
                 } catch (Exception e) {
                     //displays toast if twitter is not installed
-                    Toast.makeText(context, "Twitter not found", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Twitter app not found", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -134,7 +134,7 @@ class shareBarHandler {
         constraints.clone(mainLayout);
         constraints.connect(shareBar.getId(), ConstraintSet.BOTTOM, R.id.Navigation, ConstraintSet.BOTTOM);
         constraints.applyTo(mainLayout);
-        playAnimation(shareBar, context, R.layout.animation_slide_up);
+        playAnimation(shareBar, context, R.anim.animation_slide_up);
 
         blurEffect.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -161,7 +161,7 @@ class shareBarHandler {
     }
 
     private void closeShareBar(){
-        playAnimation(shareBar, context, R.layout.animation_slide_down);
+        playAnimation(shareBar, context, R.anim.animation_slide_down);
         mainLayout.removeView(shareBar);
         blurEffect.setVisibility(View.GONE);
     }

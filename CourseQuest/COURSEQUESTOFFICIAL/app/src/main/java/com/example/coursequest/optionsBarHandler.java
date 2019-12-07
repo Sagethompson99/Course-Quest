@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,8 @@ class optionsBarHandler {
 
     private Button close;
     private Button like;
-    private Button dislike;
+    private Drawable dislikeImage;
+    private Drawable likeImage;
     private Button share;
     private View optionsBar;
     private final Context context;
@@ -39,25 +41,14 @@ class optionsBarHandler {
     }
 
     private void prepareOptionsBar(){
-
         optionsBar = inflater.inflate(R.layout.course_options_bar, linLayout, false);
 
+        dislikeImage = context.getDrawable(R.drawable.ic_dislike);
+        likeImage = context.getDrawable(R.drawable.ic_like);
+
         like = optionsBar.findViewById(R.id.likeButton);
-        if(currentPage.equals("Home"))
-            like.setVisibility(View.GONE);
-        like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                likeCourse();
-            }
-        });
-        dislike = optionsBar.findViewById(R.id.dislikeButton);
-        dislike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dislikeCourse();
-            }
-        });
+        updateLikeButton();
+
         close = optionsBar.findViewById(R.id.cancelButton);
         close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +66,6 @@ class optionsBarHandler {
     }
 
     void closeCourseOptionsBar(){
-       // Animation a = playAnimation(optionsBar, context, R.layout.animation_slide_left, 0);
         linLayout.removeView(optionsBar);
     }
 
@@ -91,11 +81,11 @@ class optionsBarHandler {
 
         linLayout.addView(optionsBar, linLayout.indexOfChild(currentCourse)+1);
 
-        buttons = new View[]{close, share, dislike, like};
+        buttons = new View[]{close, share, like};
 
         int incrementDuration = 0;
         for(View view: buttons) {
-            playAnimation(view, context, R.layout.animation_slide_right, incrementDuration);
+            playAnimation(view, context, R.anim.animation_slide_right, incrementDuration);
             incrementDuration += 95;
         }
     }
@@ -103,17 +93,42 @@ class optionsBarHandler {
     private void likeCourse(){
         displayToast("Course Saved:)");
         HomeActivity.addNewSavedCourse(currentButtonText, currentButtonLink);
+        updateLikeButton();
     }
 
     private void dislikeCourse(){
-        displayToast("Course Unsaved");
+        displayToast("Course Removed:/");
         HomeActivity.deleteSavedCourse(currentButtonText);
+        updateLikeButton();
 
         if(currentPage.equals("Home")) {
-            Intent intent = new Intent(context, HomeActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            context.startActivity(intent);
+            closeCourseOptionsBar();
+            //playAnimation(currentCourse, context, R.anim.animation_slide_left, 0);
+            linLayout.removeView(currentCourse);
         }
+    }
+
+    public void updateLikeButton(){
+        final boolean courseIsSaved = HomeActivity.getSavedCourses().contains(currentCourse.getText().toString());
+
+        if(courseIsSaved){
+            like.setForeground(likeImage);
+        }
+        else{
+            like.setForeground(dislikeImage);
+        }
+
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(courseIsSaved) {
+                    dislikeCourse();
+                }
+                else {
+                    likeCourse();
+                }
+            }
+        });
     }
 
     @SuppressWarnings("SameParameterValue")
@@ -128,7 +143,6 @@ class optionsBarHandler {
     }
 
     private void displayToast(String toastText){
-
         View toastLayout = inflater.inflate(R.layout.course_toast, linLayout, false);
 
         TextView text = toastLayout.findViewById(R.id.text);
