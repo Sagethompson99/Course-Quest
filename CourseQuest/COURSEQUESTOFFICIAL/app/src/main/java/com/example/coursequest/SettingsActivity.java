@@ -23,6 +23,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -100,7 +101,7 @@ public class SettingsActivity extends AppCompatActivity {
     private void openColorPalette(){
         LayoutInflater inflater = this.getLayoutInflater();
         View popup;
-        if(inflater != null) {
+        //if(inflater != null) {
             popup = inflater.inflate(R.layout.color_palette_popup, settingsView, false);
             Button closePopupBtn = popup.findViewById(R.id.closePalette);
 
@@ -120,7 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
                 CheckBox c = new CheckBox(this);
                     if(checkState.get(i).equals("1"))
                         c.setChecked(true);
-                Drawable colorPreview = getDrawable(R.drawable.ic_circle).mutate();
+                Drawable colorPreview = Objects.requireNonNull(getDrawable(R.drawable.ic_circle)).mutate();
                 c.setText(colorNames.get(i));
                 colorPreview.setTint(Color.parseColor(colorValues.get(i)));
                 c.setCompoundDrawablesWithIntrinsicBounds(null, null, colorPreview, null);
@@ -157,7 +158,7 @@ public class SettingsActivity extends AppCompatActivity {
                     colorPalettePopup.dismiss();
                 }
             });
-        }
+        //}
     }
 
     private void refreshPage(Activity a){

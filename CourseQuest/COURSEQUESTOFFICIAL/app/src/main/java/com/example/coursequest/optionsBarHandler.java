@@ -1,7 +1,6 @@
 package com.example.coursequest;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -108,7 +107,7 @@ class optionsBarHandler {
         }
     }
 
-    public void updateLikeButton(){
+    private void updateLikeButton(){
         final boolean courseIsSaved = HomeActivity.getSavedCourses().contains(currentCourse.getText().toString());
 
         if(courseIsSaved){

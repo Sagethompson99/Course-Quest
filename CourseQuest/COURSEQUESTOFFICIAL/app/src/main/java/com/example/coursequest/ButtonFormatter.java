@@ -19,7 +19,7 @@ class ButtonFormatter  {
 
     private static final int textSize = 20;
     private static int colorNum;
-    private static String textColor = "#F9F9F9";
+    private static final String textColor = "#F9F9F9";
 
     static void formatCourseButton(Context c, Button b)
     {

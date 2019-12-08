@@ -114,17 +114,12 @@ public class Course implements Parcelable
         return course.courseName;
     }
 
-    private static String getCourseWebsite(Course course)
-    {
-        return course.courseWebsite;
-    }
-
     static String getCourseLink(Course course)
     {
         return course.courseLink;
     }
 
-    public static String getCourseDescription(Course course)
+    static String getCourseDescription(Course course)
     {
         return course.courseDescription;
     }
