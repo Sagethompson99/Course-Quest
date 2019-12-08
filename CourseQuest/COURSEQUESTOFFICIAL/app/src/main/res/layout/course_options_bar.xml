@@ -12,7 +12,9 @@
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/round_button"
-        android:foreground="@drawable/ic_like"
+        android:backgroundTint="?attr/colorAccent"
+        android:foreground="@drawable/ic_dislike"
+        android:foregroundTint="?android:textColor"
         android:foregroundGravity="center"
         android:hapticFeedbackEnabled="true"
         android:textColor="@color/colorTextDarkMode"
@@ -25,7 +27,9 @@
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/round_button"
+        android:backgroundTint="?attr/colorAccent"
         android:foreground="@drawable/ic_share"
+        android:foregroundTint="?android:textColor"
         android:foregroundGravity="center"
         style="?android:attr/buttonBarButtonStyle"/>
 
@@ -36,7 +40,9 @@
         android:layout_marginEnd="7dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/round_button"
+        android:backgroundTint="?attr/colorAccent"
         android:foreground="@drawable/ic_cancel"
+        android:foregroundTint="?android:textColor"
         android:foregroundGravity="center"
         style="?android:attr/buttonBarButtonStyle"/>
 

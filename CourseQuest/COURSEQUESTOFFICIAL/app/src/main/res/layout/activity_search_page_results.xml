@@ -10,11 +10,11 @@
     <TextView
         android:id="@+id/searchVal"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginStart="60dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="11dp"
         android:layout_marginEnd="60dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         app:autoSizeMaxTextSize="65sp"
         app:autoSizeMinTextSize="21sp"
@@ -28,9 +28,9 @@
     <Button
         android:id="@+id/backButton"
         android:layout_width="50dp"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/Navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchVal">
@@ -63,7 +63,7 @@
                 android:text="@string/no_results"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
                 android:textSize="40sp"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 

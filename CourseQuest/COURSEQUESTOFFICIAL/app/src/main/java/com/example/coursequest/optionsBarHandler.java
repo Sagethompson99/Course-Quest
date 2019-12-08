@@ -1,7 +1,12 @@
 package com.example.coursequest;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.LayoutTransition;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +16,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewAnimator;
 
 class optionsBarHandler {
 
@@ -102,7 +108,9 @@ class optionsBarHandler {
 
         if(currentPage.equals("Home")) {
             closeCourseOptionsBar();
+
             //playAnimation(currentCourse, context, R.anim.animation_slide_left, 0);
+            //playAnimation(linLayout.getChildAt(linLayout.indexOfChild(currentCourse) +1), context, R.anim.animation_slide_up, 0);
             linLayout.removeView(currentCourse);
         }
     }
@@ -112,6 +120,7 @@ class optionsBarHandler {
 
         if(courseIsSaved){
             like.setForeground(likeImage);
+            likeImage.setTint(Color.parseColor("#FF6164"));
         }
         else{
             like.setForeground(dislikeImage);
