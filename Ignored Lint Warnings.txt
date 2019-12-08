@@ -1,0 +1,20 @@
+Ignored warnings:
+Deprecated API within Espresso Tests
+We used the Espresso test recorder in this app which by default uses JUnit 4 (rather than JUnit 5)
+
+Within activity_home.xml
+"This tag and its children can be replaced by a compound drawable" warning
+This view being seperated into an ImageView and TextView allows us to more easily separately control the visibility of the image and the text
+
+Within shareBarHandler.java
+"Custom view ImageView has setOnTouchListener called on it but does not override 'performClick'"
+This onTouchListener was made so that when a user taps outside of the share bar, it will automatically close. If a user was using accessibility features, they would interact with the cancel button instead of tapping somewhere else on the screen.
+
+Within the website scrapers
+The warnings in these scrapers are related to the "page" objects within them and how using AsyncTask can cause memory leaks. The way in which the scrapers are declared is thread safe since when the scrapers are garbage collected, the instance variables within them will be garbage collected as well. Even if an interruption such as the user's internet turning off occurs, the scrapers will still finish as normal
+
+Vector Image Path Length Warnings
+Even with searches that return a very large number of results (such as "Science"), the size of these vector images has very little impact on performance
+
+Typo warnings are ignored because they are not accurate - the text they are referring to is not mispelled
+
