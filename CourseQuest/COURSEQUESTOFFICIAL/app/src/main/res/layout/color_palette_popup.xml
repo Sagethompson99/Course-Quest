@@ -52,9 +52,10 @@
         android:backgroundTint="@color/colorPrimaryDark"
         android:drawableEnd="@drawable/ic_check"
         android:drawableTint="#FCFCFC"
+        android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:text="@string/doneText"
-        android:textAlignment="textEnd"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textColor="#FFFFFF"
         android:textSize="18sp" />
