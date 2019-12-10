@@ -6,6 +6,6 @@ import java.util.ArrayList;
  *
  * This interface is used to inform SearchPageResults when a scraper AsyncTask is finished so that the results may be added to the UI
  */
-public interface AsyncResponse {
+interface AsyncResponse {
     void scraperFinished(ArrayList<Course> courses);
 }

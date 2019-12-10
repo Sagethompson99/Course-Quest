@@ -26,7 +26,7 @@ public class SearchPageResults extends AppCompatActivity implements AsyncRespons
 
     private static Dialog loadingView;
     private TextView numResults;
-    static ArrayList<Course> courses;
+    private static ArrayList<Course> courses;
     private static final String PREFS_NAME = "prefs";
     private static final String PREF_DARK_THEME = "dark_theme";
     private ArrayList<String> searchWhichWebsites;
@@ -255,8 +255,7 @@ public class SearchPageResults extends AppCompatActivity implements AsyncRespons
     public void scraperFinished(ArrayList<Course> courseList){
         //Creates a copy of the ArrayList before adding new values.
         //This is done to prevent scrapers in the thread pool from overwriting data
-        CopyOnWriteArrayList<Course> threadSafeList = new CopyOnWriteArrayList<>();
-        threadSafeList.addAll(courseList);
+        CopyOnWriteArrayList<Course> threadSafeList = new CopyOnWriteArrayList<>(courseList);
 
         courses.addAll(threadSafeList);
 
