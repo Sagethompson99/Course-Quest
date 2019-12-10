@@ -3,7 +3,10 @@ package com.example.coursequest;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.view.Gravity;
+import android.view.animation.Animation;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.Constraints;
 
@@ -34,6 +37,8 @@ class ButtonFormatter  {
             card.setTint(Color.parseColor(colors.get(colorNum)));
         }
         b.setBackground(card);
+        b.setGravity(Gravity.CENTER_HORIZONTAL);
+        b.setElevation(70);
         b.setPadding(55, 55, 55, 55);
         b.setTextAppearance(R.style.TextAppearance_AppCompat_Display2);
         b.setTextSize(COMPLEX_UNIT_SP, textSize);

@@ -20,6 +20,7 @@
 
         <Button
             android:id="@+id/homeButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="39dip"
             android:layout_height="37dip"
             android:layout_gravity="center"
@@ -27,27 +28,26 @@
             android:layout_marginBottom="1dip"
             android:background="@drawable/ic_home"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:scaleType="fitCenter"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:scaleType="fitCenter" />
 
         <Button
             android:id="@+id/searchButton2"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_marginEnd="60dip"
             android:layout_weight="0"
             android:background="@drawable/ic_search_black_24dp"
-            android:scaleType="fitCenter"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:scaleType="fitCenter" />
 
         <Button
             android:id="@+id/settingsButton"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="50dip"
             android:layout_height="50dip"
             android:layout_weight="0"
             android:background="@drawable/ic_settings_black_24dp"
-            android:scaleType="fitCenter"
-            style="?android:attr/buttonBarButtonStyle"/>
+            android:scaleType="fitCenter" />
     </LinearLayout>
 
     <TextView
@@ -66,9 +66,7 @@
         android:id="@+id/savedCourses"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="10dp"
         android:layout_marginTop="35dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginBottom="1dp"
         android:animateLayoutChanges="false"
         app:layout_constraintBottom_toTopOf="@+id/Navigation"
@@ -100,8 +98,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@string/saved_course_message"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display4"
-                android:textSize="23sp"
+                android:textSize="32sp"
                 android:visibility="gone" />
 
         </LinearLayout>

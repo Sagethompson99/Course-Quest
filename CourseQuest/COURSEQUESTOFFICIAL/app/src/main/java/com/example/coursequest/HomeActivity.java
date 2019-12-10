@@ -131,7 +131,7 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    private void setButtonLink(final String courseLink, Button courseView)
+    private void setButtonLink(final String courseLink, final Button courseView)
     {
         if(!courseLink.equals(""))
         {
@@ -156,10 +156,12 @@ public class HomeActivity extends AppCompatActivity {
         }
         else{
             for(int i = savedCourses.size()-1; i >= 0; i--) {
-                Button course = new Button(this);
+                final Button course = new Button(this);
                 course.setText(savedCourses.get(i));
                 final String courseLink = savedCourseLinks.get(i);
                 setButtonLink(courseLink, course);
+                int width = this.getWindow().getWindowManager().getDefaultDisplay().getWidth()-50;
+                course.setWidth(width);
                 ButtonFormatter.formatCourseButton(this, course);
                 course.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override

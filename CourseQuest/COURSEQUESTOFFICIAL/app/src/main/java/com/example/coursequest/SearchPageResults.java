@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -183,11 +184,10 @@ public class SearchPageResults extends AppCompatActivity implements AsyncRespons
         //gets course link and adds onClick function to open the link in an external browser
         setLink(course, courseView);
         ButtonFormatter.formatCourseButton(this, courseView);
-        int width = resultsView.getMeasuredWidth();
+        int width = resultsView.getMeasuredWidth()-50;
         courseView.setWidth(width);
 
         //appends course information to each courseView button
-       // courseView.append(Course.getInfoString(course));
         courseView.append(Course.getCourseName(course) + "\n\n");
         courseView.append(Course.getCourseDescription(course));
 
