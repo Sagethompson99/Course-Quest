@@ -224,19 +224,19 @@ public class SearchPageResults extends AppCompatActivity implements AsyncRespons
         if(searchWhichWebsites.contains("FutureLearn"))
         {
             futureLearnWebScraper scraper = new futureLearnWebScraper();
-            scraper.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
+            scraper.execute(searchFor,this);//OnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
 
         }
         if(searchWhichWebsites.contains("CodeCademy"))
         {
             codeCademyWebScraper scraper3 = new codeCademyWebScraper();
-            scraper3.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
+            scraper3.execute(searchFor,this);//OnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
 
         }
         if(searchWhichWebsites.contains("SkillShare"))
         {
             SkillShareScraper scraper4 = new SkillShareScraper();
-            scraper4.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
+            scraper4.execute(searchFor,this);//OnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
         }
 
         //Coursera is executed by itself to to the nature of its data collection process
@@ -244,7 +244,7 @@ public class SearchPageResults extends AppCompatActivity implements AsyncRespons
         if(searchWhichWebsites.contains("Coursera"))
         {
             CourseraWebScraper scraper2 = new CourseraWebScraper();
-            scraper2.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, searchFor, this);
+            scraper2.execute(searchFor,this);//OnExecutor(AsyncTask.SERIAL_EXECUTOR, searchFor, this);
         }
 
         loadingView.show();
