@@ -74,11 +74,6 @@ public class Course implements Parcelable
 
     }
 
-    void setCourseSubject(String courseSubject)
-    {
-        this.courseSubject = courseSubject;
-    }
-
     void setCourseName(String courseName)
     {
         this.courseName = courseName;
