@@ -15,7 +15,7 @@ import org.jsoup.select.Elements;
 */
 class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 
-    private SearchPageResults page;
+    private AsyncResponse informer = null;
 
     /**
      * doInBackground is a pre-defined method that runs an asynchronous task on a separate thread from the UI.
@@ -28,7 +28,7 @@ class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<Course>>
         final String url = "https://www.futurelearn.com";
         Document doc;
         String query = (String) params[0];
-        page = (SearchPageResults) params[1];
+        informer = (AsyncResponse) params[1];
         List<String>courses = new ArrayList<>();
         List<String>courseDescriptions = new ArrayList<>();
         List<String>courseLinks = new ArrayList<>();
@@ -36,7 +36,7 @@ class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<Course>>
         ArrayList<Course> courseList = new ArrayList<>();
 
         try {
-            //connects to futurelearn URL
+            //connects to future learn URL
             doc = Jsoup.connect(url + "/search?q=" + query).get();
 
             Elements courseTitles = doc.select(".m-link-list__item h3");
@@ -72,8 +72,7 @@ class futureLearnWebScraper extends AsyncTask<Object, String, ArrayList<Course>>
     @Override
     protected void onPostExecute(ArrayList<Course> list) {
         try {
-            SearchPageResults.courses.addAll(list);
-            page.scraperFinished();
+            informer.scraperFinished(list);
         }
         catch(Exception e){
             System.out.println("Results creation unsuccessful");

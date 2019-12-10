@@ -20,13 +20,12 @@ import android.os.AsyncTask;
 
 class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 
-	private SearchPageResults page;
-	//private ArrayList<Course> finalCourses;
+	private AsyncResponse informer = null;
 
 	protected ArrayList<Course> doInBackground(Object... params) {
 		final String url = "https://www.skillshare.com/search?query=";
 		String userSearch = (String) params[0];
-		page = (SearchPageResults) params[1];
+		informer = (AsyncResponse) params[1];
 		ArrayList<String> skillTitles = new ArrayList<>();
 		ArrayList<String> skillLinksTemp = new ArrayList<>();
 		ArrayList<String> skillLinks = new ArrayList<>();
@@ -94,10 +93,10 @@ class SkillShareScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 		return null; //maybe return string notifying error?
 	}
 
+
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {
-			SearchPageResults.courses.addAll(list);
-			page.scraperFinished();
+			informer.scraperFinished(list);
 		}
 		catch(Exception e) {
 			System.out.println("ERROR [Skill Share]: couldn't get classes :(");

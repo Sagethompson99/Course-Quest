@@ -12,7 +12,7 @@ import java.util.List;
 
 class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Course>>{
 
-	private SearchPageResults page;
+	private AsyncResponse informer = null;
 
 	/**
 	 * doInBackground is a pre-defined method that runs an asynchronous task on a separate thread from the UI.
@@ -24,9 +24,8 @@ class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Course>>{
 		Document document;
 		final String url = "https://www.coursera.org/search?query=";
 		String searchTerm = (String) params[0];
-		page = (SearchPageResults) params[1];
+		informer = (AsyncResponse) params[1];
 		List<String> titlesList = new ArrayList<>();
-		List<String> allLinks = new ArrayList<>();
 		List<String> courseLinks = new ArrayList<>();
 		ArrayList<Course> allCourses = new ArrayList<>();
 		
@@ -57,9 +56,9 @@ class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Course>>{
 
 				Elements titles = document.getElementsByClass("color-primary-text card-title headline-1-text");
 				titlesList.addAll(titles.eachText());
-				
-				Elements links = document.getElementsByTag("a");
-				allLinks.addAll(links.eachAttr("href"));
+
+				Elements links = document.select("a.rc-DesktopSearchCard.anchor-wrapper");
+				courseLinks.addAll(links.eachAttr("href"));
 
 			}
 			
@@ -70,38 +69,24 @@ class CourseraWebScraper extends AsyncTask<Object, String, ArrayList<Course>>{
 		}
 
 		String courseDescription = "No description. Click for more information about this course.";
-		setCourseLinks(allLinks, courseLinks);
 
 		for(int i = 0; i < titlesList.size(); i++) {
+			courseLinks.set(i, "https://www.coursera.org" + courseLinks.get(i));
+
 			Course courseObj = new Course();
 			courseObj.setCourseLink(courseLinks.get(i));
 			courseObj.setCourseName(titlesList.get(i));
-			courseObj.setCourseSubject(searchTerm);
 			courseObj.setCourseWebsite("Coursera");
 			courseObj.setCourseDescription(courseDescription);
 			allCourses.add(courseObj);
 		}
+		
 		return allCourses;
-
 	}
-	
-	
-	private static void setCourseLinks(List<String> allLinks, List<String> courseLinks) {
-		for(int r = 0; r < allLinks.size(); r ++) {
-			String potential_Link = allLinks.get(r);
-			if(potential_Link.contains("learn/") || potential_Link.contains("specializations/") || potential_Link.contains("professional-certificates/")
-					|| potential_Link.contains("degrees/") || potential_Link.contains("master track")) {
-				courseLinks.add("https://www.coursera.org" + potential_Link);
-			}
-		}
-	}
-
 
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {
-			//adds courses to a course ArrayList in SearchPageResults
-			SearchPageResults.courses.addAll(list);
-			page.scraperFinished();
+			informer.scraperFinished(list);
 		}
 		catch(Exception e){
 			System.out.println("[Coursera] Results creation unsuccessful");

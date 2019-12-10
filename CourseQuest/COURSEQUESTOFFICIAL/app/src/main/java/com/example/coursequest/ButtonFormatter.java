@@ -46,6 +46,7 @@ class ButtonFormatter  {
         b.setLayoutParams(params);
         b.setCompoundDrawablePadding(70);
 
+
         if(b.getTag().toString().contains("futurelearn")){
             logo = c.getDrawable(R.drawable.ic_future_learn);
         }

@@ -2,6 +2,7 @@ package com.example.coursequest;
 
 import android.os.AsyncTask;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import org.jsoup.Jsoup;
@@ -10,12 +11,13 @@ import org.jsoup.select.Elements;
 
 class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> {
 
-	private SearchPageResults page;
+
+	private AsyncResponse informer = null;
 
 	/**
 	 * doInBackground is a pre-defined method that runs an asynchronous task on a separate thread from the UI.
 	 *
-	 * This method connects to the FutureLearn URL, collects course information for a given user search query,
+	 * This method connects to the CodeCademy URL, collects course information for a given user search query,
 	 * and creates course objects with that information
 	 */
 	@Override
@@ -23,13 +25,13 @@ class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> 
 		Document doc;
 		final String url = "https://www.codecademy.com/search?page=";
 		String query = (String) params[0];
-		page = (SearchPageResults) params[1];
+		informer = (AsyncResponse) params[1];
 		List<String>courses = new ArrayList<>();
 		List<String>courseDescriptions = new ArrayList<>();
 		List<String>courseLinks = new ArrayList<>();
-		
+
 		ArrayList<Course> courseList = new ArrayList<>();
-		
+
 		int pageNumber = 1; //current page number
 		int numPages; //number of pages to parse (determined by numResults)
 		
@@ -46,7 +48,7 @@ class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> 
 	    	    	numPages += 1;
 	    	   
 	    	//loops through numPages of search results
-	    	for(int i = 1; i <= numPages; i++) { 
+	    	for(int i = 1; i <= numPages; i++) {
 	    	   doc = Jsoup.connect(url + pageNumber + "&query="+ query).get();	
 	    	   
 	    	   Elements courseNames = doc.getElementsByClass("title__3sKtpbrKLRKxJviSPPEYHM");
@@ -62,6 +64,7 @@ class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> 
 	    	}
 	    }
 	    catch(Exception e) {
+	    	e.printStackTrace();
 	    	System.out.println("[CodeCademy] Invalid Search.");
 	    }
 		
@@ -96,16 +99,15 @@ class codeCademyWebScraper extends AsyncTask<Object, String, ArrayList<Course>> 
 	 * onPostExecute is a pre-defined method that is automatically executed after a successful
 	 * doInBackground() method execution
 	 *
-	 * This method calls createButtons() and displayResults() from the SearchPageResults class, passing
-	 * them an ArrayList of courses created in the doInBackground() method
+	 * This method passes an ArrayList of courses created in the doInBackground() method to SearchResultsPage
 	 */
 	@Override
 	protected void onPostExecute(ArrayList<Course> list) {
 		try {
-			SearchPageResults.courses.addAll(list);
-			page.scraperFinished();
+			informer.scraperFinished(list);
 		}
 		catch(Exception e){
+			e.printStackTrace();
 			System.out.println("[CodeCademy] Results creation unsuccessful");
 		}
 	}

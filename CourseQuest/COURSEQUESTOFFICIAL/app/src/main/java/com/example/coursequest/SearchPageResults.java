@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.content.Intent;
@@ -14,13 +15,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * resultsActivity shows the results from searching, each course listing displayed by resultsActivity
  * functions as a button that, when clicked, opens up a corresponding url for the course.
  * There is a button on this page that takes the user back to the main search screen
  */
-public class SearchPageResults extends AppCompatActivity {
+public class SearchPageResults extends AppCompatActivity implements AsyncResponse {
 
     private static Dialog loadingView;
     private TextView numResults;
@@ -114,7 +116,6 @@ public class SearchPageResults extends AppCompatActivity {
     {
         //Code idea used for adding views programmatically
         //https://github.com/udacity/ud839_Miwok/blob/b7c723c3c38c2c2ca9eb7067e34fb526052cfd34/app/src/main/java/com/example/android/miwok/NumbersActivity.java
-        LinearLayout rootView = findViewById(R.id.resultView);
 
         sortCourses();
 
@@ -128,9 +129,20 @@ public class SearchPageResults extends AppCompatActivity {
             final Course currentCourse = courses.get(i);
             Button courseView = createCourseButton(currentCourse);
             if (courses.get(i) != null)
-                rootView.addView(courseView);
+                resultsView.addView(courseView);
         }
-        loadingView.dismiss();
+
+        //waits for all results to be loaded before dismissing the loading view
+        //Primarily used for searches with large number of results
+        resultsView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View view, int i, int i1, int i2, int i3, int i4, int i5, int i6, int i7) {
+               if(loadingView.isShowing()) {
+                   loadingView.dismiss();
+               }
+            }
+        });
+
     }
 
 
@@ -206,9 +218,51 @@ public class SearchPageResults extends AppCompatActivity {
         }
     }
 
-    public void scraperFinished()
+    //gets search results from website scrapers for a given search query
+    private void search(String searchFor)
     {
+
+        if(searchWhichWebsites.contains("FutureLearn"))
+        {
+            futureLearnWebScraper scraper = new futureLearnWebScraper();
+            scraper.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
+
+        }
+        if(searchWhichWebsites.contains("CodeCademy"))
+        {
+            codeCademyWebScraper scraper3 = new codeCademyWebScraper();
+            scraper3.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
+
+        }
+        if(searchWhichWebsites.contains("SkillShare"))
+        {
+            SkillShareScraper scraper4 = new SkillShareScraper();
+            scraper4.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, searchFor, this);
+        }
+
+        //Coursera is executed by itself to to the nature of its data collection process
+        //Running it in a pool with the other scrapers resulted in slower search loading time
+        if(searchWhichWebsites.contains("Coursera"))
+        {
+            CourseraWebScraper scraper2 = new CourseraWebScraper();
+            scraper2.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR, searchFor, this);
+        }
+
+        loadingView.show();
+    }
+
+    @Override
+    public void scraperFinished(ArrayList<Course> courseList){
+        //Creates a copy of the ArrayList before adding new values.
+        //This is done to prevent scrapers in the thread pool from overwriting data
+        CopyOnWriteArrayList<Course> threadSafeList = new CopyOnWriteArrayList<>();
+        threadSafeList.addAll(courseList);
+
+        courses.addAll(threadSafeList);
+
         numScrapersFinished++;
+
+        //update loading View
         String currentNumResults = courses.size()+"";
         numResults.setText(currentNumResults);
 
@@ -216,34 +270,6 @@ public class SearchPageResults extends AppCompatActivity {
         {
             displaySearchResults();
         }
-    }
-
-    //gets search results from website scrapers for a given search query
-    private void search(String searchFor)
-    {
-        if(searchWhichWebsites.contains("FutureLearn"))
-        {
-            futureLearnWebScraper scraper = new futureLearnWebScraper();
-            scraper.execute(searchFor, this);
-        }
-        if(searchWhichWebsites.contains("CodeCademy"))
-        {
-            codeCademyWebScraper scraper3 = new codeCademyWebScraper();
-            scraper3.execute(searchFor, this);
-        }
-        if(searchWhichWebsites.contains("SkillShare"))
-        {
-            SkillShareScraper scraper4 = new SkillShareScraper();
-            scraper4.execute(searchFor, this);
-        }
-
-        if(searchWhichWebsites.contains("Coursera"))
-        {
-            CourseraWebScraper scraper2 = new CourseraWebScraper();
-            scraper2.execute(searchFor, this);
-        }
-
-        loadingView.show();
     }
 
     private void openHomePage()
