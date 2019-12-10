@@ -4,9 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.Gravity;
-import android.view.animation.Animation;
 import android.widget.Button;
-import android.widget.LinearLayout;
 
 import androidx.constraintlayout.widget.Constraints;
 

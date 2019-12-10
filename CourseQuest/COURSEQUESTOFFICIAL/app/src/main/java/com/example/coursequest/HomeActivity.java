@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -160,7 +161,9 @@ public class HomeActivity extends AppCompatActivity {
                 course.setText(savedCourses.get(i));
                 final String courseLink = savedCourseLinks.get(i);
                 setButtonLink(courseLink, course);
-                int width = this.getWindow().getWindowManager().getDefaultDisplay().getWidth()-50;
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int width = displayMetrics.widthPixels-50;
                 course.setWidth(width);
                 ButtonFormatter.formatCourseButton(this, course);
                 course.setOnLongClickListener(new View.OnLongClickListener() {

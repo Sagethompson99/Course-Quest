@@ -62,7 +62,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:id="@+id/settingsView"
         style="@android:style/Widget.ScrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,7 +77,6 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/settingsAppearanceText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -110,7 +108,6 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/settingsGeneralText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -120,7 +117,6 @@
                 android:textStyle="bold" />
 
             <Button
-                android:id="@+id/helpButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#00FFFFFF"
