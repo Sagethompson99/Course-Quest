@@ -45,6 +45,7 @@ class shareBarHandler {
         Button copyLink;
         Button shareOther;
         shareBar = inflater.inflate(R.layout.course_share_bar, mainLayout, false);
+        shareBar.setId(View.generateViewId());
 
         cancelShare = shareBar.findViewById(R.id.cancelButton);
         cancelShare.setOnClickListener(new View.OnClickListener() {
