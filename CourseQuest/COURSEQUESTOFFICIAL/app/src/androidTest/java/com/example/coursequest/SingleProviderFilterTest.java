@@ -1,8 +1,3 @@
-/*
-Scenario:
-- Given a user who wants to share a course, that user will be able to share the course
-  via SMS message so that they can show a friend.
- */
 package com.example.coursequest;
 
 
@@ -24,8 +19,6 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
-import static androidx.test.espresso.action.ViewActions.longClick;
-import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -35,13 +28,13 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class ShareButtonMessageShareTest {
+public class SingleProviderFilterTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void shareButtonMessageShareTest() {
+    public void singleProviderFilterTest() {
         ViewInteraction appCompatButton = onView(
                 allOf(withId(R.id.searchButton2),
                         childAtPosition(
@@ -53,43 +46,35 @@ public class ShareButtonMessageShareTest {
                         isDisplayed()));
         appCompatButton.perform(click());
 
-        ViewInteraction button = onView(
-                allOf(withText("Photography"),
-                        childAtPosition(
-                                allOf(withId(R.id.popularSearches),
-                                        childAtPosition(
-                                                withId(R.id.popularSearchesView),
-                                                0)),
-                                1)));
-        button.perform(scrollTo(), click());
-
-        ViewInteraction button2 = onView(
-                allOf(withText("Photography Capstone Project\n\nNo description. Click for more information about this course."),
-                        childAtPosition(
-                                allOf(withId(R.id.resultView),
-                                        childAtPosition(
-                                                withId(R.id.results),
-                                                0)),
-                                1)));
-        button2.perform(scrollTo(), longClick());
-
         ViewInteraction appCompatButton2 = onView(
-                allOf(withId(R.id.shareButton),
+                allOf(withId(R.id.filter),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.resultView),
-                                        2),
-                                1)));
-        appCompatButton2.perform(scrollTo(), click());
-
-        ViewInteraction appCompatButton3 = onView(
-                allOf(withId(R.id.messageShare),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.HorizontalScrollView")),
+                                        withId(android.R.id.content),
                                         0),
-                                0)));
-        appCompatButton3.perform(scrollTo(), click());
+                                4),
+                        isDisplayed()));
+        appCompatButton2.perform(click());
+
+        ViewInteraction appCompatTextView = onView(
+                allOf(withId(android.R.id.title), withText("Providers"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("com.android.internal.view.menu.ListMenuItemView")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        appCompatTextView.perform(click());
+
+        ViewInteraction appCompatTextView2 = onView(
+                allOf(withId(android.R.id.title), withText("Coursera"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("com.android.internal.view.menu.ListMenuItemView")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        appCompatTextView2.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
