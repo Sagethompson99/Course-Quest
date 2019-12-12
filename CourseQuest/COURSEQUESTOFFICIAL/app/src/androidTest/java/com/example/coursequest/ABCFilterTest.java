@@ -58,7 +58,6 @@ public class ABCFilterTest {
         appCompatButton2.perform(click());
 
         onView(withText("Order")).inRoot(isPlatformPopup()).perform(click());
-
         onView(withText("Alphabetical ABC")).inRoot(isPlatformPopup()).perform(click());
 
     }

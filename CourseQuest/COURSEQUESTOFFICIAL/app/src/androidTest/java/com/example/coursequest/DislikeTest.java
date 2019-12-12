@@ -59,7 +59,7 @@ public class DislikeTest {
                                                 1)),
                                 0),
                         isDisplayed()));
-        searchAutoComplete.perform(replaceText("java"), closeSoftKeyboard());
+        searchAutoComplete.perform(replaceText("android espresso"), closeSoftKeyboard());
 
         ViewInteraction appCompatButton2 = onView(
                 allOf(withId(R.id.search), withText("Go!"),
@@ -72,7 +72,7 @@ public class DislikeTest {
         appCompatButton2.perform(click());
 
         ViewInteraction button = onView(
-                allOf(withText("Desenvolvimento Ágil com Java Avançado\n\nNo description. Click for more information about this course."),
+                allOf(withText("Ionic 4 Firebase with Angular-Build PWA, Native Android, iOS\n\nNo description. Click for more information about this course."),
                         childAtPosition(
                                 allOf(withId(R.id.resultView),
                                         childAtPosition(
