@@ -41,9 +41,6 @@ As the project comes to a close, we made our last changes to the app. We fixed u
 
 ## Ignored Lint Warnings
 
-Deprecated API within Espresso Tests
-- We used the Espresso test recorder in this app which by default uses JUnit 4 (rather than JUnit 5)
-
 Within activity_home.xml
 - "This tag and its children can be replaced by a compound drawable" warning
   This view being seperated into an ImageView and TextView allows us to more easily separately control the visibility of the image and the text.
