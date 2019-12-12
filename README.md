@@ -25,7 +25,7 @@ This project employs the strategy design pattern by allowing the user to choose 
 
 If there are issues with Espresso failing tests, allow your emulator to be in developer mode. Once in developer mode, turn off animator duration scale, transition animation scale, and window animation scale. 
 
-For the ShareButtonMessagesShareTest, it will fail if the tests are ran all at once. It'll pass if it's ran on its own. We believe this is due to the Messages app opening and for Espresso waiting on a response, but there never is one as it is the end of the test. 
+If the ShareButtonMessagesShareTest fails, run it separately from the other tests. Some of the phones we tested it on failed the test due to the Messages app opening and for Espresso waiting on a response, but there never is one as it is the end of the test. 
 
 ## Iteration 1 Report
 
