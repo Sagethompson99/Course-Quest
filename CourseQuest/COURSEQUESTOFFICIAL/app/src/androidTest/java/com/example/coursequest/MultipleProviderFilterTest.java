@@ -7,8 +7,8 @@ import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.filters.LargeTest;
+import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.matcher.RootMatchers.isPlatformPopup;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -27,7 +28,7 @@ import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
 @LargeTest
-@RunWith(AndroidJUnit4.class)
+@RunWith(AndroidJUnit4ClassRunner.class)
 public class MultipleProviderFilterTest {
 
     @Rule
@@ -56,45 +57,12 @@ public class MultipleProviderFilterTest {
                         isDisplayed()));
         appCompatButton2.perform(click());
 
-        ViewInteraction appCompatTextView = onView(
-                allOf(withId(android.R.id.title), withText("Providers"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("com.android.internal.view.menu.ListMenuItemView")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatTextView.perform(click());
+        onView(withText("Providers")).inRoot(isPlatformPopup()).perform(click());
 
-        ViewInteraction appCompatTextView2 = onView(
-                allOf(withId(android.R.id.title), withText("CodeCademy"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("com.android.internal.view.menu.ListMenuItemView")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatTextView2.perform(click());
+        onView(withText("CodeCademy")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("FutureLearn")).inRoot(isPlatformPopup()).perform(click());
+        onView(withText("Coursera")).inRoot(isPlatformPopup()).perform(click());
 
-        ViewInteraction appCompatTextView3 = onView(
-                allOf(withId(android.R.id.title), withText("FutureLearn"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("com.android.internal.view.menu.ListMenuItemView")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatTextView3.perform(click());
-
-        ViewInteraction appCompatTextView4 = onView(
-                allOf(withId(android.R.id.title), withText("Coursera"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("com.android.internal.view.menu.ListMenuItemView")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatTextView4.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
